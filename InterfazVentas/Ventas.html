@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel ERP Sales Interface</title>
+    <script src="Ventas.js"></script>
+    <link rel="stylesheet" href="Ventas.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="app-title">Hotel ERP Sales Interface</h1>
+        
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Nueva Venta</h2>
+                <p class="card-description">Crea una nueva venta para alojamiento, servicios y productos</p>
+            </div>
+            
+            <div class="card-content">
+                <!-- Nights Selection -->
+                <div class="form-group">
+                    <label for="nights">Número de Noches</label>
+                    <div class="nights-control">
+                        <button type="button" id="decrease-nights" class="btn btn-outline">-</button>
+                        <input type="number" id="nights-input" min="1" value="1" class="input-nights">
+                        <button type="button" id="increase-nights" class="btn btn-outline">+</button>
+                        <span id="nights-cost" class="nights-cost">$100 por noche × 1 noches = $100</span>
+                    </div>
+                </div>
+
+                <!-- Services Selection -->
+                <div class="form-group">
+                    <label>Servicios Adicionales</label>
+                    <div class="services-grid" id="services-container">
+                        <!-- Services will be added here by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Products Selection -->
+                <div class="form-group">
+                    <label>Productos</label>
+                    <div class="products-control">
+                        <select id="product-select" class="product-select">
+                            <option value="">Seleccionar un producto</option>
+                            <!-- Product options will be added here by JavaScript -->
+                        </select>
+                        <button type="button" id="add-product" class="btn">Agregar</button>
+                        <p class="product-note">Cada noche incluye 5 productos (artículos de aseo y comida)</p>
+                    </div>
+                    
+                    <div id="products-table-container" class="products-table-container">
+                        <!-- Products table will be added here when products are selected -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-footer">
+                <div id="total-display" class="total-display">Total: $100</div>
+                <button type="button" id="submit-sale" class="btn btn-primary">Crear Venta</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
