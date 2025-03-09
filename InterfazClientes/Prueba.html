@@ -1,0 +1,2048 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Clientes - Hotel ERP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Estilos personalizados */
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      color: #1f2937;
+      background-color: #f9fafb;
+    }
+    
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #1e3a8a;
+      color: white;
+      transition: all 0.3s;
+      z-index: 100;
+    }
+    
+    .sidebar-collapsed {
+      left: -250px;
+    }
+    
+    .main-content {
+      margin-left: 250px;
+      transition: all 0.3s;
+    }
+    
+    .main-content-expanded {
+      margin-left: 0;
+    }
+    
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.2s;
+    }
+    
+    .nav-link:hover, .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+    
+    .nav-link svg {
+      margin-right: 0.75rem;
+    }
+    
+    .card {
+      background-color: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    }
+    
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .table th {
+      background-color: #f9fafb;
+      font-weight: 500;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .table tr:hover {
+      background-color: #f9fafb;
+    }
+    
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.125rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    
+    .badge-green {
+      background-color: #d1fae5;
+      color: #065f46;
+    }
+    
+    .badge-yellow {
+      background-color: #fef3c7;
+      color: #92400e;
+    }
+    
+    .badge-red {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+    
+    .badge-purple {
+      background-color: #ede9fe;
+      color: #5b21b6;
+    }
+    
+    .badge-blue {
+      background-color: #dbeafe;
+      color: #1e40af;
+    }
+    
+    .badge-gray {
+      background-color: #f3f4f6;
+      color: #4b5563;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.375rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    
+    .btn-primary {
+      background-color: #1e40af;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: #1e3a8a;
+    }
+    
+    .btn-success {
+      background-color: #059669;
+      color: white;
+    }
+    
+    .btn-success:hover {
+      background-color: #047857;
+    }
+    
+    .btn-danger {
+      background-color: #dc2626;
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background-color: #b91c1c;
+    }
+    
+    .btn-outline {
+      border: 1px solid #d1d5db;
+      background-color: white;
+    }
+    
+    .btn-outline:hover {
+      background-color: #f9fafb;
+    }
+    
+    .btn-icon {
+      padding: 0.5rem;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.375rem;
+      font-size: 0.875rem;
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 1px #3b82f6;
+    }
+    
+    .form-select {
+      width: 100%;
+      padding: 0.5rem 2rem 0.5rem 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.375rem;
+      font-size: 0.875rem;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 0.5rem center;
+      background-repeat: no-repeat;
+      background-size: 1.5em 1.5em;
+      appearance: none;
+    }
+    
+    .form-select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 1px #3b82f6;
+    }
+    
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+    
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .modal-content {
+      background-color: white;
+      border-radius: 0.5rem;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(-20px);
+      transition: all 0.3s;
+    }
+    
+    .modal.active .modal-content {
+      transform: translateY(0);
+    }
+    
+    .modal-lg .modal-content {
+      max-width: 800px;
+    }
+    
+    /* Tabs */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .tab {
+      padding: 0.75rem 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    
+    .tab.active {
+      color: #1e40af;
+      border-bottom-color: #1e40af;
+    }
+    
+    .tab-content {
+      display: none;
+      padding: 1rem;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* Avatar */
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      color: #4b5563;
+    }
+    
+    .avatar-lg {
+      width: 64px;
+      height: 64px;
+      font-size: 1.25rem;
+    }
+    
+    /* Progress bar */
+    .progress {
+      height: 0.5rem;
+      background-color: #e5e7eb;
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background-color: #1e40af;
+    }
+    
+    /* Tooltip */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      width: 120px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 0.75rem;
+    }
+    
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+    
+    /* Timeline */
+    .timeline {
+      position: relative;
+      margin-left: 1rem;
+      padding-left: 1.5rem;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 2px;
+      background-color: #e5e7eb;
+    }
+    
+    .timeline-item {
+      position: relative;
+      padding-bottom: 1.5rem;
+    }
+    
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+    
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      top: 0.25rem;
+      left: -1.5rem;
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      background-color: #1e40af;
+    }
+    
+    /* Rating stars */
+    .rating {
+      display: flex;
+      align-items: center;
+    }
+    
+    .rating-star {
+      color: #f59e0b;
+    }
+    
+    /* Loyalty card */
+    .loyalty-card {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .loyalty-card::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .loyalty-card::after {
+      content: '';
+      position: absolute;
+      bottom: -50px;
+      left: -50px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .loyalty-level {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    
+    .loyalty-points {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    .loyalty-progress {
+      background-color: rgba(255, 255, 255, 0.2);
+      height: 0.5rem;
+      border-radius: 9999px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+    
+    .loyalty-progress-bar {
+      height: 100%;
+      background-color: white;
+    }
+    
+    .loyalty-next-level {
+      font-size: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .close-modal-btn {
+      padding: 0.25rem;
+      border-radius: 0.25rem;
+      transition: background-color 0.2s;
+    }
+
+    .close-modal-btn:hover {
+      background-color: #f3f4f6;
+    }
+    
+    /* Reservation card */
+    .reservation-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .reservation-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    
+    .reservation-dates {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .reservation-arrow {
+      margin: 0 0.5rem;
+    }
+    
+    .reservation-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .reservation-detail {
+      display: flex;
+      align-items: center;
+      font-size: 0.875rem;
+    }
+    
+    .reservation-detail svg {
+      margin-right: 0.25rem;
+    }
+    
+    .reservation-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="p-4 flex items-center border-b border-blue-800">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+        <path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Z"></path>
+        <path d="m9 16 .348-.24c1.465-1.013 3.84-1.013 5.304 0L15 16"></path>
+        <path d="M8 7h.01"></path>
+        <path d="M16 7h.01"></path>
+        <path d="M12 7h.01"></path>
+        <path d="M12 11h.01"></path>
+        <path d="M16 11h.01"></path>
+        <path d="M8 11h.01"></path>
+        <path d="M10 22v-6.5m4 0V22"></path>
+      </svg>
+      <h1 class="text-lg font-bold">Hotel ERP</h1>
+    </div>
+    <nav class="mt-4">
+      <a href="#" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        Dashboard
+      </a>
+      <a href="#" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 7h-9"></path>
+          <path d="M14 17H5"></path>
+          <circle cx="17" cy="17" r="3"></circle>
+          <circle cx="7" cy="7" r="3"></circle>
+        </svg>
+        Inventario
+      </a>
+      <a href="#" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        Recursos Humanos
+      </a>
+      <a href="#" class="nav-link active">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        Clientes
+      </a>
+      <a href="#" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+          <line x1="3" x2="21" y1="9" y2="9"></line>
+          <line x1="9" x2="9" y1="21" y2="9"></line>
+        </svg>
+        Reservaciones
+      </a>
+      <a href="#" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <path d="M14 2v6h6"></path>
+          <path d="M16 13H8"></path>
+          <path d="M16 17H8"></path>
+          <path d="M10 9H8"></path>
+        </svg>
+        Reportes
+      </a>
+      <a href="#" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z"></path>
+        </svg>
+        Configuración
+      </a>
+    </nav>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+      <div class="flex items-center justify-between p-4">
+        <button id="toggleSidebar" class="p-1 rounded-md hover:bg-gray-100">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" x2="21" y1="6" y2="6"></line>
+            <line x1="3" x2="21" y1="12" y2="12"></line>
+            <line x1="3" x2="21" y1="18" y2="18"></line>
+          </svg>
+        </button>
+        <div class="flex items-center">
+          <div class="relative mr-4">
+            <button class="p-1 rounded-full hover:bg-gray-100 relative">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+              </svg>
+              <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+            </button>
+          </div>
+          <div class="flex items-center">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="w-8 h-8 rounded-full mr-2">
+            <span class="font-medium">Admin</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold">Gestión de Clientes</h1>
+        <button id="addClientBtn" class="btn btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="8.5" cy="7" r="4"></circle>
+            <line x1="20" x2="20" y1="8" y2="14"></line>
+            <line x1="23" x2="17" y1="11" y2="11"></line>
+          </svg>
+          Agregar Cliente
+        </button>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+        <div class="card p-4">
+          <div class="flex items-center">
+            <div class="p-3 rounded-full bg-blue-100 text-blue-800 mr-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Total Clientes</p>
+              <h2 class="text-xl font-bold">1,248</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card p-4">
+          <div class="flex items-center">
+            <div class="p-3 rounded-full bg-green-100 text-green-800 mr-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6v14H6a2 2 0 0 1-2-2V6"></path>
+                <path d="M16 2H4a2 2 0 0 0-2 2v14"></path>
+                <path d="M15 11h2"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Reservas Activas</p>
+              <h2 class="text-xl font-bold">42</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card p-4">
+          <div class="flex items-center">
+            <div class="p-3 rounded-full bg-yellow-100 text-yellow-800 mr-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 8c-2.8 0-5 2.2-5 5 0 2.3 1.5 4.  stroke-linejoin="round">
+                <path d="M12 8c-2.8 0-5 2.2-5 5 0 2.3 1.5 4.3 3.5 4.8L17.8 21l2.2-2.2-8.3-8.3c.1-.2.2-.3.3-.5 0-2.8-2.2-5-5-5z"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Programa Fidelidad</p>
+              <h2 class="text-xl font-bold">356</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card p-4">
+          <div class="flex items-center">
+            <div class="p-3 rounded-full bg-purple-100 text-purple-800 mr-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Satisfacción</p>
+              <h2 class="text-xl font-bold">4.8/5</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="card p-4 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div>
+            <label for="searchInput" class="block text-sm font-medium text-gray-700 mb-1">Buscar</label>
+            <input type="text" id="searchInput" placeholder="Buscar cliente..." class="form-input">
+          </div>
+          <div>
+            <label for="loyaltyFilter" class="block text-sm font-medium text-gray-700 mb-1">Nivel de Fidelidad</label>
+            <select id="loyaltyFilter" class="form-select">
+              <option value="">Todos los niveles</option>
+              <option value="bronze">Bronce</option>
+              <option value="silver">Plata</option>
+              <option value="gold">Oro</option>
+              <option value="platinum">Platino</option>
+            </select>
+          </div>
+          <div>
+            <label for="statusFilter" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+            <select id="statusFilter" class="form-select">
+              <option value="">Todos los estados</option>
+              <option value="active">Activo</option>
+              <option value="inactive">Inactivo</option>
+              <option value="blacklisted">Lista Negra</option>
+            </select>
+          </div>
+          <div class="flex items-end">
+            <button id="applyFilters" class="btn btn-outline w-full">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+              </svg>
+              Filtrar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Clients Table -->
+      <div class="card overflow-hidden mb-6">
+        <div class="overflow-x-auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Contacto</th>
+                <th>Última Estancia</th>
+                <th>Nivel Fidelidad</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="clientsTableBody">
+              <!-- Table rows will be populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="p-4 border-t flex justify-between items-center">
+          <div class="text-sm text-gray-500">
+            Mostrando <span id="itemsShowing">1-10</span> de <span id="totalItems">1,248</span> clientes
+          </div>
+          <div class="flex space-x-1">
+            <button class="btn btn-outline btn-icon pagination-btn" data-page="prev">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6"></path>
+              </svg>
+            </button>
+            <button class="btn btn-outline pagination-btn active" data-page="1">1</button>
+            <button class="btn btn-outline pagination-btn" data-page="2">2</button>
+            <button class="btn btn-outline pagination-btn" data-page="3">3</button>
+            <span class="btn btn-outline">...</span>
+            <button class="btn btn-outline pagination-btn" data-page="10">10</button>
+            <button class="btn btn-outline btn-icon pagination-btn" data-page="next">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Client Detail Modal -->
+  <div class="modal modal-lg" id="clientDetailModal">
+    <div class="modal-content">
+      <div class="p-4 border-b flex justify-between items-center">
+        <h2 class="text-lg font-bold" id="clientDetailTitle">Detalles del Cliente</h2>
+        <button class="close-modal-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="tabs" id="clientTabs">
+        <div class="tab active" data-tab="info">Información</div>
+        <div class="tab" data-tab="reservations">Reservaciones</div>
+        <div class="tab" data-tab="history">Historial</div>
+        <div class="tab" data-tab="loyalty">Programa de Fidelidad</div>
+      </div>
+      <div class="tab-content active" id="infoTab">
+        <div class="p-4">
+          <div class="flex flex-col md:flex-row gap-6">
+            <div class="md:w-1/3">
+              <div class="flex flex-col items-center">
+                <div class="avatar avatar-lg mb-4" id="clientAvatar">JD</div>
+                <h3 class="text-lg font-bold mb-1" id="clientName">Juan Pérez</h3>
+                <p class="text-sm text-gray-500 mb-4" id="clientEmail">juan.perez@email.com</p>
+                <div class="w-full space-y-2">
+                  <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                    <span id="clientPhone">+52 123 456 7890</span>
+                  </div>
+                  <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500">
+                      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <span id="clientAddress">Av. Principal #123, Ciudad</span>
+                  </div>
+                  <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500">
+                      <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                      <path d="M3 9h18"></path>
+                      <path d="M9 21V9"></path>
+                    </svg>
+                    <span id="clientNationality">México</span>
+                  </div>
+                  <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500">
+                      <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span id="clientIdNumber">PERJ850512ABC</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="md:w-2/3">
+              <div class="grid grid-cols-2 gap-4 mb-6">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                  <input type="text" id="clientFirstName" class="form-input" value="Juan">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
+                  <input type="text" id="clientLastName" class="form-input" value="Pérez">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+                  <input type="email" id="clientEmailInput" class="form-input" value="juan.perez@email.com">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+                  <input type="tel" id="clientPhoneInput" class="form-input" value="+52 123 456 7890">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+                  <input type="text" id="clientAddressInput" class="form-input" value="Av. Principal #123, Ciudad">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Nacionalidad</label>
+                  <select id="clientNationalityInput" class="form-select">
+                    <option value="mexico">México</option>
+                    <option value="usa">Estados Unidos</option>
+                    <option value="canada">Canadá</option>
+                    <option value="spain">España</option>
+                    <option value="other">Otro</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Número de Identificación</label>
+                  <input type="text" id="clientIdNumberInput" class="form-input" value="PERJ850512ABC">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                  <select id="clientStatusInput" class="form-select">
+                    <option value="active">Activo</option>
+                    <option value="inactive">Inactivo</option>
+                    <option value="blacklisted">Lista Negra</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Preferencias</label>
+                <textarea id="clientPreferences" rows="4" class="form-input">Habitación con vista al mar. Almohadas extra. Alérgico a frutos secos.</textarea>
+              </div>
+              <div class="flex justify-end space-x-2">
+                <button id="saveClientChangesBtn" class="btn btn-primary">Guardar Cambios</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-content" id="reservationsTab">
+        <div class="p-4">
+          <div class="flex justify-between mb-4">
+            <h3 class="text-lg font-medium">Reservaciones</h3>
+            <button id="newReservationBtn" class="btn btn-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                <path d="M3 9h18"></path>
+                <path d="M9 21V9"></path>
+                <path d="M15 12h-6"></path>
+                <path d="M12 15v-6"></path>
+              </svg>
+              Nueva Reservación
+            </button>
+          </div>
+          
+          <div id="reservationsContainer">
+            <!-- Active Reservations -->
+            <h4 class="font-medium mb-2">Reservaciones Activas</h4>
+            <div class="reservation-card">
+              <div class="reservation-header">
+                <span class="font-medium">Reserva #12345</span>
+                <span class="badge badge-green">Confirmada</span>
+              </div>
+              <div class="reservation-dates">
+                <div>
+                  <div class="text-sm text-gray-500">Check-in</div>
+                  <div class="font-medium">15 Jun 2024</div>
+                </div>
+                <div class="reservation-arrow">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-sm text-gray-500">Check-out</div>
+                  <div class="font-medium">20 Jun 2024</div>
+                </div>
+                <div class="ml-4 px-2 py-1 bg-gray-100 rounded text-sm">
+                  5 noches
+                </div>
+              </div>
+              <div class="reservation-details">
+                <div class="reservation-detail">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 12a5 5 0 0 0 5 5 8 8 0 0 1 5 2 8 8 0 0 1 5-2 5 5 0 0 0 5-5V7a3 3 0 0 0-3-3H5a3 3 0 0 0-3 3Z"></path>
+                    <path d="M6 11V9"></path>
+                    <path d="M10 11V9"></path>
+                    <path d="M14 11V9"></path>
+                    <path d="M18 11V9"></path>
+                  </svg>
+                  <span>Suite Deluxe</span>
+                </div>
+                <div class="reservation-detail">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                  <span>2 Adultos, 1 Niño</span>
+                </div>
+                <div class="reservation-detail">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 6v6l4 2"></path>
+                  </svg>
+                  <span>Todo Incluido</span>
+                </div>
+              </div>
+              <div class="mt-2 text-right font-medium">
+                Total: $12,500.00
+              </div>
+              <div class="reservation-actions">
+                <button class="btn btn-outline btn-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+                    <path d="m15 5 4 4"></path>
+                  </svg>
+                  Editar
+                </button>
+                <button class="btn btn-outline btn-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+                    <path d="M21 11v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8"></path>
+                    <path d="M8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
+                    <path d="M21 15l-5-5L5 21"></path>
+                  </svg>
+                  Ver Detalles
+                </button>
+                <button class="btn btn-danger btn-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+                    <path d="M3 6h18"></path>
+                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                  </svg>
+                  Cancelar
+                </button>
+              </div>
+            </div>
+            
+            <!-- Past Reservations -->
+            <h4 class="font-medium mt-4 mb-2">Reservaciones Pasadas</h4>
+            <div class="reservation-card">
+              <div class="reservation-header">
+                <span class="font-medium">Reserva #10982</span>
+                <span class="badge badge-gray">Completada</span>
+              </div>
+              <div class="reservation-dates">
+                <div>
+                  <div class="text-sm text-gray-500">Check-in</div>
+                  <div class="font-medium">10 Ene 2024</div>
+                </div>
+                <div class="reservation-arrow">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-sm text-gray-500">Check-out</div>
+                  <div class="font-medium">15 Ene 2024</div>
+                </div>
+                <div class="ml-4 px-2 py-1 bg-gray-100 rounded text-sm">
+                  5 noches
+                </div>
+              </div>
+              <div class="reservation-details">
+                <div class="reservation-detail">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 12a5 5 0 0 0 5 5 8 8 0 0 1 5 2 8 8 0 0 1 5-2 5 5 0 0 0 5-5V7a3 3 0 0 0-3-3H5a3 3 0 0 0-3 3Z"></path>
+                    <path d="M6 11V9"></path>
+                    <path d="M10 11V9"></path>
+                    <path d="M14 11V9"></path>
+                    <path d="M18 11V9"></path>
+                  </svg>
+                  <span>Habitación Estándar</span>
+                </div>
+                <div class="reservation-detail">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                  <span>2 Adultos</span>
+                </div>
+                <div class="reservation-detail">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 6v6l4 2"></path>
+                  </svg>
+                  <span>Desayuno Incluido</span>
+                </div>
+              </div>
+              <div class="mt-2 text-right font-medium">
+                Total: $8,750.00
+              </div>
+              <div class="reservation-actions">
+                <button class="btn btn-outline btn-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+                    <path d="M21 11v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8"></path>
+                    <path d="M8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
+                    <path d="M21 15l-5-5L5 21"></path>
+                  </svg>
+                  Ver Detalles
+                </button>
+                <button class="btn btn-outline btn-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" x2="12" y1="15" y2="3"></line>
+                  </svg>
+                  Factura
+                </button>
+                <button class="btn btn-primary btn-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+                    <path d="M5 12h14"></path>
+                    <path d="M12 5v14"></path>
+                  </svg>
+                  Reservar Similar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-content" id="historyTab">
+        <div class="p-4">
+          <h3 class="text-lg font-medium mb-4">Historial del Cliente</h3>
+          
+          <div class="flex items-center mb-4">
+            <div class="mr-4">
+              <div class="text-sm text-gray-500">Primera Visita</div>
+              <div class="font-medium">10 Ene 2022</div>
+            </div>
+            <div class="mr-4">
+              <div class="text-sm text-gray-500">Última Visita</div>
+              <div class="font-medium">15 Ene 2024</div>
+            </div>
+            <div>
+              <div class="text-sm text-gray-500">Total Estancias</div>
+              <div class="font-medium">8</div>
+            </div>
+            <div class="ml-auto">
+              <div class="rating">
+                <div class="text-sm text-gray-500 mr-2">Valoración Promedio</div>
+                <div class="flex">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star" style="opacity: 0.5;">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                  <span class="ml-1 font-medium">4.5</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="font-medium">Enero 2024</div>
+              <div class="text-sm text-gray-500">Estancia en Habitación Estándar</div>
+              <div class="mt-1 text-sm">
+                <p>El cliente se hospedó del 10 al 15 de enero. Solicitó servicio a la habitación en 3 ocasiones. Utilizó el spa del hotel.</p>
+                <div class="mt-1 flex items-center">
+                  <span class="text-sm text-gray-500 mr-2">Valoración:</span>
+                  <div class="flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="font-medium">Agosto 2023</div>
+              <div class="text-sm text-gray-500">Estancia en Suite Deluxe</div>
+              <div class="mt-1 text-sm">
+                <p>El cliente se hospedó del 5 al 12 de agosto. Reservó una cena romántica en el restaurante. Reportó un problema con el aire acondicionado que fue solucionado.</p>
+                <div class="mt-1 flex items-center">
+                  <span class="text-sm text-gray-500 mr-2">Valoración:</span>
+                  <div class="flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="font-medium">Marzo 2023</div>
+              <div class="text-sm text-gray-500">Estancia en Habitación Estándar</div>
+              <div class="mt-1 text-sm">
+                <p>El cliente se hospedó del 15 al 18 de marzo. Viaje de negocios. Solicitó servicio de lavandería.</p>
+                <div class="mt-1 flex items-center">
+                  <span class="text-sm text-gray-500 mr-2">Valoración:</span>
+                  <div class="flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="rating-star">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-4">
+            <h4 class="font-medium mb-2">Notas y Comentarios</h4>
+            <div class="card p-4">
+              <div class="mb-3">
+                <div class="flex justify-between mb-1">
+                  <span class="font-medium">Recepcionista: María González</span>
+                  <span class="text-sm text-gray-500">15 Ene 2024</span>
+                </div>
+                <p class="text-sm">Cliente muy amable. Mencionó que le gustaría reservar para su aniversario en junio. Prefiere habitaciones en pisos altos.</p>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="font-medium">Gerente: Carlos Rodríguez</span>
+                  <span class="text-sm text-gray-500">12 Ago 2023</span>
+                </div>
+                <p class="text-sm">Se ofreció un descuento del 15% en su próxima estancia debido al problema con el aire acondicionado. Cliente satisfecho con la resolución.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-content" id="loyaltyTab">
+        <div class="p-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <div class="loyalty-card mb-4">
+                <div class="loyalty-level">Nivel Oro</div>
+                <div class="loyalty-points">2,450 Puntos</div>
+                <div class="text-sm mb-2">Progreso hacia Platino</div>
+                <div class="loyalty-progress">
+                  <div class="loyalty-progress-bar" style="width: 70%;"></div>
+                </div>
+                <div class="loyalty-next-level">
+                  <span>2,450 / 3,500 puntos</span>
+                  <span>1,050 puntos más</span>
+                </div>
+              </div>
+              
+              <div class="card p-4">
+                <h4 class="font-medium mb-2">Beneficios Actuales</h4>
+                <ul class="space-y-2 text-sm">
+                  <li class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-green-500">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <span>Late check-out hasta las 14:00</span>
+                  </li>
+                  <li class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-green-500">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <span>Upgrade de habitación (sujeto a disponibilidad)</span>
+                  </li>
+                  <li class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-green-500">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <span>15% de descuento en restaurantes del hotel</span>
+                  </li>
+                  <li class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-green-500">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <span>Acceso a la sala VIP</span>
+                  </li>
+                  <li class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-green-500">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <span>10% de descuento en servicios de spa</span>
+                  </li>
+                </ul>
+                
+                <h4 class="font-medium mt-4 mb-2">Próximo Nivel: Platino</h4>
+                <ul class="space-y-2 text-sm">
+                  <li class="flex items-center text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <span>Late check-out hasta las 16:00</span>
+                  </li>
+                  <li class="flex items-center text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <span>Upgrade garantizado a la siguiente categoría</span>
+                  </li>
+                  <li class="flex items-center text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <span>25% de descuento en restaurantes del hotel</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div>
+              <div class="card p-4 mb-4">
+                <h4 class="font-medium mb-2">Historial de Puntos</h4>
+                <div class="overflow-x-auto">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Fecha</th>
+                        <th>Actividad</th>
+                        <th>Puntos</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>15 Ene 2024</td>
+                        <td>Estancia 5 noches</td>
+                        <td>+500</td>
+                      </tr>
+                      <tr>
+                        <td>15 Ene 2024</td>
+                        <td>Consumo en restaurante</td>
+                        <td>+150</td>
+                      </tr>
+                      <tr>
+                        <td>12 Ago 2023</td>
+                        <td>Estancia 7 noches</td>
+                        <td>+700</td>
+                      </tr>
+                      <tr>
+                        <td>10 Ago 2023</td>
+                        <td>Servicios de spa</td>
+                        <td>+200</td>
+                      </tr>
+                      <tr>
+                        <td>18 Mar 2023</td>
+                        <td>Estancia 3 noches</td>
+                        <td>+300</td>
+                      </tr>
+                      <tr>
+                        <td>15 Dic 2022</td>
+                        <td>Canje por upgrade</td>
+                        <td>-500</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+              <div class="card p-4">
+                <h4 class="font-medium mb-2">Opciones de Canje</h4>
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center p-2 border rounded hover:bg-gray-50 cursor-pointer">
+                    <div>
+                      <div class="font-medium">Noche Gratis</div>
+                      <div class="text-sm text-gray-500">Canjea tus puntos por una noche de estancia</div>
+                    </div>
+                    <div class="text-right">
+                      <div class="font-medium">2,500 puntos</div>
+                      <button class="btn btn-primary btn-sm mt-1" disabled>Canjear</button>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center p-2 border rounded hover:bg-gray-50 cursor-pointer">
+                    <div>
+                      <div class="font-medium">Upgrade de Habitación</div>
+                      <div class="text-sm text-gray-500">Mejora tu habitación en tu próxima estancia</div>
+                    </div>
+                    <div class="text-right">
+                      <div class="font-medium">1,000 puntos</div>
+                      <button class="btn btn-primary btn-sm mt-1">Canjear</button>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center p-2 border rounded hover:bg-gray-50 cursor-pointer">
+                    <div>
+                      <div class="font-medium">Desayuno Gratis</div>
+                      <div class="text-sm text-gray-500">Para dos personas durante tu estancia</div>
+                    </div>
+                    <div class="text-right">
+                      <div class="font-medium">500 puntos</div>
+                      <button class="btn btn-primary btn-sm mt-1">Canjear</button>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center p-2 border rounded hover:bg-gray-50 cursor-pointer">
+                    <div>
+                      <div class="font-medium">Tratamiento de Spa</div>
+                      <div class="text-sm text-gray-500">Masaje relajante de 60 minutos</div>
+                    </div>
+                    <div class="text-right">
+                      <div class="font-medium">800 puntos</div>
+                      <button class="btn btn-primary btn-sm mt-1">Canjear</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Client Modal -->
+  <div class="modal" id="clientModal">
+    <div class="modal-content">
+      <div class="p-4 border-b flex justify-between items-center">
+        <h2 class="text-lg font-bold" id="modalTitle">Agregar Cliente</h2>
+        <button class="close-modal-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <form id="clientForm">
+        <div class="p-4 space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+              <input type="text" id="firstName" name="firstName" class="form-input" required>
+            </div>
+            <div>
+              <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
+              <input type="text" id="lastName" name="lastName" class="form-input" required>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+              <input type="email" id="email" name="email" class="form-input" required>
+            </div>
+            <div>
+              <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+              <input type="tel" id="phone" name="phone" class="form-input" required>
+            </div>
+          </div>
+          <div>
+            <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+            <input type="text" id="address" name="address" class="form-input">
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="nationality" class="block text-sm font-medium text-gray-700 mb-1">Nacionalidad</label>
+              <select id="nationality" name="nationality" class="form-select">
+                <option value="">Seleccionar nacionalidad</option>
+                <option value="mexico">México</option>
+                <option value="usa">Estados Unidos</option>
+                <option value="canada">Canadá</option>
+                <option value="spain">España</option>
+                <option value="other">Otro</option>
+              </select>
+            </div>
+            <div>
+              <label for="idNumber" class="block text-sm font-medium text-gray-700 mb-1">Número de Identificación</label>
+              <input type="text" id="idNumber" name="idNumber" class="form-input">
+            </div>
+          </div>
+          <div>
+            <label for="preferences" class="block text-sm font-medium text-gray-700 mb-1">Preferencias</label>
+            <textarea id="preferences" name="preferences" rows="3" class="form-input" placeholder="Preferencias del cliente (tipo de habitación, servicios especiales, etc.)"></textarea>
+          </div>
+          <div>
+            <label for="loyaltyProgram" class="block text-sm font-medium text-gray-700 mb-1">Programa de Fidelidad</label>
+            <div class="flex items-center">
+              <input type="checkbox" id="loyaltyProgram" name="loyaltyProgram" class="mr-2">
+              <label for="loyaltyProgram" class="text-sm">Inscribir al cliente en el programa de fidelidad</label>
+            </div>
+          </div>
+        </div>
+        <div class="p-4 border-t flex justify-end space-x-2">
+          <button type="button" id="cancelClientBtn" class="btn btn-outline">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- New Reservation Modal -->
+  <div class="modal modal-lg" id="reservationModal">
+    <div class="modal-content">
+      <div class="p-4 border-b flex justify-between items-center">
+        <h2 class="text-lg font-bold">Nueva Reservación</h2>
+        <button class="close-modal-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <form id="reservationForm">
+        <div class="p-4 space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="checkInDate" class="block text-sm font-medium text-gray-700 mb-1">Fecha de Check-in</label>
+              <input type="date" id="checkInDate" name="checkInDate" class="form-input" required>
+            </div>
+            <div>
+              <label for="checkOutDate" class="block text-sm font-medium text-gray-700 mb-1">Fecha de Check-out</label>
+              <input type="date" id="checkOutDate" name="checkOutDate" class="form-input" required>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="roomType" class="block text-sm font-medium text-gray-700 mb-1">Tipo de Habitación</label>
+              <select id="roomType" name="roomType" class="form-select" required>
+                <option value="">Seleccionar tipo</option>
+                <option value="standard">Habitación Estándar</option>
+                <option value="superior">Habitación Superior</option>
+                <option value="deluxe">Suite Deluxe</option>
+                <option value="executive">Suite Ejecutiva</option>
+                <option value="presidential">Suite Presidencial</option>
+              </select>
+            </div>
+            <div>
+              <label for="rateType" class="block text-sm font-medium text-gray-700 mb-1">Tipo de Tarifa</label>
+              <select id="rateType" name="rateType" class="form-select" required>
+                <option value="">Seleccionar tarifa</option>
+                <option value="standard">Estándar</option>
+                <option value="breakfast">Con Desayuno</option>
+                <option value="halfboard">Media Pensión</option>
+                <option value="fullboard">Pensión Completa</option>
+                <option value="allinclusive">Todo Incluido</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label for="adults" class="block text-sm font-medium text-gray-700 mb-1">Adultos</label>
+              <select id="adults" name="adults" class="form-select" required>
+                <option value="1">1</option>
+                <option value="2" selected>2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+            <div>
+              <label for="children" class="block text-sm font-medium text-gray-700 mb-1">Niños</label>
+              <select id="children" name="children" class="form-select">
+                <option value="0" selected>0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+            <div>
+              <label for="rooms" class="block text-sm font-medium text-gray-700 mb-1">Habitaciones</label>
+              <select id="rooms" name="rooms" class="form-select" required>
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label for="specialRequests" class="block text-sm font-medium text-gray-700 mb-1">Solicitudes Especiales</label>
+            <textarea id="specialRequests" name="specialRequests" rows="3" class="form-input" placeholder="Solicitudes especiales para esta reservación"></textarea>
+          </div>
+          <div class="border rounded p-4">
+            <h3 class="font-medium mb-2">Resumen de Precios</h3>
+            <div class="space-y-2">
+              <div class="flex justify-between">
+                <span>Habitación (5 noches)</span>
+                <span>$10,000.00</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Impuestos</span>
+                <span>$1,600.00</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Resort Fee</span>
+                <span>$500.00</span>
+              </div>
+              <div class="flex justify-between font-medium border-t pt-2 mt-2">
+                <span>Total</span>
+                <span>$12,100.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-4 border-t flex justify-end space-x-2">
+          <button type="button" id="cancelReservationBtn" class="btn btn-outline">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Confirmar Reservación</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Sample clients data
+      const clientsData = [
+        { id: 1, firstName: 'Juan', lastName: 'Pérez', email: 'juan.perez@email.com', phone: '+52 123 456 7890', address: 'Av. Principal #123, Ciudad', nationality: 'mexico', idNumber: 'PERJ850512ABC', status: 'active', loyaltyLevel: 'gold', lastStay: '2024-01-15', totalStays: 8 },
+        { id: 2, firstName: 'María', lastName: 'González', email: 'maria.gonzalez@email.com', phone: '+52 234 567 8901', address: 'Calle 45 #678, Ciudad', nationality: 'mexico', idNumber: 'GONM780623XYZ', status: 'active', loyaltyLevel: 'platinum', lastStay: '2024-02-20', totalStays: 12 },
+        { id: 3, firstName: 'Carlos', lastName: 'Rodríguez', email: 'carlos.rodriguez@email.com', phone: '+52 345 678 9012', address: 'Blvd. Central #456, Ciudad', nationality: 'spain', idNumber: 'RODC900815DEF', status: 'active', loyaltyLevel: 'silver', lastStay: '2023-12-05', totalStays: 5 },
+        { id: 4, firstName: 'Ana', lastName: 'Martínez', email: 'ana.martinez@email.com', phone: '+52 456 789 0123', address: 'Av. Norte #789, Ciudad', nationality: 'mexico', idNumber: 'MARA880210GHI', status: 'inactive', loyaltyLevel: 'bronze', lastStay: '2023-08-12', totalStays: 3 },
+        { id: 5, firstName: 'Roberto', lastName: 'López', email: 'roberto.lopez@email.com', phone: '+52 567 890 1234', address: 'Calle Sur #234, Ciudad', nationality: 'usa', idNumber: 'LOPR750518JKL', status: 'active', loyaltyLevel: 'gold', lastStay: '2024-03-01', totalStays: 7 },
+        { id: 6, firstName: 'Laura', lastName: 'Sánchez', email: 'laura.sanchez@email.com', phone: '+52 678 901 2345', address: 'Av. Este #567, Ciudad', nationality: 'mexico', idNumber: 'SANL820630MNO', status: 'blacklisted', loyaltyLevel: 'none', lastStay: '2022-11-15', totalStays: 2 },
+        { id: 7, firstName: 'Miguel', lastName: 'Hernández', email: 'miguel.hernandez@email.com', phone: '+52 789 012 3456', address: 'Calle Oeste #890, Ciudad', nationality: 'mexico', idNumber: 'HERM910712PQR', status: 'active', loyaltyLevel: 'platinum', lastStay: '2024-02-28', totalStays: 15 },
+        { id: 8, firstName: 'Sofía', lastName: 'Díaz', email: 'sofia.diaz@email.com', phone: '+52 890 123 4567', address: 'Blvd. Principal #123, Ciudad', nationality: 'canada', idNumber: 'DIAS890405STU', status: 'active', loyaltyLevel: 'silver', lastStay: '2023-10-10', totalStays: 4 }
+      ];
+
+      // DOM Elements
+      const toggleSidebarBtn = document.getElementById('toggleSidebar');
+      const sidebar = document.getElementById('sidebar');
+      const mainContent = document.getElementById('mainContent');
+      const clientsTableBody = document.getElementById('clientsTableBody');
+      const addClientBtn = document.getElementById('addClientBtn');
+      const clientModal = document.getElementById('clientModal');
+      const clientForm = document.getElementById('clientForm');
+      const cancelClientBtn = document.getElementById('cancelClientBtn');
+      const clientDetailModal = document.getElementById('clientDetailModal');
+      const clientTabs = document.getElementById('clientTabs');
+      const tabContents = document.querySelectorAll('.tab-content');
+      const reservationModal = document.getElementById('reservationModal');
+      const reservationForm = document.getElementById('reservationForm');
+      const cancelReservationBtn = document.getElementById('cancelReservationBtn');
+      const newReservationBtn = document.getElementById('newReservationBtn');
+      const searchInput = document.getElementById('searchInput');
+      const loyaltyFilter = document.getElementById('loyaltyFilter');
+      const statusFilter = document.getElementById('statusFilter');
+      const applyFiltersBtn = document.getElementById('applyFilters');
+      const saveClientChangesBtn = document.getElementById('saveClientChangesBtn');
+      const paginationBtns = document.querySelectorAll('.pagination-btn');
+
+      // Variables
+      let currentClientId = null;
+      let filteredData = [...clientsData];
+      let currentPage = 1;
+      const itemsPerPage = 10;
+
+      // Toggle sidebar
+      toggleSidebarBtn.addEventListener('click', function() {
+        sidebar.classList.toggle('sidebar-collapsed');
+        mainContent.classList.toggle('main-content-expanded');
+      });
+
+      // Render clients table
+      function renderClientsTable() {
+        clientsTableBody.innerHTML = '';
+        
+        if (filteredData.length === 0) {
+          clientsTableBody.innerHTML = `
+            <tr>
+              <td colspan="6" class="text-center py-4">No se encontraron clientes</td>
+            </tr>
+          `;
+          return;
+        }
+        
+        // Calculate pagination
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = Math.min(startIndex + itemsPerPage, filteredData.length);
+        const paginatedData = filteredData.slice(startIndex, endIndex);
+        
+        // Update pagination info
+        document.getElementById('itemsShowing').textContent = `${startIndex + 1}-${endIndex}`;
+        document.getElementById('totalItems').textContent = filteredData.length;
+        
+        paginatedData.forEach(client => {
+          const statusBadge = getStatusBadge(client.status);
+          const loyaltyBadge = getLoyaltyBadge(client.loyaltyLevel);
+          const fullName = `${client.firstName} ${client.lastName}`;
+          
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>
+              <div class="flex items-center">
+                <div class="avatar mr-3">${getInitials(fullName)}</div>
+                <div>
+                  <div class="font-medium">${fullName}</div>
+                  <div class="text-sm text-gray-500">${client.nationality === 'mexico' ? 'México' : client.nationality === 'usa' ? 'Estados Unidos' : client.nationality === 'canada' ? 'Canadá' : client.nationality === 'spain' ? 'España' : client.nationality}</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div>${client.email}</div>
+              <div class="text-sm text-gray-500">${client.phone}</div>
+            </td>
+            <td>${formatDate(client.lastStay)}</td>
+            <td>${loyaltyBadge}</td>
+            <td>${statusBadge}</td>
+            <td>
+              <div class="flex space-x-2">
+                <button class="btn btn-icon btn-outline view-client-btn" data-id="${client.id}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tooltip">
+                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <span class="tooltip-text">Ver</span>
+                  </svg>
+                </button>
+                <button class="btn btn-icon btn-outline edit-client-btn" data-id="${client.id}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tooltip">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+                    <path d="m15 5 4 4"></path>
+                    <span class="tooltip-text">Editar</span>
+                  </svg>
+                </button>
+                <button class="btn btn-icon btn-outline reservation-btn" data-id="${client.id}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tooltip">
+                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                    <path d="M3 9h18"></path>
+                    <path d="M9 21V9"></path>
+                    <span class="tooltip-text">Reservar</span>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          `;
+          
+          clientsTableBody.appendChild(row);
+        });
+        
+        // Add event listeners to buttons
+        document.querySelectorAll('.view-client-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const clientId = parseInt(this.getAttribute('data-id'));
+            openClientDetailModal(clientId);
+          });
+        });
+        
+        document.querySelectorAll('.edit-client-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const clientId = parseInt(this.getAttribute('data-id'));
+            openEditClientModal(clientId);
+          });
+        });
+        
+        document.querySelectorAll('.reservation-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const clientId = parseInt(this.getAttribute('data-id'));
+            openReservationModal(clientId);
+          });
+        });
+      }
+
+      // Get status badge HTML
+      function getStatusBadge(status) {
+        switch (status) {
+          case 'active':
+            return '<span class="badge badge-green">Activo</span>';
+          case 'inactive':
+            return '<span class="badge badge-yellow">Inactivo</span>';
+          case 'blacklisted':
+            return '<span class="badge badge-red">Lista Negra</span>';
+          default:
+            return '';
+        }
+      }
+
+      // Get loyalty badge HTML
+      function getLoyaltyBadge(level) {
+        switch (level) {
+          case 'bronze':
+            return '<span class="badge badge-gray">Bronce</span>';
+          case 'silver':
+            return '<span class="badge badge-gray">Plata</span>';
+          case 'gold':
+            return '<span class="badge badge-yellow">Oro</span>';
+          case 'platinum':
+            return '<span class="badge badge-purple">Platino</span>';
+          default:
+            return '<span class="badge badge-gray">Ninguno</span>';
+        }
+      }
+
+      // Get initials from name
+      function getInitials(name) {
+        return name
+          .split(' ')
+          .map(part => part.charAt(0))
+          .join('')
+          .toUpperCase()
+          .substring(0, 2);
+      }
+
+      // Format date
+      function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('es-ES');
+      }
+
+      // Open add client modal
+      function openAddClientModal() {
+        document.getElementById('modalTitle').textContent = 'Agregar Cliente';
+        clientForm.reset();
+        currentClientId = null;
+        clientModal.classList.add('active');
+      }
+
+      // Open edit client modal
+      function openEditClientModal(clientId) {
+        const client = clientsData.find(c => c.id === clientId);
+        if (!client) return;
+        
+        document.getElementById('modalTitle').textContent = 'Editar Cliente';
+        
+        document.getElementById('firstName').value = client.firstName;
+        document.getElementById('lastName').value = client.lastName;
+        document.getElementById('email').value = client.email;
+        document.getElementById('phone').value = client.phone;
+        document.getElementById('address').value = client.address;
+        document.getElementById('nationality').value = client.nationality;
+        document.getElementById('idNumber').value = client.idNumber;
+        
+        currentClientId = clientId;
+        clientModal.classList.add('active');
+      }
+
+      // Open client detail modal
+      function openClientDetailModal(clientId, activeTab = 'info') {
+        const client = clientsData.find(c => c.id === clientId);
+        if (!client) return;
+        
+        currentClientId = clientId;
+        
+        // Set client details
+        document.getElementById('clientDetailTitle').textContent = `${client.firstName} ${client.lastName}`;
+        document.getElementById('clientAvatar').textContent = getInitials(`${client.firstName} ${client.lastName}`);
+        document.getElementById('clientName').textContent = `${client.firstName} ${client.lastName}`;
+        document.getElementById('clientEmail').textContent = client.email;
+        document.getElementById('clientPhone').textContent = client.phone;
+        document.getElementById('clientAddress').textContent = client.address;
+        document.getElementById('clientNationality').textContent = client.nationality === 'mexico' ? 'México' : client.nationality === 'usa' ? 'Estados Unidos' : client.nationality === 'canada' ? 'Canadá' : client.nationality === 'spain' ? 'España' : client.nationality;
+        document.getElementById('clientIdNumber').textContent = client.idNumber;
+        
+        document.getElementById('clientFirstName').value = client.firstName;
+        document.getElementById('clientLastName').value = client.lastName;
+        document.getElementById('clientEmailInput').value = client.email;
+        document.getElementById('clientPhoneInput').value = client.phone;
+        document.getElementById('clientAddressInput').value = client.address;
+        document.getElementById('clientNationalityInput').value = client.nationality;
+        document.getElementById('clientIdNumberInput').value = client.idNumber;
+        document.getElementById('clientStatusInput').value = client.status;
+        
+        // Set active tab
+        document.querySelectorAll('.tab').forEach(tab => {
+          tab.classList.remove('active');
+        });
+        document.querySelectorAll('.tab-content').forEach(content => {
+          content.classList.remove('active');
+        });
+        
+        document.querySelector(`.tab[data-tab="${activeTab}"]`).classList.add('active');
+        document.getElementById(`${activeTab}Tab`).classList.add('active');
+        
+        clientDetailModal.classList.add('active');
+      }
+
+      // Open reservation modal
+      function openReservationModal(clientId) {
+        const client = clientsData.find(c => c.id === clientId);
+        if (!client) return;
+        
+        currentClientId = clientId;
+        
+        // Set default dates (today and today + 5 days)
+        const today = new Date();
+        const checkoutDate = new Date();
+        checkoutDate.setDate(today.getDate() + 5);
+        
+        document.getElementById('checkInDate').value = today.toISOString().split('T')[0];
+        document.getElementById('checkOutDate').value = checkoutDate.toISOString().split('T')[0];
+        
+        reservationModal.classList.add('active');
+      }
+
+      // Close modals
+      function closeClientModal() {
+        clientModal.classList.remove('active');
+      }
+      
+      function closeClientDetailModal() {
+        clientDetailModal.classList.remove('active');
+      }
+      
+      function closeReservationModal() {
+        reservationModal.classList.remove('active');
+      }
+
+      // Apply filters
+      function applyFilters() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const loyaltyValue = loyaltyFilter.value;
+        const statusValue = statusFilter.value;
+        
+        filteredData = clientsData.filter(client => {
+          const fullName = `${client.firstName} ${client.lastName}`.toLowerCase();
+          const matchesSearch = fullName.includes(searchTerm) || client.email.toLowerCase().includes(searchTerm) || client.phone.includes(searchTerm);
+          const matchesLoyalty = !loyaltyValue || client.loyaltyLevel === loyaltyValue;
+          const matchesStatus = !statusValue || client.status === statusValue;
+          
+          return matchesSearch && matchesLoyalty && matchesStatus;
+        });
+        
+        currentPage = 1;
+        renderClientsTable();
+      }
+
+      // Event Listeners
+      addClientBtn.addEventListener('click', openAddClientModal);
+      cancelClientBtn.addEventListener('click', closeClientModal);
+      cancelReservationBtn.addEventListener('click', closeReservationModal);
+      newReservationBtn.addEventListener('click', () => openReservationModal(currentClientId));
+      applyFiltersBtn.addEventListener('click', applyFilters);
+      
+      // Tab navigation
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+          const tabId = this.getAttribute('data-tab');
+          
+          document.querySelectorAll('.tab').forEach(t => {
+            t.classList.remove('active');
+          });
+          document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+          });
+          
+          this.classList.add('active');
+          document.getElementById(`${tabId}Tab`).classList.add('active');
+        });
+      });
+      
+      // Pagination
+      paginationBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const page = this.getAttribute('data-page');
+          
+          if (page === 'prev') {
+            if (currentPage > 1) {
+              currentPage--;
+            }
+          } else if (page === 'next') {
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+            if (currentPage < totalPages) {
+              currentPage++;
+            }
+          } else {
+            currentPage = parseInt(page);
+          }
+          
+          // Update active state
+          paginationBtns.forEach(b => {
+            b.classList.remove('active');
+            if (b.getAttribute('data-page') === currentPage.toString()) {
+              b.classList.add('active');
+            }
+          });
+          
+          renderClientsTable();
+        });
+      });
+      
+      // Save client changes
+      saveClientChangesBtn.addEventListener('click', function() {
+        const client = clientsData.find(c => c.id === currentClientId);
+        if (!client) return;
+        
+        client.firstName = document.getElementById('clientFirstName').value;
+        client.lastName = document.getElementById('clientLastName').value;
+        client.email = document.getElementById('clientEmailInput').value;
+        client.phone = document.getElementById('clientPhoneInput').value;
+        client.address = document.getElementById('clientAddressInput').value;
+        client.nationality = document.getElementById('clientNationalityInput').value;
+        client.idNumber = document.getElementById('clientIdNumberInput').value;
+        client.status = document.getElementById('clientStatusInput').value;
+        
+        // Update UI
+        document.getElementById('clientName').textContent = `${client.firstName} ${client.lastName}`;
+        document.getElementById('clientEmail').textContent = client.email;
+        document.getElementById('clientPhone').textContent = client.phone;
+        document.getElementById('clientAddress').textContent = client.address;
+        document.getElementById('clientNationality').textContent = client.nationality === 'mexico' ? 'México' : client.nationality === 'usa' ? 'Estados Unidos' : client.nationality === 'canada' ? 'Canadá' : client.nationality === 'spain' ? 'España' : client.nationality;
+        document.getElementById('clientIdNumber').textContent = client.idNumber;
+        document.getElementById('clientAvatar').textContent = getInitials(`${client.firstName} ${client.lastName}`);
+        
+        // Refresh table
+        renderClientsTable();
+        
+        alert('Cambios guardados correctamente');
+      });
+      
+      // Form submissions
+      clientForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(clientForm);
+        const clientData = {
+          firstName: formData.get('firstName'),
+          lastName: formData.get('lastName'),
+          email: formData.get('email'),
+          phone: formData.get('phone'),
+          address: formData.get('address'),
+          nationality: formData.get('nationality'),
+          idNumber: formData.get('idNumber'),
+          status: 'active',
+          loyaltyLevel: formData.get('loyaltyProgram') ? 'bronze' : 'none',
+          lastStay: null,
+          totalStays: 0
+        };
+        
+        if (currentClientId) {
+          // Edit existing client
+          const index = clientsData.findIndex(c => c.id === currentClientId);
+          if (index !== -1) {
+            clientsData[index] = { ...clientsData[index], ...clientData };
+          }
+        } else {
+          // Add new client
+          const newId = Math.max(...clientsData.map(c => c.id), 0) + 1;
+          clientsData.push({ id: newId, ...clientData });
+        }
+        
+        closeClientModal();
+        applyFilters(); // Re-apply filters and render table
+      });
+      
+      reservationForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Here you would normally save the reservation
+        
+        closeReservationModal();
+        alert('Reservación confirmada correctamente');
+      });
+
+      // Close modal buttons
+      document.querySelectorAll('.close-modal-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const modal = this.closest('.modal');
+          if (modal) {
+            modal.classList.remove('active');
+          }
+        });
+      });
+      
+      // Initialize
+      renderClientsTable();
+    });
+  </script>
+</body>
+</html>
+
