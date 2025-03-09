@@ -1,638 +1,290 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel ERP Sales Interface</title>
+    <title>Hotel ERP - Sistema de Ventas</title>
     <script src="Ventas.js"></script>
     <link rel="stylesheet" href="Ventas.css">
+    <!-- Iconos de Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
-<style>
-    /* Base styles */
-:root {
-  --primary-color: #4f46e5;
-  --primary-hover: #4338ca;
-  --border-color: #e5e7eb;
-  --text-color: #111827;
-  --text-muted: #6b7280;
-  --bg-color: #ffffff;
-  --bg-muted: #f9fafb;
-  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  --radius: 0.375rem;
-}
-
-/* Global styles */
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  color: var(--text-color);
-  line-height: 1.5;
-  background-color: #f3f4f6;
-  margin: 0;
-  padding: 0;
-}
-
-/* Container */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-}
-
-/* App title */
-.app-title {
-  font-size: 1.875rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-/* Card */
-.card {
-  background-color: var(--bg-color);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-
-.card-header {
-  padding: 1.5rem;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.card-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 0 0 0.5rem 0;
-}
-
-.card-description {
-  color: var(--text-muted);
-  margin: 0;
-}
-
-.card-content {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.card-footer {
-  padding: 1.5rem;
-  border-top: 1px solid var(--border-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Form elements */
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-label {
-  font-weight: 500;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius);
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  background-color: var(--bg-color);
-  border: 1px solid var(--border-color);
-  transition: background-color 0.2s, border-color 0.2s;
-}
-
-.btn:hover {
-  background-color: var(--bg-muted);
-}
-
-.btn-primary {
-  background-color: var(--primary-color);
-  color: white;
-  border: 1px solid var(--primary-color);
-}
-
-.btn-primary:hover {
-  background-color: var(--primary-hover);
-}
-
-.btn-outline {
-  background-color: transparent;
-  border: 1px solid var(--border-color);
-}
-
-.btn-outline:hover {
-  background-color: var(--bg-muted);
-}
-
-.btn-quantity {
-  width: 24px;
-  height: 24px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius);
-  border: 1px solid var(--border-color);
-  background-color: var(--bg-color);
-  cursor: pointer;
-}
-
-.btn-remove {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
-}
-
-.btn-remove:hover {
-  text-decoration: underline;
-}
-
-/* Nights control */
-.nights-control {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.input-nights {
-  width: 60px;
-  text-align: center;
-  padding: 0.5rem;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-}
-
-.nights-cost {
-  margin-left: 1rem;
-  color: var(--text-muted);
-}
-
-/* Services grid */
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-}
-
-.service-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.service-checkbox {
-  width: 1rem;
-  height: 1rem;
-}
-
-.service-label {
-  font-weight: normal;
-}
-
-/* Products control */
-.products-control {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.product-select {
-  flex: 1;
-  padding: 0.5rem;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-}
-
-.product-note {
-  margin-left: 1rem;
-  color: var(--text-muted);
-  font-size: 0.875rem;
-}
-
-/* Products table */
-.products-table-container {
-  margin-top: 1rem;
-}
-
-.products-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.products-table th,
-.products-table td {
-  padding: 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.products-table th {
-  font-weight: 600;
-  background-color: var(--bg-muted);
-}
-
-.quantity-control {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* Total display */
-.total-display {
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .products-control {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .product-select {
-    width: 100%;
-  }
-
-  .product-note {
-    margin-left: 0;
-    margin-top: 0.5rem;
-  }
-
-  .nights-control {
-    flex-wrap: wrap;
-  }
-
-  .nights-cost {
-    margin-left: 0;
-    margin-top: 0.5rem;
-    width: 100%;
-  }
-
-  .card-footer {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .total-display {
-    width: 100%;
-  }
-}
-
-
-</style>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-    // Available services
-    const availableServices = [
-      { id: "spa", name: "Servicio de Spa", price: 50 },
-      { id: "transport", name: "Transporte al Aeropuerto", price: 30 },
-      { id: "laundry", name: "Servicio de Lavandería", price: 20 },
-      { id: "gym", name: "Acceso al Gimnasio", price: 15 },
-      { id: "tour", name: "Tour Guiado", price: 45 },
-    ]
-  
-    // Available products
-    const availableProducts = [
-      { id: "soap", name: "Jabón de Lujo", price: 5, category: "toiletry" },
-      { id: "shampoo", name: "Champú Premium", price: 7, category: "toiletry" },
-      { id: "toothbrush", name: "Kit de Cepillo de Dientes", price: 4, category: "toiletry" },
-      { id: "towel", name: "Toalla Extra", price: 3, category: "toiletry" },
-      { id: "slippers", name: "Pantuflas de Hotel", price: 8, category: "toiletry" },
-      { id: "breakfast", name: "Desayuno", price: 15, category: "food" },
-      { id: "lunch", name: "Almuerzo", price: 25, category: "food" },
-      { id: "dinner", name: "Cena", price: 30, category: "food" },
-      { id: "snack", name: "Caja de Snacks", price: 10, category: "food" },
-      { id: "minibar", name: "Artículos de Minibar", price: 12, category: "food" },
-    ]
-  
-    // Night rate
-    const nightRate = 100
-  
-    // State variables
-    let nights = 1
-    let selectedServices = []
-    let selectedProducts = []
-    let total = 0
-  
-    // Initialize UI
-    initializeUI()
-  
-    function initializeUI() {
-      // Populate services
-      const servicesContainer = document.getElementById("services-container")
-      availableServices.forEach((service) => {
-        const serviceElement = document.createElement("div")
-        serviceElement.className = "service-item"
-        serviceElement.innerHTML = `
-          <input type="checkbox" id="service-${service.id}" class="service-checkbox">
-          <label for="service-${service.id}" class="service-label">
-            ${service.name} ($${service.price})
-          </label>
-        `
-        servicesContainer.appendChild(serviceElement)
-      })
-  
-      // Populate product options
-      const productSelect = document.getElementById("product-select")
-      availableProducts.forEach((product) => {
-        const option = document.createElement("option")
-        option.value = product.id
-        option.textContent = `${product.name} ($${product.price})`
-        productSelect.appendChild(option)
-      })
-  
-      // Add event listeners
-      setupEventListeners()
-  
-      // Initial calculation
-      calculateTotal()
-    }
-  
-    function setupEventListeners() {
-      // Nights controls
-      document.getElementById("decrease-nights").addEventListener("click", () => {
-        if (nights > 1) {
-          nights--
-          document.getElementById("nights-input").value = nights
-          updateNightsCost()
-          calculateTotal()
-        }
-      })
-  
-      document.getElementById("increase-nights").addEventListener("click", () => {
-        nights++
-        document.getElementById("nights-input").value = nights
-        updateNightsCost()
-        calculateTotal()
-      })
-  
-      document.getElementById("nights-input").addEventListener("change", (e) => {
-        const value = Number.parseInt(e.target.value) || 1
-        nights = Math.max(1, value)
-        e.target.value = nights
-        updateNightsCost()
-        calculateTotal()
-      })
-  
-      // Services checkboxes
-      const serviceCheckboxes = document.querySelectorAll(".service-checkbox")
-      serviceCheckboxes.forEach((checkbox) => {
-        checkbox.addEventListener("change", (e) => {
-          const serviceId = e.target.id.replace("service-", "")
-          if (e.target.checked) {
-            selectedServices.push(serviceId)
-          } else {
-            selectedServices = selectedServices.filter((id) => id !== serviceId)
-          }
-          calculateTotal()
-        })
-      })
-  
-      // Add product button
-      document.getElementById("add-product").addEventListener("click", () => {
-        const productSelect = document.getElementById("product-select")
-        const productId = productSelect.value
-  
-        if (productId) {
-          addProduct(productId)
-          productSelect.value = ""
-          renderProductsTable()
-          calculateTotal()
-        }
-      })
-  
-      // Submit button
-      document.getElementById("submit-sale").addEventListener("click", submitSale)
-    }
-  
-    function updateNightsCost() {
-      const nightsCost = nights * nightRate
-      document.getElementById("nights-cost").textContent = `$${nightRate} por noche × ${nights} noches = $${nightsCost}`
-    }
-  
-    function addProduct(productId) {
-      const product = availableProducts.find((p) => p.id === productId)
-      if (!product) return
-  
-      const existingProduct = selectedProducts.find((p) => p.id === productId)
-      if (existingProduct) {
-        existingProduct.quantity += 1
-      } else {
-        selectedProducts.push({
-          ...product,
-          quantity: 1,
-        })
-      }
-    }
-  
-    function removeProduct(productId) {
-      const existingProduct = selectedProducts.find((p) => p.id === productId)
-      if (existingProduct) {
-        if (existingProduct.quantity > 1) {
-          existingProduct.quantity -= 1
-        } else {
-          selectedProducts = selectedProducts.filter((p) => p.id !== productId)
-        }
-        renderProductsTable()
-        calculateTotal()
-      }
-    }
-  
-    function deleteProduct(productId) {
-      selectedProducts = selectedProducts.filter((p) => p.id !== productId)
-      renderProductsTable()
-      calculateTotal()
-    }
-  
-    function renderProductsTable() {
-      const container = document.getElementById("products-table-container")
-  
-      if (selectedProducts.length === 0) {
-        container.innerHTML = ""
-        return
-      }
-  
-      container.innerHTML = `
-        <table class="products-table">
-          <thead>
-            <tr>
-              <th>Producto</th>
-              <th>Precio</th>
-              <th>Cantidad</th>
-              <th>Subtotal</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="products-table-body">
-            <!-- Product rows will be added here -->
-          </tbody>
-        </table>
-      `
-  
-      const tableBody = document.getElementById("products-table-body")
-      selectedProducts.forEach((product) => {
-        const row = document.createElement("tr")
-        row.innerHTML = `
-          <td>${product.name}</td>
-          <td>$${product.price}</td>
-          <td>
-            <div class="quantity-control">
-              <button type="button" class="btn-quantity decrease-quantity" data-id="${product.id}">-</button>
-              <span>${product.quantity}</span>
-              <button type="button" class="btn-quantity increase-quantity" data-id="${product.id}">+</button>
-            </div>
-          </td>
-          <td>$${product.price * product.quantity}</td>
-          <td>
-            <button type="button" class="btn-remove" data-id="${product.id}">Eliminar</button>
-          </td>
-        `
-        tableBody.appendChild(row)
-      })
-  
-      // Add event listeners for quantity buttons
-      document.querySelectorAll(".decrease-quantity").forEach((button) => {
-        button.addEventListener("click", (e) => {
-          const productId = e.target.getAttribute("data-id")
-          removeProduct(productId)
-        })
-      })
-  
-      document.querySelectorAll(".increase-quantity").forEach((button) => {
-        button.addEventListener("click", (e) => {
-          const productId = e.target.getAttribute("data-id")
-          addProduct(productId)
-        })
-      })
-  
-      document.querySelectorAll(".btn-remove").forEach((button) => {
-        button.addEventListener("click", (e) => {
-          const productId = e.target.getAttribute("data-id")
-          deleteProduct(productId)
-        })
-      })
-    }
-  
-    function calculateTotal() {
-      // Nights cost
-      const nightsCost = nights * nightRate
-  
-      // Services cost
-      const servicesCost = selectedServices.reduce((sum, serviceId) => {
-        const service = availableServices.find((s) => s.id === serviceId)
-        return sum + (service ? service.price : 0)
-      }, 0)
-  
-      // Products cost
-      const productsCost = selectedProducts.reduce((sum, product) => {
-        return sum + product.price * product.quantity
-      }, 0)
-  
-      total = nightsCost + servicesCost + productsCost
-      document.getElementById("total-display").textContent = `Total: $${total}`
-    }
-  
-    function submitSale() {
-      // Prepare sale data
-      const saleData = {
-        nights,
-        nightRate,
-        services: selectedServices.map((id) => availableServices.find((s) => s.id === id)),
-        products: selectedProducts,
-        total,
-      }
-  
-      console.log("Venta enviada:", saleData)
-      alert("¡La venta ha sido creada exitosamente!")
-  
-      // Reset form
-      nights = 1
-      selectedServices = []
-      selectedProducts = []
-  
-      // Update UI
-      document.getElementById("nights-input").value = nights
-      updateNightsCost()
-  
-      const serviceCheckboxes = document.querySelectorAll(".service-checkbox")
-      serviceCheckboxes.forEach((checkbox) => {
-        checkbox.checked = false
-      })
-  
-      renderProductsTable()
-      calculateTotal()
-    }
-  })
-  
-  
-</script>
 <body>
-    <div class="container">
-        <h1 class="app-title">Hotel ERP Sales Interface</h1>
-        
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">Nueva Venta</h2>
-                <p class="card-description">Crea una nueva venta para alojamiento, servicios y productos</p>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class='bx bx-building-house'></i>
+                <span>Hotel ERP</span>
             </div>
             
-            <div class="card-content">
-                <!-- Nights Selection -->
-                <div class="form-group">
-                    <label for="nights">Número de Noches</label>
-                    <div class="nights-control">
-                        <button type="button" id="decrease-nights" class="btn btn-outline">-</button>
-                        <input type="number" id="nights-input" min="1" value="1" class="input-nights">
-                        <button type="button" id="increase-nights" class="btn btn-outline">+</button>
-                        <span id="nights-cost" class="nights-cost">$100 por noche × 1 noches = $100</span>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item">
+                    <i class='bx bx-grid-alt'></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class='bx bx-package'></i>
+                    <span>Inventario</span>
+                </a>
+                <a href="#" class="nav-item active">
+                    <i class='bx bx-cart'></i>
+                    <span>Ventas</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class='bx bx-user'></i>
+                    <span>Huéspedes</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class='bx bx-calendar'></i>
+                    <span>Reservaciones</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class='bx bx-bar-chart'></i>
+                    <span>Reportes</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class='bx bx-cog'></i>
+                    <span>Configuración</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <i class='bx bx-menu'></i>
+                </button>
+                
+                <div class="header-right">
+                    <div class="notifications">
+                        <i class='bx bx-bell'></i>
+                        <span class="notification-badge">2</span>
+                    </div>
+                    <div class="admin-profile">
+                        <img src="https://via.placeholder.com/32" alt="Admin" class="admin-avatar">
+                        <span>Admin</span>
                     </div>
                 </div>
+            </header>
 
-                <!-- Services Selection -->
-                <div class="form-group">
-                    <label>Servicios Adicionales</label>
-                    <div class="services-grid" id="services-container">
-                        <!-- Services will be added here by JavaScript -->
+            <!-- Page Content -->
+            <div class="container">
+                <h1 class="app-title">Hotel ERP Sales Interface</h1>
+                <button id="add-sale" class="btn btn-primary">
+                    <i class='bx bx-plus'></i>
+                    Nueva Venta
+                </button>
+            </div>
+            
+            <!-- Modal Nueva Venta -->
+            <div id="sales-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Nueva Venta</h2>
+                        <button id="close-modal" class="close-button">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="card-description">Crea una nueva venta para alojamiento, servicios y productos</p>
+                        
+                        <div class="form-group">
+                            <label for="nights">Número de Noches</label>
+                            <div class="nights-control">
+                                <button type="button" id="decrease-nights" class="btn btn-outline">-</button>
+                                <input type="number" id="nights-input" min="1" value="1" class="input-nights">
+                                <button type="button" id="increase-nights" class="btn btn-outline">+</button>
+                                <span id="nights-cost" class="nights-cost">$100 por noche × 1 noches = $100</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Servicios Adicionales</label>
+                            <div class="services-grid" id="services-container"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Productos</label>
+                            <div class="products-control">
+                                <select id="product-select" class="product-select">
+                                    <option value="">Seleccionar un producto</option>
+                                </select>
+                                <button type="button" id="add-product" class="btn">Agregar</button>
+                            </div>
+                            <div id="products-table-container" class="products-table-container"></div>
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <div id="total-display" class="total-display">Total: $100</div>
+                            <button type="button" id="submit-sale" class="btn btn-primary">Crear Venta</button>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Products Selection -->
-                <div class="form-group">
-                    <label>Productos</label>
-                    <div class="products-control">
-                        <select id="product-select" class="product-select">
-                            <option value="">Seleccionar un producto</option>
-                            <!-- Product options will be added here by JavaScript -->
-                        </select>
-                        <button type="button" id="add-product" class="btn">Agregar</button>
-                        <p class="product-note">Cada noche incluye 5 productos (artículos de aseo y comida)</p>
+            </div>
+            <script src="AccionVenta.js"></script>
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class='bx bx-dollar'></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Ventas Totales</span>
+                            <span class="stat-value">$24,850</span>
+                        </div>
                     </div>
                     
-                    <div id="products-table-container" class="products-table-container">
-                        <!-- Products table will be added here when products are selected -->
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i class='bx bx-calendar-check'></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Ventas del Mes</span>
+                            <span class="stat-value">32</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon purple">
+                            <i class='bx bx-time'></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Ventas Pendientes</span>
+                            <span class="stat-value">5</span>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Filters -->
+                <div class="filters">
+                    <div class="search-box">
+                        <i class='bx bx-search'></i>
+                        <input type="text" id="search-input" placeholder="Buscar venta...">
+                    </div>
+                    
+                    <div class="filter-group">
+                        <select id="status-filter">
+                            <option value="">Todos los estados</option>
+                            <option value="completed">Completada</option>
+                            <option value="pending">Pendiente</option>
+                            <option value="cancelled">Cancelada</option>
+                        </select>
+                        
+                        <input type="date" id="date-filter" class="date-filter">
+                        
+                        <button class="btn btn-outline" id="filter-button">
+                            <i class='bx bx-filter-alt'></i>
+                            Filtrar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sales Table -->
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID <i class='bx bx-sort'></i></th>
+                                <th>Cliente <i class='bx bx-sort'></i></th>
+                                <th>Fecha <i class='bx bx-sort'></i></th>
+                                <th>Noches</th>
+                                <th>Total <i class='bx bx-sort'></i></th>
+                                <th>Estado <i class='bx bx-sort'></i></th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sales-table-body">
+                            <!-- Table content will be added by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            
-            <div class="card-footer">
-                <div id="total-display" class="total-display">Total: $100</div>
-                <button type="button" id="submit-sale" class="btn btn-primary">Crear Venta</button>
+        </main>
+    </div>
+
+    <!-- Modal for Add/Edit Sale -->
+    <div id="sale-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Nueva Venta</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="sale-form">
+                    <div class="form-group">
+                        <label for="customer-name">Nombre del Cliente</label>
+                        <input type="text" id="customer-name" required>
+                    </div>
+                    
+                    <!-- Nights Selection -->
+                    <div class="form-group">
+                        <label for="nights">Número de Noches</label>
+                        <div class="nights-control">
+                            <button type="button" id="decrease-nights" class="btn btn-outline">-</button>
+                            <input type="number" id="nights-input" min="1" value="1" class="input-nights">
+                            <button type="button" id="increase-nights" class="btn btn-outline">+</button>
+                            <span id="nights-cost" class="nights-cost">$100 por noche × 1 noches = $100</span>
+                        </div>
+                    </div>
+
+                    <!-- Services Selection -->
+                    <div class="form-group">
+                        <label>Servicios Adicionales</label>
+                        <div class="services-grid" id="services-container">
+                            <!-- Services will be added here by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Products Selection -->
+                    <div class="form-group">
+                        <label>Productos</label>
+                        <div class="products-control">
+                            <select id="product-select" class="product-select">
+                                <option value="">Seleccionar un producto</option>
+                                <!-- Product options will be added here by JavaScript -->
+                            </select>
+                            <button type="button" id="add-product" class="btn">Agregar</button>
+                            <p class="product-note">Cada noche incluye 5 productos (artículos de aseo y comida)</p>
+                        </div>
+                        
+                        <div id="products-table-container" class="products-table-container">
+                            <!-- Products table will be added here when products are selected -->
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="payment-method">Método de Pago</label>
+                        <select id="payment-method" required>
+                            <option value="cash">Efectivo</option>
+                            <option value="credit">Tarjeta de Crédito</option>
+                            <option value="debit">Tarjeta de Débito</option>
+                            <option value="transfer">Transferencia</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div id="total-display" class="total-display">Total: $100</div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline" id="cancel-sale">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar Venta</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for View Sale Details -->
+    <div id="view-sale-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detalles de Venta</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="sale-details-container">
+                <!-- Sale details will be added here by JavaScript -->
             </div>
         </div>
     </div>
