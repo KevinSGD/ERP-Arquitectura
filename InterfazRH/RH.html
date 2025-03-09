@@ -10,491 +10,198 @@
 
 </head>
 <body>
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <div class="p-4 flex items-center border-b border-blue-800">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
-        <path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Z"></path>
-        <path d="m9 16 .348-.24c1.465-1.013 3.84-1.013 5.304 0L15 16"></path>
-        <path d="M8 7h.01"></path>
-        <path d="M16 7h.01"></path>
-        <path d="M12 7h.01"></path>
-        <path d="M12 11h.01"></path>
-        <path d="M16 11h.01"></path>
-        <path d="M8 11h.01"></path>
-        <path d="M10 22v-6.5m4 0V22"></path>
-      </svg>
-      <h1 class="text-lg font-bold">Hotel ERP</h1>
-    </div>
-    <nav class="mt-4">
-      <a href="#" class="nav-link">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="p-4 flex items-center border-b border-blue-800">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+          <path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Z"></path>
+          <path d="m9 16 .348-.24c1.465-1.013 3.84-1.013 5.304 0L15 16"></path>
+          <path d="M8 7h.01"></path>
+          <path d="M16 7h.01"></path>
+          <path d="M12 7h.01"></path>
+          <path d="M12 11h.01"></path>
+          <path d="M16 11h.01"></path>
+          <path d="M8 11h.01"></path>
+          <path d="M10 22v-6.5m4 0V22"></path>
         </svg>
-        Dashboard
-      </a>
-      <a href="#" class="nav-link">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 7h-9"></path>
-          <path d="M14 17H5"></path>
-          <circle cx="17" cy="17" r="3"></circle>
-          <circle cx="7" cy="7" r="3"></circle>
-        </svg>
-        Inventario
-      </a>
-      <a href="#" class="nav-link active">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-          <circle cx="9" cy="7" r="4"></circle>
-          <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-        </svg>
-        Recursos Humanos
-      </a>
-      <a href="#" class="nav-link">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
-          <line x1="3" x2="21" y1="9" y2="9"></line>
-          <line x1="9" x2="9" y1="21" y2="9"></line>
-        </svg>
-        Reservaciones
-      </a>
-      <a href="#" class="nav-link">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-          <path d="M14 2v6h6"></path>
-          <path d="M16 13H8"></path>
-          <path d="M16 17H8"></path>
-          <path d="M10 9H8"></path>
-        </svg>
-        Reportes
-      </a>
-      <a href="#" class="nav-link">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="3"></circle>
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z"></path>
-        </svg>
-        Configuración
-      </a>
-    </nav>
-  </div>
-
-  <!-- Main Content -->
-  <div class="main-content" id="mainContent">
-    <!-- Header -->
-    <header class="bg-white shadow-sm">
-      <div class="flex items-center justify-between p-4">
-        <button id="toggleSidebar" class="p-1 rounded-md hover:bg-gray-100">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="3" x2="21" y1="6" y2="6"></line>
-            <line x1="3" x2="21" y1="12" y2="12"></line>
-            <line x1="3" x2="21" y1="18" y2="18"></line>
+        <h1 class="text-lg font-bold">Hotel ERP</h1>
+      </div>
+      <nav class="mt-4">
+        <a href="#" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
           </svg>
-        </button>
-        <div class="flex items-center">
-          <div class="relative mr-4">
-            <button class="p-1 rounded-full hover:bg-gray-100 relative">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-              </svg>
-              <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-            </button>
-          </div>
-          <div class="flex items-center">
-            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="w-8 h-8 rounded-full mr-2">
-            <span class="font-medium">Admin</span>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- Content -->
-    <main class="p-6">
-      <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold">Gestión de Recursos Humanos</h1>
-        <button id="addEmployeeBtn" class="btn btn-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
-            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-            <circle cx="8.5" cy="7" r="4"></circle>
-            <line x1="20" x2="20" y1="8" y2="14"></line>
-            <line x1="23" x2="17" y1="11" y2="11"></line>
+          Dashboard
+        </a>
+        <a href="#" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 7h-9"></path>
+            <path d="M14 17H5"></path>
+            <circle cx="17" cy="17" r="3"></circle>
+            <circle cx="7" cy="7" r="3"></circle>
           </svg>
-          Agregar Empleado
-        </button>
-      </div>
-
-      <!-- Stats Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-        <div class="card p-4">
-          <div class="flex items-center">
-            <div class="p-3 rounded-full bg-blue-100 text-blue-800 mr-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                <circle cx="9" cy="7" r="4"></circle>
-                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-              </svg>
-            </div>
-            <div>
-              <p class="text-sm text-gray-500">Total Empleados</p>
-              <h2 class="text-xl font-bold">48</h2>
-            </div>
-          </div>
-        </div>
-        <div class="card p-4">
-          <div class="flex items-center">
-            <div class="p-3 rounded-full bg-green-100 text-green-800 mr-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
-            </div>
-            <div>
-              <p class="text-sm text-gray-500">Activos</p>
-              <h2 class="text-xl font-bold">42</h2>
-            </div>
-          </div>
-        </div>
-        <div class="card p-4">
-          <div class="flex items-center">
-            <div class="p-3 rounded-full bg-yellow-100 text-yellow-800 mr-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 11.5V9a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v1.4"></path>
-                <path d="M14 10V8a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"></path>
-                <path d="M10 9.9V9a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v5"></path>
-                <path d="M6 14v0a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"></path>
-                <path d="M18 11v0a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-4a8 8 0 0 1-8-8 2 2 0 1 1 4 0"></path>
-              </svg>
-            </div>
-            <div>
-              <p class="text-sm text-gray-500">Descansando</p>
-              <h2 class="text-xl font-bold">4</h2>
-            </div>
-          </div>
-        </div>
-        <div class="card p-4">
-          <div class="flex items-center">
-            <div class="p-3 rounded-full bg-red-100 text-red-800 mr-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 16v2a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"></path>
-                <path d="M15 9H9.5a3.5 3.5 0 0 0 0 7h.5"></path>
-                <path d="m21 15-3-3 3-3"></path>
-              </svg>
-            </div>
-            <div>
-              <p class="text-sm text-gray-500">Despedidos</p>
-              <h2 class="text-xl font-bold">2</h2>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Filters -->
-      <div class="card p-4 mb-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div>
-            <label for="searchInput" class="block text-sm font-medium text-gray-700 mb-1">Buscar</label>
-            <input type="text" id="searchInput" placeholder="Buscar empleado..." class="form-input">
-          </div>
-          <div>
-            <label for="departmentFilter" class="block text-sm font-medium text-gray-700 mb-1">Departamento</label>
-            <select id="departmentFilter" class="form-select">
-              <option value="">Todos los departamentos</option>
-              <option value="recepcion">Recepción</option>
-              <option value="limpieza">Limpieza</option>
-              <option value="cocina">Cocina</option>
-              <option value="restaurante">Restaurante</option>
-              <option value="mantenimiento">Mantenimiento</option>
-              <option value="administracion">Administración</option>
-            </select>
-          </div>
-          <div>
-            <label for="statusFilter" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-            <select id="statusFilter" class="form-select">
-              <option value="">Todos los estados</option>
-              <option value="activo">Activo</option>
-              <option value="descansando">Descansando</option>
-              <option value="despedido">Despedido</option>
-            </select>
-          </div>
-          <div class="flex items-end">
-            <button id="applyFilters" class="btn btn-outline w-full">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
-                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-              </svg>
-              Filtrar
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Employees Table -->
-      <div class="card overflow-hidden mb-6">
-        <div class="overflow-x-auto">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Empleado</th>
-                <th>Departamento</th>
-                <th>Puesto</th>
-                <th>Fecha Contratación</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="employeesTableBody">
-              <!-- Table rows will be populated by JavaScript -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <!-- Employee Detail Modal -->
-  <div class="modal modal-lg" id="employeeDetailModal">
-    <div class="modal-content">
-      <div class="p-4 border-b">
-        <h2 class="text-lg font-bold" id="employeeDetailTitle">Detalles del Empleado</h2>
-      </div>
-      <div class="tabs" id="employeeTabs">
-        <div class="tab active" data-tab="info">Información</div>
-        <div class="tab" data-tab="contract">Contrato</div>
-        <div class="tab" data-tab="payroll">Nómina</div>
-      </div>
-      <div class="tab-content active" id="infoTab">
-        <div class="p-4">
-          <div class="flex flex-col md:flex-row gap-6">
-            <div class="md:w-1/3">
-              <div class="flex flex-col items-center">
-                <div class="avatar avatar-lg mb-4" id="employeeAvatar">JD</div>
-                <h3 class="text-lg font-bold mb-1" id="employeeName">Juan Pérez</h3>
-                <p class="text-sm text-gray-500 mb-4" id="employeePosition">Recepcionista</p>
-                <div class="w-full">
-                  <div class="flex justify-between text-sm mb-1">
-                    <span>Rendimiento</span>
-                    <span id="employeePerformance">85%</span>
-                  </div>
-                  <div class="progress mb-4">
-                    <div class="progress-bar" id="employeePerformanceBar" style="width: 85%;"></div>
-                  </div>
-                </div>
-                <div class="w-full space-y-2">
-                  <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500">
-                      <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                    </svg>
-                    <span id="employeeEmail">juan.perez@hotel.com</span>
-                  </div>
-                  <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500">
-                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                    </svg>
-                    <span id="employeePhone">+52 123 456 7890</span>
-                  </div>
-                  <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500">
-                      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
-                      <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
-                    <span id="employeeAddress">Av. Principal #123, Ciudad</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="md:w-2/3">
-              <div class="grid grid-cols-2 gap-4 mb-6">
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Departamento</label>
-                  <select id="employeeDepartment" class="form-select">
-                    <option value="recepcion">Recepción</option>
-                    <option value="limpieza">Limpieza</option>
-                    <option value="cocina">Cocina</option>
-                    <option value="restaurante">Restaurante</option>
-                    <option value="mantenimiento">Mantenimiento</option>
-                    <option value="administracion">Administración</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Puesto</label>
-                  <select id="employeeRole" class="form-select">
-                    <option value="recepcionista">Recepcionista</option>
-                    <option value="camarero">Camarero/a</option>
-                    <option value="cocinero">Cocinero/a</option>
-                    <option value="mesero">Mesero/a</option>
-                    <option value="mantenimiento">Técnico de Mantenimiento</option>
-                    <option value="gerente">Gerente</option>
-                    <option value="administrativo">Administrativo</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-                  <select id="employeeStatus" class="form-select">
-                    <option value="activo">Activo</option>
-                    <option value="descansando">Descansando</option>
-                    <option value="despedido">Despedido</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Fecha de Contratación</label>
-                  <input type="date" id="employeeHireDate" class="form-input">
-                </div>
-              </div>
-              <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Notas</label>
-                <textarea id="employeeNotes" rows="4" class="form-input"></textarea>
-              </div>
-              <div class="flex justify-end space-x-2">
-                <button id="saveEmployeeChangesBtn" class="btn btn-primary">Guardar Cambios</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tab-content" id="contractTab">
-        <div class="p-4">
-          <div class="flex justify-between mb-4">
-            <h3 class="text-lg font-medium">Contratos</h3>
-            <button id="generateContractBtn" class="btn btn-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <path d="M14 2v6h6"></path>
-                <path d="M16 13H8"></path>
-                <path d="M16 17H8"></path>
-                <path d="M10 9H8"></path>
-              </svg>
-              Generar Contrato
-            </button>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Tipo</th>
-                  <th>Fecha Inicio</th>
-                  <th>Fecha Fin</th>
-                  <th>Estado</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody id="contractsTableBody">
-                <!-- Contracts will be populated by JavaScript -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="tab-content" id="payrollTab">
-        <div class="p-4">
-          <h3 class="text-lg font-medium mb-4">Información de Nómina</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <div class="payroll-card">
-                <h4 class="font-medium mb-2">Detalles de Salario</h4>
-                <div class="payroll-item">
-                  <span>Salario Base</span>
-                  <span id="baseSalary">$15,000.00</span>
-                </div>
-                <div class="payroll-item">
-                  <span>Bonificaciones</span>
-                  <span id="bonuses">$2,000.00</span>
-                </div>
-                <div class="payroll-item">
-                  <span>Horas Extra</span>
-                  <span id="overtime">$1,200.00</span>
-                </div>
-                <div class="payroll-total">
-                  <span>Total Bruto</span>
-                  <span id="grossTotal">$18,200.00</span>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div class="payroll-card">
-                <h4 class="font-medium mb-2">Deducciones</h4>
-                <div class="payroll-item">
-                  <span>Impuestos</span>
-                  <span id="taxes">$2,730.00</span>
-                </div>
-                <div class="payroll-item">
-                  <span>Seguro Social</span>
-                  <span id="socialSecurity">$910.00</span>
-                </div>
-                <div class="payroll-item">
-                  <span>Otras Deducciones</span>
-                  <span id="otherDeductions">$500.00</span>
-                </div>
-                <div class="payroll-total">
-                  <span>Total Neto</span>
-                  <span id="netTotal">$14,060.00</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="mt-6">
-            <h4 class="font-medium mb-2">Historial de Pagos</h4>
-            <div class="overflow-x-auto">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Periodo</th>
-                    <th>Fecha de Pago</th>
-                    <th>Monto Bruto</th>
-                    <th>Deducciones</th>
-                    <th>Monto Neto</th>
-                  </tr>
-                </thead>
-                <tbody id="paymentsTableBody">
-                  <!-- Payments will be populated by JavaScript -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+          Inventario
+        </a>
+        <a href="#" class="nav-link active">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          Recursos Humanos
+        </a>
+        <a href="#" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+            <line x1="3" x2="21" y1="9" y2="9"></line>
+            <line x1="9" x2="9" y1="21" y2="9"></line>
+          </svg>
+          Reservaciones
+        </a>
+        <a href="#" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <path d="M14 2v6h6"></path>
+            <path d="M16 13H8"></path>
+            <path d="M16 17H8"></path>
+            <path d="M10 9H8"></path>
+          </svg>
+          Reportes
+        </a>
+        <a href="#" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z"></path>
+          </svg>
+          Configuración
+        </a>
+      </nav>
     </div>
-  </div>
-
-  <!-- Add/Edit Employee Modal -->
-  <div class="modal" id="employeeModal">
-    <div class="modal-content">
-      <div class="p-4 border-b">
-        <h2 class="text-lg font-bold" id="modalTitle">Agregar Empleado</h2>
-      </div>
-      <form id="employeeForm">
-        <div class="p-4 space-y-4">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-              <input type="text" id="firstName" name="firstName" class="form-input" required>
+  
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+      <!-- Header -->
+      <header class="bg-white shadow-sm">
+        <div class="flex items-center justify-between p-4">
+          <button id="toggleSidebar" class="p-1 rounded-md hover:bg-gray-100">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" x2="21" y1="6" y2="6"></line>
+              <line x1="3" x2="21" y1="12" y2="12"></line>
+              <line x1="3" x2="21" y1="18" y2="18"></line>
+            </svg>
+          </button>
+          <div class="flex items-center">
+            <div class="relative mr-4">
+              <button class="p-1 rounded-full hover:bg-gray-100 relative">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                  <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+                </svg>
+                <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+              </button>
             </div>
-            <div>
-              <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
-              <input type="text" id="lastName" name="lastName" class="form-input" required>
-            </div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
-              <input type="email" id="email" name="email" class="form-input" required>
-            </div>
-            <div>
-              <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
-              <input type="tel" id="phone" name="phone" class="form-input" required>
+            <div class="flex items-center">
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="w-8 h-8 rounded-full mr-2">
+              <span class="font-medium">Admin</span>
             </div>
           </div>
-          <div>
-            <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
-            <input type="text" id="address" name="address" class="form-input" required>
+        </div>
+      </header>
+  
+      <!-- Content -->
+      <main class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h1 class="text-2xl font-bold">Gestión de Recursos Humanos</h1>
+          <button id="addEmployeeBtn" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="8.5" cy="7" r="4"></circle>
+              <line x1="20" x2="20" y1="8" y2="14"></line>
+              <line x1="23" x2="17" y1="11" y2="11"></line>
+            </svg>
+            Agregar Empleado
+          </button>
+        </div>
+  
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+          <div class="card p-4">
+            <div class="flex items-center">
+              <div class="p-3 rounded-full bg-blue-100 text-blue-800 mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Total Empleados</p>
+                <h2 class="text-xl font-bold">48</h2>
+              </div>
+            </div>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="card p-4">
+            <div class="flex items-center">
+              <div class="p-3 rounded-full bg-green-100 text-green-800 mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Activos</p>
+                <h2 class="text-xl font-bold">42</h2>
+              </div>
+            </div>
+          </div>
+          <div class="card p-4">
+            <div class="flex items-center">
+              <div class="p-3 rounded-full bg-yellow-100 text-yellow-800 mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 11.5V9a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v1.4"></path>
+                  <path d="M14 10V8a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"></path>
+                  <path d="M10 9.9V9a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v5"></path>
+                  <path d="M6 14v0a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"></path>
+                  <path d="M18 11v0a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-4a8 8 0 0 1-8-8 2 2 0 1 1 4 0"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Descansando</p>
+                <h2 class="text-xl font-bold">4</h2>
+              </div>
+            </div>
+          </div>
+          <div class="card p-4">
+            <div class="flex items-center">
+              <div class="p-3 rounded-full bg-red-100 text-red-800 mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 16v2a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"></path>
+                  <path d="M15 9H9.5a3.5 3.5 0 0 0 0 7h.5"></path>
+                  <path d="m21 15-3-3 3-3"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Despedidos</p>
+                <h2 class="text-xl font-bold">2</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Filters -->
+        <div class="card p-4 mb-6">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-              <label for="department" class="block text-sm font-medium text-gray-700 mb-1">Departamento</label>
-              <select id="department" name="department" class="form-select" required>
-                <option value="">Seleccionar departamento</option>
+              <label for="searchInput" class="block text-sm font-medium text-gray-700 mb-1">Buscar</label>
+              <input type="text" id="searchInput" placeholder="Buscar empleado..." class="form-input">
+            </div>
+            <div>
+              <label for="departmentFilter" class="block text-sm font-medium text-gray-700 mb-1">Departamento</label>
+              <select id="departmentFilter" class="form-select">
+                <option value="">Todos los departamentos</option>
                 <option value="recepcion">Recepción</option>
                 <option value="limpieza">Limpieza</option>
                 <option value="cocina">Cocina</option>
@@ -504,125 +211,436 @@
               </select>
             </div>
             <div>
-              <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Puesto</label>
-              <select id="role" name="role" class="form-select" required>
-                <option value="">Seleccionar puesto</option>
-                <option value="recepcionista">Recepcionista</option>
-                <option value="camarero">Camarero/a</option>
-                <option value="cocinero">Cocinero/a</option>
-                <option value="mesero">Mesero/a</option>
-                <option value="mantenimiento">Técnico de Mantenimiento</option>
-                <option value="gerente">Gerente</option>
-                <option value="administrativo">Administrativo</option>
+              <label for="statusFilter" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+              <select id="statusFilter" class="form-select">
+                <option value="">Todos los estados</option>
+                <option value="activo">Activo</option>
+                <option value="descansando">Descansando</option>
+                <option value="despedido">Despedido</option>
               </select>
             </div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label for="hireDate" class="block text-sm font-medium text-gray-700 mb-1">Fecha de Contratación</label>
-              <input type="date" id="hireDate" name="hireDate" class="form-input" required>
-            </div>
-            <div>
-              <label for="salary" class="block text-sm font-medium text-gray-700 mb-1">Salario Base</label>
-              <input type="number" id="salary" name="salary" min="0" step="0.01" class="form-input" required>
+            <div class="flex items-end">
+              <button id="applyFilters" class="btn btn-outline w-full">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg>
+                Filtrar
+              </button>
             </div>
           </div>
         </div>
-        <div class="p-4 border-t flex justify-end space-x-2">
-          <button type="button" id="cancelEmployeeBtn" class="btn btn-outline">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
+  
+        <!-- Employees Table -->
+        <div class="card overflow-hidden mb-6">
+          <div class="overflow-x-auto">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Empleado</th>
+                  <th>Departamento</th>
+                  <th>Puesto</th>
+                  <th>Fecha Contratación</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="employeesTableBody">
+                <!-- Table rows will be populated by JavaScript -->
+              </tbody>
+            </table>
+          </div>
         </div>
-      </form>
+      </main>
     </div>
-  </div>
-
-  <!-- Generate Contract Modal -->
-  <div class="modal modal-lg" id="contractModal">
-    <div class="modal-content">
-      <div class="p-4 border-b">
-        <h2 class="text-lg font-bold">Generar Contrato</h2>
-      </div>
-      <form id="contractForm">
-        <div class="p-4 space-y-4">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label for="contractType" class="block text-sm font-medium text-gray-700 mb-1">Tipo de Contrato</label>
-              <select id="contractType" name="contractType" class="form-select" required>
-                <option value="">Seleccionar tipo</option>
-                <option value="indefinido">Indefinido</option>
-                <option value="temporal">Temporal</option>
-                <option value="practicas">Prácticas</option>
-              </select>
-            </div>
-            <div>
-              <label for="contractDuration" class="block text-sm font-medium text-gray-700 mb-1">Duración (meses)</label>
-              <input type="number" id="contractDuration" name="contractDuration" min="1" class="form-input">
-            </div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label for="contractStartDate" class="block text-sm font-medium text-gray-700 mb-1">Fecha de Inicio</label>
-              <input type="date" id="contractStartDate" name="contractStartDate" class="form-input" required>
-            </div>
-            <div>
-              <label for="contractEndDate" class="block text-sm font-medium text-gray-700 mb-1">Fecha de Finalización</label>
-              <input type="date" id="contractEndDate" name="contractEndDate" class="form-input">
-            </div>
-          </div>
-          <div>
-            <label for="contractSalary" class="block text-sm font-medium text-gray-700 mb-1">Salario</label>
-            <input type="number" id="contractSalary" name="contractSalary" min="0" step="0.01" class="form-input" required>
-          </div>
-          <div>
-            <label for="contractTerms" class="block text-sm font-medium text-gray-700 mb-1">Términos y Condiciones</label>
-            <textarea id="contractTerms" name="contractTerms" rows="4" class="form-input"></textarea>
-          </div>
-        </div>
-        <div class="p-4 border-t">
-          <div class="contract-template" id="contractPreview">
-            <h1>CONTRATO DE TRABAJO</h1>
-            <p>En la ciudad de [Ciudad], a <span id="contractDate">01 de enero de 2024</span>, entre:</p>
-            <p><strong>HOTEL EJEMPLO, S.A.</strong>, con domicilio en Av. Principal #100, representada por su Director General, en adelante "EL EMPLEADOR"</p>
-            <p>y</p>
-            <p><strong><span id="contractEmployeeName">Juan Pérez</span></strong>, con domicilio en <span id="contractEmployeeAddress">Av. Secundaria #123</span>, en adelante "EL EMPLEADO"</p>
-            <p>Se celebra el presente contrato de trabajo bajo las siguientes cláusulas:</p>
-            
-            <h2>PRIMERA: OBJETO</h2>
-            <p>EL EMPLEADO se compromete a prestar sus servicios como <span id="contractEmployeePosition">Recepcionista</span> en el departamento de <span id="contractEmployeeDepartment">Recepción</span>, realizando las tareas propias del puesto y las que le sean asignadas por sus superiores.</p>
-            
-            <h2>SEGUNDA: DURACIÓN</h2>
-            <p>El presente contrato tendrá una duración <span id="contractTypeText">indefinida</span>, iniciando el <span id="contractStartDateText">01/01/2024</span><span id="contractEndDateSection"> y finalizando el <span id="contractEndDateText">31/12/2024</span></span>.</p>
-            
-            <h2>TERCERA: JORNADA LABORAL</h2>
-            <p>La jornada laboral será de 40 horas semanales, distribuidas según las necesidades del hotel, respetando los descansos establecidos por la ley.</p>
-            
-            <h2>CUARTA: REMUNERACIÓN</h2>
-            <p>EL EMPLEADO percibirá un salario mensual de <span id="contractSalaryText">$15,000.00</span> (pesos mexicanos), pagaderos el último día de cada mes.</p>
-            
-            <h2>QUINTA: TÉRMINOS Y CONDICIONES</h2>
-            <p id="contractTermsText">El empleado se compromete a cumplir con las políticas y procedimientos internos del hotel, así como a mantener la confidencialidad de la información a la que tenga acceso.</p>
-            
-            <div class="signature">
-              <div class="signature-line">EL EMPLEADOR</div>
-              <div class="signature-line">EL EMPLEADO</div>
-            </div>
-          </div>
-        </div>
-        <div class="p-4 border-t flex justify-end space-x-2">
-          <button type="button" id="cancelContractBtn" class="btn btn-outline">Cancelar</button>
-          <button type="button" id="printContractBtn" class="btn btn-outline">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
-              <polyline points="6 9 6 2 18 2 18 9"></polyline>
-              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-              <rect width="12" height="8" x="6" y="14"></rect>
+  
+    <!-- Employee Detail Modal -->
+    <div class="modal modal-lg" id="employeeDetailModal">
+      <div class="modal-content">
+        <div class="p-4 border-b flex justify-between items-center">
+          <h2 class="text-lg font-bold" id="employeeDetailTitle">Detalles del Empleado</h2>
+          <button class="close-modal-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
-            Imprimir
           </button>
-          <button type="submit" class="btn btn-primary">Guardar Contrato</button>
         </div>
-      </form>
+        <div class="tabs" id="employeeTabs">
+          <div class="tab active" data-tab="info">Información</div>
+          <div class="tab" data-tab="contract">Contrato</div>
+          <div class="tab" data-tab="payroll">Nómina</div>
+        </div>
+        <div class="tab-content active" id="infoTab">
+          <div class="p-4">
+            <div class="flex flex-col md:flex-row gap-6">
+              <div class="md:w-1/3">
+                <div class="flex flex-col items-center">
+                  <div class="avatar avatar-lg mb-4" id="employeeAvatar">JD</div>
+                  <h3 class="text-lg font-bold mb-1" id="employeeName">Juan Pérez</h3>
+                  <p class="text-sm text-gray-500 mb-4" id="employeePosition">Recepcionista</p>
+                  <div class="w-full">
+                    <div class="flex justify-between text-sm mb-1">
+                      <span>Rendimiento</span>
+                      <span id="employeePerformance">85%</span>
+                    </div>
+                    <div class="progress mb-4">
+                      <div class="progress-bar" id="employeePerformanceBar" style="width: 85%;"></div>
+                    </div>
+                  </div>
+                  <div class="w-full space-y-2">
+                    <div class="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500">
+                        <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                      </svg>
+                      <span id="employeeEmail">juan.perez@hotel.com</span>
+                    </div>
+                    <div class="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                      </svg>
+                      <span id="employeePhone">+52 123 456 7890</span>
+                    </div>
+                    <div class="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500">
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                      </svg>
+                      <span id="employeeAddress">Av. Principal #123, Ciudad</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="md:w-2/3">
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Departamento</label>
+                    <select id="employeeDepartment" class="form-select">
+                      <option value="recepcion">Recepción</option>
+                      <option value="limpieza">Limpieza</option>
+                      <option value="cocina">Cocina</option>
+                      <option value="restaurante">Restaurante</option>
+                      <option value="mantenimiento">Mantenimiento</option>
+                      <option value="administracion">Administración</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Puesto</label>
+                    <select id="employeeRole" class="form-select">
+                      <option value="recepcionista">Recepcionista</option>
+                      <option value="camarero">Camarero/a</option>
+                      <option value="cocinero">Cocinero/a</option>
+                      <option value="mesero">Mesero/a</option>
+                      <option value="mantenimiento">Técnico de Mantenimiento</option>
+                      <option value="gerente">Gerente</option>
+                      <option value="administrativo">Administrativo</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                    <select id="employeeStatus" class="form-select">
+                      <option value="activo">Activo</option>
+                      <option value="descansando">Descansando</option>
+                      <option value="despedido">Despedido</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Fecha de Contratación</label>
+                    <input type="date" id="employeeHireDate" class="form-input">
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Notas</label>
+                  <textarea id="employeeNotes" rows="4" class="form-input"></textarea>
+                </div>
+                <div class="flex justify-end space-x-2">
+                  <button id="saveEmployeeChangesBtn" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-content" id="contractTab">
+          <div class="p-4">
+            <div class="flex justify-between mb-4">
+              <h3 class="text-lg font-medium">Contratos</h3>
+              <button id="generateContractBtn" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <path d="M14 2v6h6"></path>
+                  <path d="M16 13H8"></path>
+                  <path d="M16 17H8"></path>
+                  <path d="M10 9H8"></path>
+                </svg>
+                Generar Contrato
+              </button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Tipo</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="contractsTableBody">
+                  <!-- Contracts will be populated by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="tab-content" id="payrollTab">
+          <div class="p-4">
+            <h3 class="text-lg font-medium mb-4">Información de Nómina</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <div class="payroll-card">
+                  <h4 class="font-medium mb-2">Detalles de Salario</h4>
+                  <div class="payroll-item">
+                    <span>Salario Base</span>
+                    <span id="baseSalary">$15,000.00</span>
+                  </div>
+                  <div class="payroll-item">
+                    <span>Bonificaciones</span>
+                    <span id="bonuses">$2,000.00</span>
+                  </div>
+                  <div class="payroll-item">
+                    <span>Horas Extra</span>
+                    <span id="overtime">$1,200.00</span>
+                  </div>
+                  <div class="payroll-total">
+                    <span>Total Bruto</span>
+                    <span id="grossTotal">$18,200.00</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="payroll-card">
+                  <h4 class="font-medium mb-2">Deducciones</h4>
+                  <div class="payroll-item">
+                    <span>Impuestos</span>
+                    <span id="taxes">$2,730.00</span>
+                  </div>
+                  <div class="payroll-item">
+                    <span>Seguro Social</span>
+                    <span id="socialSecurity">$910.00</span>
+                  </div>
+                  <div class="payroll-item">
+                    <span>Otras Deducciones</span>
+                    <span id="otherDeductions">$500.00</span>
+                  </div>
+                  <div class="payroll-total">
+                    <span>Total Neto</span>
+                    <span id="netTotal">$14,060.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-6">
+              <h4 class="font-medium mb-2">Historial de Pagos</h4>
+              <div class="overflow-x-auto">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Periodo</th>
+                      <th>Fecha de Pago</th>
+                      <th>Monto Bruto</th>
+                      <th>Deducciones</th>
+                      <th>Monto Neto</th>
+                    </tr>
+                  </thead>
+                  <tbody id="paymentsTableBody">
+                    <!-- Payments will be populated by JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  
+    <!-- Add/Edit Employee Modal -->
+    <div class="modal" id="employeeModal">
+      <div class="modal-content">
+        <div class="p-4 border-b flex justify-between items-center">
+          <h2 class="text-lg font-bold" id="modalTitle">Agregar Empleado</h2>
+          <button class="close-modal-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <form id="employeeForm">
+          <div class="p-4 space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                <input type="text" id="firstName" name="firstName" class="form-input" required>
+              </div>
+              <div>
+                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
+                <input type="text" id="lastName" name="lastName" class="form-input" required>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+                <input type="email" id="email" name="email" class="form-input" required>
+              </div>
+              <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+                <input type="tel" id="phone" name="phone" class="form-input" required>
+              </div>
+            </div>
+            <div>
+              <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+              <input type="text" id="address" name="address" class="form-input" required>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="department" class="block text-sm font-medium text-gray-700 mb-1">Departamento</label>
+                <select id="department" name="department" class="form-select" required>
+                  <option value="">Seleccionar departamento</option>
+                  <option value="recepcion">Recepción</option>
+                  <option value="limpieza">Limpieza</option>
+                  <option value="cocina">Cocina</option>
+                  <option value="restaurante">Restaurante</option>
+                  <option value="mantenimiento">Mantenimiento</option>
+                  <option value="administracion">Administración</option>
+                </select>
+              </div>
+              <div>
+                <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Puesto</label>
+                <select id="role" name="role" class="form-select" required>
+                  <option value="">Seleccionar puesto</option>
+                  <option value="recepcionista">Recepcionista</option>
+                  <option value="camarero">Camarero/a</option>
+                  <option value="cocinero">Cocinero/a</option>
+                  <option value="mesero">Mesero/a</option>
+                  <option value="mantenimiento">Técnico de Mantenimiento</option>
+                  <option value="gerente">Gerente</option>
+                  <option value="administrativo">Administrativo</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="hireDate" class="block text-sm font-medium text-gray-700 mb-1">Fecha de Contratación</label>
+                <input type="date" id="hireDate" name="hireDate" class="form-input" required>
+              </div>
+              <div>
+                <label for="salary" class="block text-sm font-medium text-gray-700 mb-1">Salario Base</label>
+                <input type="number" id="salary" name="salary" min="0" step="0.01" class="form-input" required>
+              </div>
+            </div>
+          </div>
+          <div class="p-4 border-t flex justify-end space-x-2">
+            <button type="button" id="cancelEmployeeBtn" class="btn btn-outline">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+    <!-- Generate Contract Modal -->
+    <div class="modal modal-lg" id="contractModal">
+      <div class="modal-content">
+        <div class="p-4 border-b flex justify-between items-center">
+          <h2 class="text-lg font-bold">Generar Contrato</h2>
+          <button class="close-modal-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <form id="contractForm">
+          <div class="p-4 space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="contractType" class="block text-sm font-medium text-gray-700 mb-1">Tipo de Contrato</label>
+                <select id="contractType" name="contractType" class="form-select" required>
+                  <option value="">Seleccionar tipo</option>
+                  <option value="indefinido">Indefinido</option>
+                  <option value="temporal">Temporal</option>
+                  <option value="practicas">Prácticas</option>
+                </select>
+              </div>
+              <div>
+                <label for="contractDuration" class="block text-sm font-medium text-gray-700 mb-1">Duración (meses)</label>
+                <input type="number" id="contractDuration" name="contractDuration" min="1" class="form-input">
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="contractStartDate" class="block text-sm font-medium text-gray-700 mb-1">Fecha de Inicio</label>
+                <input type="date" id="contractStartDate" name="contractStartDate" class="form-input" required>
+              </div>
+              <div>
+                <label for="contractEndDate" class="block text-sm font-medium text-gray-700 mb-1">Fecha de Finalización</label>
+                <input type="date" id="contractEndDate" name="contractEndDate" class="form-input">
+              </div>
+            </div>
+            <div>
+              <label for="contractSalary" class="block text-sm font-medium text-gray-700 mb-1">Salario</label>
+              <input type="number" id="contractSalary" name="contractSalary" min="0" step="0.01" class="form-input" required>
+            </div>
+            <div>
+              <label for="contractTerms" class="block text-sm font-medium text-gray-700 mb-1">Términos y Condiciones</label>
+              <textarea id="contractTerms" name="contractTerms" rows="4" class="form-input"></textarea>
+            </div>
+          </div>
+          <div class="p-4 border-t">
+            <div class="contract-template" id="contractPreview">
+              <h1>CONTRATO DE TRABAJO</h1>
+              <p>En la ciudad de [Ciudad], a <span id="contractDate">01 de enero de 2024</span>, entre:</p>
+              <p><strong>HOTEL EJEMPLO, S.A.</strong>, con domicilio en Av. Principal #100, representada por su Director General, en adelante "EL EMPLEADOR"</p>
+              <p>y</p>
+              <p><strong><span id="contractEmployeeName">Juan Pérez</span></strong>, con domicilio en <span id="contractEmployeeAddress">Av. Secundaria #123</span>, en adelante "EL EMPLEADO"</p>
+              <p>Se celebra el presente contrato de trabajo bajo las siguientes cláusulas:</p>
+              
+              <h2>PRIMERA: OBJETO</h2>
+              <p>EL EMPLEADO se compromete a prestar sus servicios como <span id="contractEmployeePosition">Recepcionista</span> en el departamento de <span id="contractEmployeeDepartment">Recepción</span>, realizando las tareas propias del puesto y las que le sean asignadas por sus superiores.</p>
+              
+              <h2>SEGUNDA: DURACIÓN</h2>
+              <p>El presente contrato tendrá una duración <span id="contractTypeText">indefinida</span>, iniciando el <span id="contractStartDateText">01/01/2024</span><span id="contractEndDateSection"> y finalizando el <span id="contractEndDateText">31/12/2024</span></span>.</p>
+              
+              <h2>TERCERA: JORNADA LABORAL</h2>
+              <p>La jornada laboral será de 40 horas semanales, distribuidas según las necesidades del hotel, respetando los descansos establecidos por la ley.</p>
+              
+              <h2>CUARTA: REMUNERACIÓN</h2>
+              <p>EL EMPLEADO percibirá un salario mensual de <span id="contractSalaryText">$15,000.00</span> (pesos mexicanos), pagaderos el último día de cada mes.</p>
+              
+              <h2>QUINTA: TÉRMINOS Y CONDICIONES</h2>
+              <p id="contractTermsText">El empleado se compromete a cumplir con las políticas y procedimientos internos del hotel, así como a mantener la confidencialidad de la información a la que tenga acceso.</p>
+              
+              <div class="signature">
+                <div class="signature-line">EL EMPLEADOR</div>
+                <div class="signature-line">EL EMPLEADO</div>
+              </div>
+            </div>
+          </div>
+          <div class="p-4 border-t flex justify-end space-x-2">
+            <button type="button" id="cancelContractBtn" class="btn btn-outline">Cancelar</button>
+            <button type="button" id="printContractBtn" class="btn btn-outline">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect width="12" height="8" x="6" y="14"></rect>
+              </svg>
+              Imprimir
+            </button>
+            <button type="submit" class="btn btn-primary">Guardar Contrato</button>
+          </div>
+        </form>
+      </div>
+    </div>
 </body>
 </html>
 

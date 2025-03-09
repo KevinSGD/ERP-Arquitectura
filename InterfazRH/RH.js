@@ -678,6 +678,16 @@ document.addEventListener('DOMContentLoaded', function() {
       
       alert('Contrato generado correctamente');
     });
+
+    // Close modal buttons
+    document.querySelectorAll('.close-modal-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const modal = this.closest('.modal');
+        if (modal) {
+          modal.classList.remove('active');
+        }
+      });
+    });
     
     // Initialize
     renderEmployeesTable();

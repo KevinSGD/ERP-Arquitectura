@@ -379,3 +379,13 @@ body {
     padding-top: 0.5rem;
     border-top: 1px solid #e5e7eb;
   }
+
+  .close-modal-btn {
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s;
+  }
+
+  .close-modal-btn:hover {
+    background-color: #f3f4f6;
+  }
