@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Inventario - Hotel ERP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="Inventario.js"></script>
+  <link rel="stylesheet" href="Inventario.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="p-4 flex items-center border-b border-blue-800">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+        <path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Z"></path>
+        <path d="m9 16 .348-.24c1.465-1.013 3.84-1.013 5.304 0L15 16"></path>
+        <path d="M8 7h.01"></path>
+        <path d="M16 7h.01"></path>
+        <path d="M12 7h.01"></path>
+        <path d="M12 11h.01"></path>
+        <path d="M16 11h.01"></path>
+        <path d="M8 11h.01"></path>
+        <path d="M10 22v-6.5m4 0V22"></path>
+      </svg>
+      <h1 class="text-lg font-bold">Hotel ERP</h1>
+    </div>
+    <nav class="mt-4">
+      <a href="#" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        Dashboard
+      </a>
+      <a href="#" class="nav-link active">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 7h-9"></path>
+          <path d="M14 17H5"></path>
+          <circle cx="17" cy="17" r="3"></circle>
+          <circle cx="7" cy="7" r="3"></circle>
+        </svg>
+        Inventario
+      </a>
+      <a href="#" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        Huéspedes
+      </a>
+      <a href="#" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+          <line x1="3" x2="21" y1="9" y2="9"></line>
+          <line x1="9" x2="9" y1="21" y2="9"></line>
+        </svg>
+        Reservaciones
+      </a>
+      <a href="#" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <path d="M14 2v6h6"></path>
+          <path d="M16 13H8"></path>
+          <path d="M16 17H8"></path>
+          <path d="M10 9H8"></path>
+        </svg>
+        Reportes
+      </a>
+      <a href="#" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z"></path>
+        </svg>
+        Configuración
+      </a>
+    </nav>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+      <div class="flex items-center justify-between p-4">
+        <button id="toggleSidebar" class="p-1 rounded-md hover:bg-gray-100">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" x2="21" y1="6" y2="6"></line>
+            <line x1="3" x2="21" y1="12" y2="12"></line>
+            <line x1="3" x2="21" y1="18" y2="18"></line>
+          </svg>
+        </button>
+        <div class="flex items-center">
+          <div class="relative mr-4">
+            <button class="p-1 rounded-full hover:bg-gray-100 relative">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+              </svg>
+              <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+            </button>
+          </div>
+          <div class="flex items-center">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="w-8 h-8 rounded-full mr-2">
+            <span class="font-medium">Admin</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold">Gestión de Inventario</h1>
+        <button id="addItemBtn" class="btn btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+            <path d="M5 12h14"></path>
+            <path d="M12 5v14"></path>
+          </svg>
+          Agregar Artículo
+        </button>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="card p-4">
+          <div class="flex items-center">
+            <div class="p-3 rounded-full bg-blue-100 text-blue-800 mr-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"></path>
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"></path>
+                <path d="M2 7h20"></path>
+                <path d="M22 7v3a2 2 0 0 1-2 2v0a2 2 0 0 1-2-2V7"></path>
+                <path d="M6 7v3a2 2 0 0 1-2 2v0a2 2 0 0 1-2-2V7"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Total de Artículos</p>
+              <h2 class="text-xl font-bold">1,248</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card p-4">
+          <div class="flex items-center">
+            <div class="p-3 rounded-full bg-yellow-100 text-yellow-800 mr-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Artículos Bajos</p>
+              <h2 class="text-xl font-bold">42</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card p-4">
+          <div class="flex items-center">
+            <div class="p-3 rounded-full bg-red-100 text-red-800 mr-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                <line x1="3" x2="21" y1="9" y2="9"></line>
+                <path d="m9 16 3-3 3 3"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Artículos Agotados</p>
+              <h2 class="text-xl font-bold">16</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="card p-4 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div>
+            <label for="searchInput" class="block text-sm font-medium text-gray-700 mb-1">Buscar</label>
+            <input type="text" id="searchInput" placeholder="Buscar artículo..." class="form-input">
+          </div>
+          <div>
+            <label for="categoryFilter" class="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+            <select id="categoryFilter" class="form-select">
+              <option value="">Todas las categorías</option>
+              <option value="limpieza">Limpieza</option>
+              <option value="alimentos">Alimentos</option>
+              <option value="bebidas">Bebidas</option>
+              <option value="amenidades">Amenidades</option>
+              <option value="mantenimiento">Mantenimiento</option>
+            </select>
+          </div>
+          <div>
+            <label for="statusFilter" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+            <select id="statusFilter" class="form-select">
+              <option value="">Todos los estados</option>
+              <option value="en-stock">En Stock</option>
+              <option value="bajo-stock">Bajo Stock</option>
+              <option value="agotado">Agotado</option>
+            </select>
+          </div>
+          <div class="flex items-end">
+            <button id="applyFilters" class="btn btn-outline w-full">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+              </svg>
+              Filtrar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventory Table -->
+      <div class="card overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="cursor-pointer" data-sort="name">
+                  Artículo
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 inline-block">
+                    <path d="m7 15 5 5 5-5"></path>
+                    <path d="m7 9 5-5 5 5"></path>
+                  </svg>
+                </th>
+                <th class="cursor-pointer" data-sort="category">
+                  Categoría
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 inline-block">
+                    <path d="m7 15 5 5 5-5"></path>
+                    <path d="m7 9 5-5 5 5"></path>
+                  </svg>
+                </th>
+                <th class="cursor-pointer" data-sort="quantity">
+                  Cantidad
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 inline-block">
+                    <path d="m7 15 5 5 5-5"></path>
+                    <path d="m7 9 5-5 5 5"></path>
+                  </svg>
+                </th>
+                <th>Unidad</th>
+                <th class="cursor-pointer" data-sort="status">
+                  Estado
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 inline-block">
+                    <path d="m7 15 5 5 5-5"></path>
+                    <path d="m7 9 5-5 5 5"></path>
+                  </svg>
+                </th>
+                <th class="cursor-pointer" data-sort="updated">
+                  Actualizado
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 inline-block">
+                    <path d="m7 15 5 5 5-5"></path>
+                    <path d="m7 9 5-5 5 5"></path>
+                  </svg>
+                </th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="inventoryTableBody">
+              <!-- Table rows will be populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="p-4 border-t flex justify-between items-center">
+          <div class="text-sm text-gray-500">
+            Mostrando <span id="itemsShowing">1-10</span> de <span id="totalItems">1,248</span> artículos
+          </div>
+          <ul class="pagination" id="pagination">
+            <li class="pagination-item">
+              <a href="#" class="pagination-link" data-page="prev">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m15 18-6-6 6-6"></path>
+                </svg>
+              </a>
+            </li>
+            <li class="pagination-item">
+              <a href="#" class="pagination-link active" data-page="1">1</a>
+            </li>
+            <li class="pagination-item">
+              <a href="#" class="pagination-link" data-page="2">2</a>
+            </li>
+            <li class="pagination-item">
+              <a href="#" class="pagination-link" data-page="3">3</a>
+            </li>
+            <li class="pagination-item">
+              <span class="pagination-link">...</span>
+            </li>
+            <li class="pagination-item">
+              <a href="#" class="pagination-link" data-page="10">10</a>
+            </li>
+            <li class="pagination-item">
+              <a href="#" class="pagination-link" data-page="next">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add/Edit Item Modal -->
+  <div class="modal" id="itemModal">
+    <div class="modal-content">
+      <div class="p-4 border-b">
+        <h2 class="text-lg font-bold" id="modalTitle">Agregar Artículo</h2>
+      </div>
+      <form id="itemForm">
+        <div class="p-4 space-y-4">
+          <div>
+            <label for="itemName" class="block text-sm font-medium text-gray-700 mb-1">Nombre del Artículo</label>
+            <input type="text" id="itemName" name="name" class="form-input" required>
+          </div>
+          <div>
+            <label for="itemCategory" class="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+            <select id="itemCategory" name="category" class="form-select" required>
+              <option value="">Seleccionar categoría</option>
+              <option value="limpieza">Limpieza</option>
+              <option value="alimentos">Alimentos</option>
+              <option value="bebidas">Bebidas</option>
+              <option value="amenidades">Amenidades</option>
+              <option value="mantenimiento">Mantenimiento</option>
+            </select>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="itemQuantity" class="block text-sm font-medium text-gray-700 mb-1">Cantidad</label>
+              <input type="number" id="itemQuantity" name="quantity" min="0" class="form-input" required>
+            </div>
+            <div>
+              <label for="itemUnit" class="block text-sm font-medium text-gray-700 mb-1">Unidad</label>
+              <select id="itemUnit" name="unit" class="form-select" required>
+                <option value="">Seleccionar unidad</option>
+                <option value="unidad">Unidad</option>
+                <option value="kg">Kilogramo</option>
+                <option value="g">Gramo</option>
+                <option value="l">Litro</option>
+                <option value="ml">Mililitro</option>
+                <option value="caja">Caja</option>
+                <option value="paquete">Paquete</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label for="itemMinQuantity" class="block text-sm font-medium text-gray-700 mb-1">Cantidad Mínima</label>
+            <input type="number" id="itemMinQuantity" name="minQuantity" min="0" class="form-input" required>
+            <p class="text-xs text-gray-500 mt-1">Cantidad mínima antes de mostrar alerta de bajo stock</p>
+          </div>
+          <div>
+            <label for="itemDescription" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+            <textarea id="itemDescription" name="description" rows="3" class="form-input"></textarea>
+          </div>
+        </div>
+        <div class="p-4 border-t flex justify-end space-x-2">
+          <button type="button" id="cancelItemBtn" class="btn btn-outline">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal" id="deleteModal">
+    <div class="modal-content" style="max-width: 400px;">
+      <div class="p-4 border-b">
+        <h2 class="text-lg font-bold">Confirmar Eliminación</h2>
+      </div>
+      <div class="p-4">
+        <p>¿Está seguro que desea eliminar este artículo? Esta acción no se puede deshacer.</p>
+      </div>
+      <div class="p-4 border-t flex justify-end space-x-2">
+        <button type="button" id="cancelDeleteBtn" class="btn btn-outline">Cancelar</button>
+        <button type="button" id="confirmDeleteBtn" class="btn btn-primary" style="background-color: #ef4444;">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
