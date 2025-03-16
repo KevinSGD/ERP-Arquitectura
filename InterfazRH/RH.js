@@ -1,647 +1,827 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // DOM Elements
-  const toggleSidebarBtn = document.getElementById('toggleSidebar');
-  const sidebar = document.getElementById('sidebar');
-  const mainContent = document.getElementById('mainContent');
-  const employeesTableBody = document.getElementById('employeesTableBody');
-  const addEmployeeBtn = document.getElementById('addEmployeeBtn');
-  const employeeModal = document.getElementById('employeeModal');
-  const employeeForm = document.getElementById('employeeForm');
-  const cancelEmployeeBtn = document.getElementById('cancelEmployeeBtn');
-  const employeeDetailModal = document.getElementById('employeeDetailModal');
-  const employeeTabs = document.getElementById('employeeTabs');
-  const tabContents = document.querySelectorAll('.tab-content');
-  const contractModal = document.getElementById('contractModal');
-  const contractForm = document.getElementById('contractForm');
-  const cancelContractBtn = document.getElementById('cancelContractBtn');
-  const printContractBtn = document.getElementById('printContractBtn');
-  const generateContractBtn = document.getElementById('generateContractBtn');
-  const searchInput = document.getElementById('searchInput');
-  const departmentFilter = document.getElementById('departmentFilter');
-  const statusFilter = document.getElementById('statusFilter');
-  const applyFiltersBtn = document.getElementById('applyFilters');
-  const saveEmployeeChangesBtn = document.getElementById('saveEmployeeChangesBtn');
+document.addEventListener("DOMContentLoaded", () => {
+  // Set current year in footer
+  document.getElementById("current-year").textContent = new Date().getFullYear()
 
-  // Variables
-  let currentEmployeeId = null;
-  let filteredData = [...employeesData];
+  // Header scroll effect
+  const header = document.querySelector(".header")
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+      header.classList.add("scrolled")
+    } else {
+      header.classList.remove("scrolled")
+    }
+  })
+
+  // Mobile menu toggle
+  const mobileMenuBtn = document.querySelector(".mobile-menu-btn")
+  const mobileMenuCloseBtn = document.querySelector(".mobile-menu-close")
+  const mobileMenu = document.querySelector(".mobile-menu")
+
+  mobileMenuBtn.addEventListener("click", () => {
+    mobileMenu.classList.add("active")
+    document.body.style.overflow = "hidden"
+  })
+
+  mobileMenuCloseBtn.addEventListener("click", () => {
+    mobileMenu.classList.remove("active")
+    document.body.style.overflow = ""
+  })
+
+  // Date picker functionality
+  const datePickerTriggers = document.querySelectorAll(".date-picker-trigger")
+  const datePickers = document.querySelectorAll(".date-picker")
+
+  datePickerTriggers.forEach((trigger, index) => {
+    trigger.addEventListener("click", () => {
+      datePickers[index].classList.toggle("active")
+
+      // Close other date pickers
+      datePickers.forEach((picker, i) => {
+        if (i !== index) {
+          picker.classList.remove("active")
+        }
+      })
+    })
+  })
+
+  // Close date pickers when clicking outside
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest(".date-picker-wrapper")) {
+      datePickers.forEach((picker) => {
+        picker.classList.remove("active")
+      })
+    }
+  })
+
+  // Simple calendar implementation
+  const months = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ]
+  const days = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"]
+
+  function generateCalendar(datePickerId, displayElement) {
+    const datePicker = document.getElementById(datePickerId)
+    const today = new Date()
+    const currentMonth = today.getMonth()
+    const currentYear = today.getFullYear()
+
+    // Create calendar header
+    const calendarHeader = document.createElement("div")
+    calendarHeader.className = "calendar-header"
+    calendarHeader.innerHTML = `
+      <button class="prev-month"><i class="fas fa-chevron-left"></i></button>
+      <div class="current-month">${months[currentMonth]} ${currentYear}</div>
+      <button class="next-month"><i class="fas fa-chevron-right"></i></button>
+    `
+
+    // Create days header
+    const daysHeader = document.createElement("div")
+    daysHeader.className = "days-header"
+    days.forEach((day) => {
+      const dayEl = document.createElement("div")
+      dayEl.className = "day-name"
+      dayEl.textContent = day
+      daysHeader.appendChild(dayEl)
+    })
+
+    // Create days grid
+    const daysGrid = document.createElement("div")
+    daysGrid.className = "days-grid"
+
+    // Get first day of month and total days
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay()
+    const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate()
+
+    // Add empty cells for days before first day of month
+    for (let i = 0; i < firstDay; i++) {
+      const emptyDay = document.createElement("div")
+      emptyDay.className = "day empty"
+      daysGrid.appendChild(emptyDay)
+    }
+
+    // Add days of month
+    for (let i = 1; i <= totalDays; i++) {
+      const day = document.createElement("div")
+      day.className = "day"
+      day.textContent = i
+
+      // Highlight today
+      if (i === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
+        day.classList.add("today")
+      }
+
+      // Add click event to select date
+      day.addEventListener("click", () => {
+        const selectedDate = new Date(currentYear, currentMonth, i)
+        const formattedDate = `${i} de ${months[currentMonth]} de ${currentYear}`
+        displayElement.textContent = formattedDate
+        datePicker.classList.remove("active")
+      })
+
+      daysGrid.appendChild(day)
+    }
+
+    // Append all elements to calendar
+    datePicker.innerHTML = ""
+    datePicker.appendChild(calendarHeader)
+    datePicker.appendChild(daysHeader)
+    datePicker.appendChild(daysGrid)
+
+    // Add month navigation functionality
+    const prevMonthBtn = datePicker.querySelector(".prev-month")
+    const nextMonthBtn = datePicker.querySelector(".next-month")
+
+    // This would need more implementation for full functionality
+  }
+
+  // Initialize calendars
+  const arrivalDateDisplay = document
+    .querySelector("#arrival-date-picker")
+    .previousElementSibling.querySelector(".date-display")
+  const departureDateDisplay = document
+    .querySelector("#departure-date-picker")
+    .previousElementSibling.querySelector(".date-display")
+
+  generateCalendar("arrival-date-picker", arrivalDateDisplay)
+  generateCalendar("departure-date-picker", departureDateDisplay)
+
+  // Scroll animations
+  const animatedElements = document.querySelectorAll(".fade-in-up, .fade-in-scale")
+
+  function checkScroll() {
+    animatedElements.forEach((element) => {
+      const elementTop = element.getBoundingClientRect().top
+      const windowHeight = window.innerHeight
+
+      if (elementTop < windowHeight * 0.8) {
+        element.classList.add("active")
+      }
+    })
+  }
+
+  // Initial check
+  checkScroll()
+
+  // Check on scroll
+  window.addEventListener("scroll", checkScroll)
+})
+
+document.addEventListener("DOMContentLoaded", () => {
+  // DOM Elements
+  const sidebar = document.querySelector(".sidebar")
+  const sidebarToggle = document.getElementById("sidebar-toggle")
+  const navItems = document.querySelectorAll(".sidebar-nav li")
+  const sections = document.querySelectorAll(".section")
+  const employeesTableBody = document.getElementById("employees-table-body")
+  const addEmployeeBtn = document.getElementById("add-employee-btn")
+  const employeeModal = document.getElementById("employee-modal")
+  const employeeDetailsModal = document.getElementById("employee-details-modal")
+  const confirmationModal = document.getElementById("confirmation-modal")
+  const closeModalButtons = document.querySelectorAll(".close-modal")
+  const employeeForm = document.getElementById("employee-form")
+  const modalTitle = document.getElementById("modal-title")
+  const employeeSearch = document.getElementById("employee-search")
+  const departmentFilter = document.getElementById("department-filter")
+  const statusFilter = document.getElementById("status-filter")
+  const editEmployeeBtn = document.getElementById("edit-employee-btn")
+  const deleteEmployeeBtn = document.getElementById("delete-employee-btn")
+  const confirmActionBtn = document.getElementById("confirm-action-btn")
+
+  // Current employee being edited or viewed
+  let currentEmployee = null
+
+  // API endpoints - Reemplazar con tus propios endpoints
+  const API_URL = {
+    employees: "/api/employees",
+    departments: "/api/departments",
+    positions: "/api/positions",
+  }
 
   // Toggle sidebar
-  toggleSidebarBtn.addEventListener('click', function() {
-    sidebar.classList.toggle('sidebar-collapsed');
-    mainContent.classList.toggle('main-content-expanded');
-  });
+  sidebarToggle.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed")
+  })
 
-  // Render employees table
-  function renderEmployeesTable() {
-    employeesTableBody.innerHTML = '';
-    
-    if (filteredData.length === 0) {
-      employeesTableBody.innerHTML = `
-        <tr>
-          <td colspan="6" class="text-center py-4">No se encontraron empleados</td>
-        </tr>
-      `;
-      return;
+  // Navigation
+  navItems.forEach((item) => {
+    item.addEventListener("click", function () {
+      // Remove active class from all items
+      navItems.forEach((i) => i.classList.remove("active"))
+
+      // Add active class to clicked item
+      this.classList.add("active")
+
+      // Show corresponding section
+      const sectionId = this.getAttribute("data-section")
+      sections.forEach((section) => {
+        section.classList.remove("active")
+        if (section.id === sectionId) {
+          section.classList.add("active")
+        }
+      })
+
+      // Cargar datos si es la sección de empleados
+      if (sectionId === "employees") {
+        fetchEmployees()
+      }
+    })
+  })
+
+  // Fetch employees from API
+  async function fetchEmployees() {
+    try {
+      // Mostrar indicador de carga
+      employeesTableBody.innerHTML = '<tr><td colspan="7" class="text-center">Cargando datos...</td></tr>'
+
+      // Fetch data from API
+      // Comentado para evitar errores hasta que la API esté lista
+      /*
+      const response = await fetch(API_URL.employees);
+      if (!response.ok) {
+        throw new Error('Error al cargar los datos');
+      }
+      const data = await response.json();
+      renderEmployeesTable(data);
+      */
+
+      // Mientras tanto, mostrar tabla vacía
+      renderEmployeesTable([])
+    } catch (error) {
+      console.error("Error:", error)
+      employeesTableBody.innerHTML = `<tr><td colspan="7" class="text-center">Error al cargar los datos: ${error.message}</td></tr>`
     }
-    
-    filteredData.forEach(employee => {
-      const statusBadge = getStatusBadge(employee.status);
-      const fullName = `${employee.firstName} ${employee.lastName}`;
-      const departmentName = getDepartmentName(employee.department);
-      const roleName = getRoleName(employee.role);
-      
-      const row = document.createElement('tr');
+  }
+
+  // Populate employees table
+  function renderEmployeesTable(data = []) {
+    employeesTableBody.innerHTML = ""
+
+    if (data.length === 0) {
+      const emptyRow = document.createElement("tr")
+      emptyRow.innerHTML = `
+        <td colspan="7" class="text-center">No hay datos disponibles. Conecte su base de datos o añada nuevos empleados.</td>
+      `
+      employeesTableBody.appendChild(emptyRow)
+      return
+    }
+
+    data.forEach((employee) => {
+      const row = document.createElement("tr")
+
+      // Format date for display
+      const hireDate = new Date(employee.hireDate)
+      const formattedDate = hireDate.toLocaleDateString("es-ES")
+
+      // Determine status class
+      let statusClass = ""
+      switch (employee.status) {
+        case "Activo":
+          statusClass = "status-active"
+          break
+        case "Inactivo":
+          statusClass = "status-inactive"
+          break
+        case "Vacaciones":
+          statusClass = "status-vacation"
+          break
+      }
+
       row.innerHTML = `
+        <td>${employee.id}</td>
+        <td>${employee.firstName} ${employee.lastName}</td>
+        <td>${employee.department}</td>
+        <td>${employee.position}</td>
+        <td>${formattedDate}</td>
+        <td><span class="status-badge ${statusClass}">${employee.status}</span></td>
         <td>
-          <div class="flex items-center">
-            <div class="avatar mr-3">${getInitials(fullName)}</div>
-            <div>
-              <div class="font-medium">${fullName}</div>
-              <div class="text-sm text-gray-500">${employee.email}</div>
-            </div>
-          </div>
-        </td>
-        <td>${departmentName}</td>
-        <td>${roleName}</td>
-        <td>${formatDate(employee.hireDate)}</td>
-        <td>${statusBadge}</td>
-        <td>
-          <div class="flex space-x-2">
-            <button class="btn btn-icon btn-outline view-employee-btn" data-id="${employee.id}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tooltip">
-                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-                <span class="tooltip-text">Ver</span>
-              </svg>
+          <div class="action-buttons">
+            <button class="action-btn view-btn" data-id="${employee.id}">
+              <i class="fas fa-eye"></i>
             </button>
-            <button class="btn btn-icon btn-outline edit-employee-btn" data-id="${employee.id}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tooltip">
-                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
-                <path d="m15 5 4 4"></path>
-                <span class="tooltip-text">Editar</span>
-              </svg>
+            <button class="action-btn edit-btn" data-id="${employee.id}">
+              <i class="fas fa-edit"></i>
             </button>
-            <button class="btn btn-icon btn-outline contract-btn" data-id="${employee.id}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tooltip">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <path d="M14 2v6h6"></path>
-                <path d="M16 13H8"></path>
-                <path d="M16 17H8"></path>
-                <path d="M10 9H8"></path>
-                <span class="tooltip-text">Contrato</span>
-              </svg>
+            <button class="action-btn delete-btn" data-id="${employee.id}">
+              <i class="fas fa-trash"></i>
             </button>
           </div>
         </td>
-      `;
-      
-      employeesTableBody.appendChild(row);
-    });
-    
-    // Add event listeners to buttons
-    document.querySelectorAll('.view-employee-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const employeeId = parseInt(this.getAttribute('data-id'));
-        openEmployeeDetailModal(employeeId);
-      });
-    });
-    
-    document.querySelectorAll('.edit-employee-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const employeeId = parseInt(this.getAttribute('data-id'));
-        openEditEmployeeModal(employeeId);
-      });
-    });
-    
-    document.querySelectorAll('.contract-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const employeeId = parseInt(this.getAttribute('data-id'));
-        openEmployeeDetailModal(employeeId, 'contract');
-      });
-    });
+      `
+
+      employeesTableBody.appendChild(row)
+    })
+
+    // Add event listeners to action buttons
+    document.querySelectorAll(".view-btn").forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const employeeId = this.getAttribute("data-id")
+        viewEmployee(employeeId)
+      })
+    })
+
+    document.querySelectorAll(".edit-btn").forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const employeeId = this.getAttribute("data-id")
+        editEmployee(employeeId)
+      })
+    })
+
+    document.querySelectorAll(".delete-btn").forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const employeeId = this.getAttribute("data-id")
+        showDeleteConfirmation(employeeId)
+      })
+    })
   }
 
-  // Get department name
-  function getDepartmentName(department) {
-    const departments = {
-      'recepcion': 'Recepción',
-      'limpieza': 'Limpieza',
-      'cocina': 'Cocina',
-      'restaurante': 'Restaurante',
-      'mantenimiento': 'Mantenimiento',
-      'administracion': 'Administración'
-    };
-    return departments[department] || department;
-  }
+  // Initialize table
+  fetchEmployees()
 
-  // Get role name
-  function getRoleName(role) {
-    const roles = {
-      'recepcionista': 'Recepcionista',
-      'camarero': 'Camarero/a',
-      'cocinero': 'Cocinero/a',
-      'mesero': 'Mesero/a',
-      'mantenimiento': 'Técnico de Mantenimiento',
-      'gerente': 'Gerente',
-      'administrativo': 'Administrativo'
-    };
-    return roles[role] || role;
-  }
+  // Search and filter functionality
+  function filterEmployees() {
+    const searchTerm = employeeSearch.value.toLowerCase()
+    const departmentValue = departmentFilter.value
+    const statusValue = statusFilter.value
 
-  // Get initials from name
-  function getInitials(name) {
-    return name
-      .split(' ')
-      .map(part => part.charAt(0))
-      .join('')
-      .toUpperCase()
-      .substring(0, 2);
-  }
-
-  // Format date
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('es-ES');
-  }
-
-  // Open add employee modal
-  function openAddEmployeeModal() {
-    document.getElementById('modalTitle').textContent = 'Agregar Empleado';
-    employeeForm.reset();
-    currentEmployeeId = null;
-    employeeModal.classList.add('active');
-  }
-
-  // Open edit employee modal
-  function openEditEmployeeModal(employeeId) {
-    const employee = employeesData.find(emp => emp.id === employeeId);
-    if (!employee) return;
-    
-    document.getElementById('modalTitle').textContent = 'Editar Empleado';
-    
-    document.getElementById('firstName').value = employee.firstName;
-    document.getElementById('lastName').value = employee.lastName;
-    document.getElementById('email').value = employee.email;
-    document.getElementById('phone').value = employee.phone;
-    document.getElementById('address').value = employee.address;
-    document.getElementById('department').value = employee.department;
-    document.getElementById('role').value = employee.role;
-    document.getElementById('hireDate').value = employee.hireDate;
-    document.getElementById('salary').value = employee.salary;
-    
-    currentEmployeeId = employeeId;
-    employeeModal.classList.add('active');
-  }
-
-  // Open employee detail modal
-  function openEmployeeDetailModal(employeeId, activeTab = 'info') {
-    const employee = employeesData.find(emp => emp.id === employeeId);
-    if (!employee) return;
-    
-    currentEmployeeId = employeeId;
-    
-    // Set employee details
-    document.getElementById('employeeDetailTitle').textContent = `${employee.firstName} ${employee.lastName}`;
-    document.getElementById('employeeAvatar').textContent = getInitials(`${employee.firstName} ${employee.lastName}`);
-    document.getElementById('employeeName').textContent = `${employee.firstName} ${employee.lastName}`;
-    document.getElementById('employeePosition').textContent = getRoleName(employee.role);
-    document.getElementById('employeeEmail').textContent = employee.email;
-    document.getElementById('employeePhone').textContent = employee.phone;
-    document.getElementById('employeeAddress').textContent = employee.address;
-    document.getElementById('employeePerformance').textContent = `${employee.performance}%`;
-    document.getElementById('employeePerformanceBar').style.width = `${employee.performance}%`;
-    
-    document.getElementById('employeeDepartment').value = employee.department;
-    document.getElementById('employeeRole').value = employee.role;
-    document.getElementById('employeeStatus').value = employee.status;
-    document.getElementById('employeeHireDate').value = employee.hireDate;
-    document.getElementById('employeeNotes').value = 'Empleado con buen desempeño. Puntual y responsable.';
-    
-    // Load contracts
-    loadEmployeeContracts(employeeId);
-    
-    // Load payroll data
-    loadEmployeePayroll(employeeId);
-    
-    // Set active tab
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.classList.remove('active');
-    });
-    document.querySelectorAll('.tab-content').forEach(content => {
-      content.classList.remove('active');
-    });
-    
-    document.querySelector(`.tab[data-tab="${activeTab}"]`).classList.add('active');
-    document.getElementById(`${activeTab}Tab`).classList.add('active');
-    
-    employeeDetailModal.classList.add('active');
-  }
-
-  // Load employee contracts
-  function loadEmployeeContracts(employeeId) {
-    const contractsTableBody = document.getElementById('contractsTableBody');
-    contractsTableBody.innerHTML = '';
-    
-    const employeeContracts = contractsData.filter(contract => contract.employeeId === employeeId);
-    
-    if (employeeContracts.length === 0) {
-      contractsTableBody.innerHTML = `
-        <tr>
-          <td colspan="5" class="text-center py-4">No hay contratos registrados</td>
-        </tr>
-      `;
-      return;
-    }
-    
-    employeeContracts.forEach(contract => {
-      const row = document.createElement('tr');
-      const contractType = getContractTypeName(contract.type);
-      const contractStatus = getContractStatusBadge(contract.status);
-      
-      row.innerHTML = `
-        <td>${contractType}</td>
-        <td>${formatDate(contract.startDate)}</td>
-        <td>${contract.endDate ? formatDate(contract.endDate) : 'N/A'}</td>
-        <td>${contractStatus}</td>
-        <td>
-          <div class="flex space-x-2">
-            <button class="btn btn-icon btn-outline view-contract-btn" data-id="${contract.id}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tooltip">
-                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-                <span class="tooltip-text">Ver</span>
-              </svg>
-            </button>
-            <button class="btn btn-icon btn-outline print-contract-btn" data-id="${contract.id}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tooltip">
-                <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-                <rect width="12" height="8" x="6" y="14"></rect>
-                <span class="tooltip-text">Imprimir</span>
-              </svg>
-            </button>
-          </div>
+    // Aquí se implementaría la búsqueda y filtrado con la API
+    // Por ahora, simplemente mostramos un mensaje
+    employeesTableBody.innerHTML = `
+      <tr>
+        <td colspan="7" class="text-center">
+          Buscando: "${searchTerm}" 
+          ${departmentValue ? `| Departamento: ${departmentValue}` : ""} 
+          ${statusValue ? `| Estado: ${statusValue}` : ""}
         </td>
-      `;
-      
-      contractsTableBody.appendChild(row);
-    });
+      </tr>
+    `
+
+    // Cuando la API esté lista:
+    /*
+    const queryParams = new URLSearchParams();
+    if (searchTerm) queryParams.append('search', searchTerm);
+    if (departmentValue) queryParams.append('department', departmentValue);
+    if (statusValue) queryParams.append('status', statusValue);
+    
+    fetch(`${API_URL.employees}?${queryParams}`)
+      .then(response => response.json())
+      .then(data => renderEmployeesTable(data))
+      .catch(error => console.error('Error:', error));
+    */
   }
 
-  // Get contract type name
-  function getContractTypeName(type) {
-    const types = {
-      'indefinido': 'Indefinido',
-      'temporal': 'Temporal',
-      'practicas': 'Prácticas'
-    };
-    return types[type] || type;
+  employeeSearch.addEventListener("input", filterEmployees)
+  departmentFilter.addEventListener("change", filterEmployees)
+  statusFilter.addEventListener("change", filterEmployees)
+
+  // Modal functionality
+  function openModal(modal) {
+    modal.classList.add("active")
+    document.body.style.overflow = "hidden"
   }
 
-  // Get contract status badge
-  function getContractStatusBadge(status) {
-    switch (status) {
-      case 'activo':
-        return '<span class="badge badge-green">Activo</span>';
-      case 'finalizado':
-        return '<span class="badge badge-purple">Finalizado</span>';
-      default:
-        return '';
+  function closeModal(modal) {
+    modal.classList.remove("active")
+    document.body.style.overflow = ""
+  }
+
+  closeModalButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const modal = this.closest(".modal")
+      closeModal(modal)
+    })
+  })
+
+  // Close modal when clicking outside
+  window.addEventListener("click", (event) => {
+    if (event.target.classList.contains("modal")) {
+      closeModal(event.target)
+    }
+  })
+
+  // Add new employee
+  addEmployeeBtn.addEventListener("click", () => {
+    // Reset form
+    employeeForm.reset()
+    document.getElementById("employee-id").value = ""
+    modalTitle.textContent = "Añadir Nuevo Empleado"
+    currentEmployee = null
+
+    openModal(employeeModal)
+  })
+
+  // View employee details
+  async function viewEmployee(employeeId) {
+    try {
+      // Fetch employee details from API
+      // Comentado hasta que la API esté lista
+      /*
+      const response = await fetch(`${API_URL.employees}/${employeeId}`);
+      if (!response.ok) {
+        throw new Error('Error al cargar los datos del empleado');
+      }
+      const employee = await response.json();
+      */
+
+      // Por ahora, mostrar mensaje
+      alert(`Ver detalles del empleado con ID: ${employeeId}`)
+      return
+
+      // El resto del código se ejecutaría cuando la API esté lista
+      // const employee = await response.json(); // Assuming the API returns employee data
+      // currentEmployee = employee;
+
+      // Format date for display
+      // const hireDate = new Date(employee.hireDate);
+      // const formattedDate = hireDate.toLocaleDateString('es-ES');
+
+      // Format salary with currency
+      // const formattedSalary = new Intl.NumberFormat('es-ES', {
+      //   style: 'currency',
+      //   currency: 'EUR'
+      // }).format(employee.salary);
+
+      // Update modal with employee details
+      // document.getElementById('employee-name').textContent = `${employee.firstName} ${employee.lastName}`;
+      // document.getElementById('employee-position').textContent = `${employee.position} - ${employee.department}`;
+      // document.getElementById('employee-status').textContent = employee.status;
+      // document.getElementById('employee-status').className = `status-badge status-${employee.status.toLowerCase()}`;
+
+      // document.getElementById('detail-id').textContent = employee.id;
+      // document.getElementById('detail-department').textContent = employee.department;
+      // document.getElementById('detail-email').textContent = employee.email;
+      // document.getElementById('detail-phone').textContent = employee.phone;
+      // document.getElementById('detail-hire-date').textContent = formattedDate;
+      // document.getElementById('detail-salary').textContent = formattedSalary;
+
+      // Set avatar
+      // document.getElementById('employee-avatar').src = employee.avatar || `https://randomuser.me/api/portraits/men/1.jpg`;
+
+      // openModal(employeeDetailsModal);
+    } catch (error) {
+      console.error("Error:", error)
+      alert(`Error al cargar los datos del empleado: ${error.message}`)
     }
   }
 
-  // Load employee payroll
-  function loadEmployeePayroll(employeeId) {
-    const paymentsTableBody = document.getElementById('paymentsTableBody');
-    paymentsTableBody.innerHTML = '';
-    
-    const employeePayments = paymentsData.filter(payment => payment.employeeId === employeeId);
-    
-    if (employeePayments.length === 0) {
-      paymentsTableBody.innerHTML = `
-        <tr>
-          <td colspan="5" class="text-center py-4">No hay pagos registrados</td>
-        </tr>
-      `;
-    } else {
-      employeePayments.forEach(payment => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${payment.period}</td>
-          <td>${formatDate(payment.paymentDate)}</td>
-          <td>$${payment.grossAmount.toFixed(2)}</td>
-          <td>$${payment.deductions.toFixed(2)}</td>
-          <td>$${payment.netAmount.toFixed(2)}</td>
-        `;
-        paymentsTableBody.appendChild(row);
-      });
-    }
-    
-    // Set payroll details
-    const employee = employeesData.find(emp => emp.id === employeeId);
-    if (employee) {
-      document.getElementById('baseSalary').textContent = `$${employee.salary.toFixed(2)}`;
-      document.getElementById('bonuses').textContent = '$2,000.00';
-      document.getElementById('overtime').textContent = '$1,200.00';
-      document.getElementById('grossTotal').textContent = `$${(employee.salary + 2000 + 1200).toFixed(2)}`;
-      
-      const taxes = (employee.salary + 2000 + 1200) * 0.15;
-      const socialSecurity = (employee.salary + 2000 + 1200) * 0.05;
-      const otherDeductions = 500;
-      const totalDeductions = taxes + socialSecurity + otherDeductions;
-      const netTotal = (employee.salary + 2000 + 1200) - totalDeductions;
-      
-      document.getElementById('taxes').textContent = `$${taxes.toFixed(2)}`;
-      document.getElementById('socialSecurity').textContent = `$${socialSecurity.toFixed(2)}`;
-      document.getElementById('otherDeductions').textContent = `$${otherDeductions.toFixed(2)}`;
-      document.getElementById('netTotal').textContent = `$${netTotal.toFixed(2)}`;
+  // Edit employee
+  async function editEmployee(employeeId) {
+    try {
+      // Fetch employee details from API
+      // Comentado hasta que la API esté lista
+      /*
+      const response = await fetch(`${API_URL.employees}/${employeeId}`);
+      if (!response.ok) {
+        throw new Error('Error al cargar los datos del empleado');
+      }
+      const employee = await response.json();
+      */
+
+      // Por ahora, mostrar mensaje
+      alert(`Editar empleado con ID: ${employeeId}`)
+      return
+
+      // El resto del código se ejecutaría cuando la API esté lista
+      // const employee = await response.json(); // Assuming the API returns employee data
+      // currentEmployee = employee;
+
+      // Fill form with employee data
+      // document.getElementById('employee-id').value = employee.id;
+      // document.getElementById('first-name').value = employee.firstName;
+      // document.getElementById('last-name').value = employee.lastName;
+      // document.getElementById('email').value = employee.email;
+      // document.getElementById('phone').value = employee.phone;
+      // document.getElementById('department').value = employee.department;
+      // document.getElementById('position').value = employee.position;
+      // document.getElementById('hire-date').value = employee.hireDate;
+      // document.getElementById('salary').value = employee.salary;
+      // document.getElementById('status').value = employee.status;
+
+      // modalTitle.textContent = 'Editar Empleado';
+
+      // openModal(employeeModal);
+    } catch (error) {
+      console.error("Error:", error)
+      alert(`Error al cargar los datos del empleado: ${error.message}`)
     }
   }
 
-  // Open contract modal
-  function openContractModal() {
-    const employee = employeesData.find(emp => emp.id === currentEmployeeId);
-    if (!employee) return;
-    
-    contractForm.reset();
-    
-    // Set default values
-    document.getElementById('contractSalary').value = employee.salary;
-    document.getElementById('contractStartDate').value = new Date().toISOString().split('T')[0];
-    
-    // Update contract preview
-    updateContractPreview(employee);
-    
-    contractModal.classList.add('active');
+  // Edit from details modal
+  editEmployeeBtn.addEventListener("click", () => {
+    if (currentEmployee) {
+      closeModal(employeeDetailsModal)
+      editEmployee(currentEmployee.id)
+    }
+  })
+
+  // Delete confirmation
+  function showDeleteConfirmation(employeeId) {
+    currentEmployee = { id: employeeId }
+
+    document.getElementById("confirmation-message").textContent =
+      `¿Está seguro de que desea eliminar al empleado con ID ${employeeId}?`
+
+    openModal(confirmationModal)
   }
 
-  // Update contract preview
-  function updateContractPreview(employee) {
-    const contractType = document.getElementById('contractType').value || 'indefinido';
-    const contractStartDate = document.getElementById('contractStartDate').value || new Date().toISOString().split('T')[0];
-    const contractEndDate = document.getElementById('contractEndDate').value || '';
-    const contractSalary = document.getElementById('contractSalary').value || employee.salary;
-    const contractTerms = document.getElementById('contractTerms').value || 'El empleado se compromete a cumplir con las políticas y procedimientos internos del hotel, así como a mantener la confidencialidad de la información a la que tenga acceso.';
-    
-    document.getElementById('contractDate').textContent = formatDate(new Date().toISOString().split('T')[0]);
-    document.getElementById('contractEmployeeName').textContent = `${employee.firstName} ${employee.lastName}`;
-    document.getElementById('contractEmployeeAddress').textContent = employee.address;
-    document.getElementById('contractEmployeePosition').textContent = getRoleName(employee.role);
-    document.getElementById('contractEmployeeDepartment').textContent = getDepartmentName(employee.department);
-    document.getElementById('contractTypeText').textContent = getContractTypeName(contractType).toLowerCase();
-    document.getElementById('contractStartDateText').textContent = formatDate(contractStartDate);
-    
-    if (contractType === 'indefinido') {
-      document.getElementById('contractEndDateSection').style.display = 'none';
-    } else {
-      document.getElementById('contractEndDateSection').style.display = 'inline';
-      document.getElementById('contractEndDateText').textContent = contractEndDate ? formatDate(contractEndDate) : 'por definir';
+  // Delete from details modal
+  deleteEmployeeBtn.addEventListener("click", () => {
+    if (currentEmployee) {
+      closeModal(employeeDetailsModal)
+      showDeleteConfirmation(currentEmployee.id)
     }
-    
-    document.getElementById('contractSalaryText').textContent = `$${parseFloat(contractSalary).toFixed(2)}`;
-    document.getElementById('contractTermsText').textContent = contractTerms;
-  }
+  })
 
-  // Close modals
-  function closeEmployeeModal() {
-    employeeModal.classList.remove('active');
-  }
-  
-  function closeEmployeeDetailModal() {
-    employeeDetailModal.classList.remove('active');
-  }
-  
-  function closeContractModal() {
-    contractModal.classList.remove('active');
-  }
+  // Confirm delete
+  confirmActionBtn.addEventListener("click", async () => {
+    if (currentEmployee) {
+      try {
+        // Delete employee from API
+        // Comentado hasta que la API esté lista
+        /*
+        const response = await fetch(`${API_URL.employees}/${currentEmployee.id}`, {
+          method: 'DELETE'
+        });
+        
+        if (!response.ok) {
+          throw new Error('Error al eliminar el empleado');
+        }
+        */
 
-  // Apply filters
-  function applyFilters() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const departmentValue = departmentFilter.value;
-    const statusValue = statusFilter.value;
-    
-    filteredData = employeesData.filter(employee => {
-      const fullName = `${employee.firstName} ${employee.lastName}`.toLowerCase();
-      const matchesSearch = fullName.includes(searchTerm) || employee.email.toLowerCase().includes(searchTerm);
-      const matchesDepartment = !departmentValue || employee.department === departmentValue;
-      const matchesStatus = !statusValue || employee.status === statusValue;
-      
-      return matchesSearch && matchesDepartment && matchesStatus;
-    });
-    
-    renderEmployeesTable();
-  }
+        // Por ahora, mostrar mensaje
+        alert(`Empleado con ID ${currentEmployee.id} eliminado correctamente`)
 
-  // Event Listeners
-  addEmployeeBtn.addEventListener('click', openAddEmployeeModal);
-  cancelEmployeeBtn.addEventListener('click', closeEmployeeModal);
-  generateContractBtn.addEventListener('click', openContractModal);
-  cancelContractBtn.addEventListener('click', closeContractModal);
-  applyFiltersBtn.addEventListener('click', applyFilters);
-  
-  // Tab navigation
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', function() {
-      const tabId = this.getAttribute('data-tab');
-      
-      document.querySelectorAll('.tab').forEach(t => {
-        t.classList.remove('active');
-      });
-      document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-      });
-      
-      this.classList.add('active');
-      document.getElementById(`${tabId}Tab`).classList.add('active');
-    });
-  });
-  
-  // Contract form events
-  document.getElementById('contractType').addEventListener('change', function() {
-    const contractType = this.value;
-    const durationField = document.getElementById('contractDuration');
-    const endDateField = document.getElementById('contractEndDate');
-    
-    if (contractType === 'indefinido') {
-      durationField.disabled = true;
-      endDateField.disabled = true;
-    } else {
-      durationField.disabled = false;
-      endDateField.disabled = false;
+        // Close modal
+        closeModal(confirmationModal)
+
+        // Refresh employee list
+        fetchEmployees()
+      } catch (error) {
+        console.error("Error:", error)
+        alert(`Error al eliminar el empleado: ${error.message}`)
+      }
     }
-    
-    const employee = employeesData.find(emp => emp.id === currentEmployeeId);
-    if (employee) {
-      updateContractPreview(employee);
-    }
-  });
-  
-  document.getElementById('contractStartDate').addEventListener('change', function() {
-    const employee = employeesData.find(emp => emp.id === currentEmployeeId);
-    if (employee) {
-      updateContractPreview(employee);
-    }
-  });
-  
-  document.getElementById('contractEndDate').addEventListener('change', function() {
-    const employee = employeesData.find(emp => emp.id === currentEmployeeId);
-    if (employee) {
-      updateContractPreview(employee);
-    }
-  });
-  
-  document.getElementById('contractSalary').addEventListener('input', function() {
-    const employee = employeesData.find(emp => emp.id === currentEmployeeId);
-    if (employee) {
-      updateContractPreview(employee);
-    }
-  });
-  
-  document.getElementById('contractTerms').addEventListener('input', function() {
-    const employee = employeesData.find(emp => emp.id === currentEmployeeId);
-    if (employee) {
-      updateContractPreview(employee);
-    }
-  });
-  
-  // Print contract
-  printContractBtn.addEventListener('click', function() {
-    const contractPreview = document.getElementById('contractPreview');
-    const printWindow = window.open('', '_blank');
-    printWindow.document.write(`
-      <html>
-        <head>
-          <title>Contrato de Trabajo</title>
-          <style>
-            body {
-              font-family: Arial, sans-serif;
-              line-height: 1.5;
-              margin: 2cm;
-            }
-            h1 {
-              font-size: 18px;
-              text-align: center;
-              margin-bottom: 24px;
-            }
-            h2 {
-              font-size: 14px;
-              margin-top: 24px;
-              margin-bottom: 8px;
-            }
-            p {
-              margin-bottom: 12px;
-            }
-            .signature {
-              margin-top: 48px;
-              display: flex;
-              justify-content: space-between;
-            }
-            .signature-line {
-              width: 200px;
-              border-top: 1px solid #000;
-              margin-top: 48px;
-              padding-top: 8px;
-              text-align: center;
-            }
-          </style>
-        </head>
-        <body>
-          ${contractPreview.innerHTML}
-        </body>
-      </html>
-    `);
-    printWindow.document.close();
-    printWindow.print();
-  });
-  
-  // Save employee changes
-  saveEmployeeChangesBtn.addEventListener('click', function() {
-    const employee = employeesData.find(emp => emp.id === currentEmployeeId);
-    if (!employee) return;
-    
-    employee.department = document.getElementById('employeeDepartment').value;
-    employee.role = document.getElementById('employeeRole').value;
-    employee.status = document.getElementById('employeeStatus').value;
-    employee.hireDate = document.getElementById('employeeHireDate').value;
-    
-    // Update UI
-    document.getElementById('employeePosition').textContent = getRoleName(employee.role);
-    
-    // Refresh table
-    applyFilters();
-    
-    alert('Cambios guardados correctamente');
-  });
-  
-  // Form submissions
-  employeeForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(employeeForm);
+  })
+
+  // Save employee (add or edit)
+  employeeForm.addEventListener("submit", async (e) => {
+    e.preventDefault()
+
+    const employeeId = document.getElementById("employee-id").value
+    const firstName = document.getElementById("first-name").value
+    const lastName = document.getElementById("last-name").value
+    const email = document.getElementById("email").value
+    const phone = document.getElementById("phone").value
+    const department = document.getElementById("department").value
+    const position = document.getElementById("position").value
+    const hireDate = document.getElementById("hire-date").value
+    const salary = Number.parseInt(document.getElementById("salary").value)
+    const status = document.getElementById("status").value
+
     const employeeData = {
-      firstName: formData.get('firstName'),
-      lastName: formData.get('lastName'),
-      email: formData.get('email'),
-      phone: formData.get('phone'),
-      address: formData.get('address'),
-      department: formData.get('department'),
-      role: formData.get('role'),
-      hireDate: formData.get('hireDate'),
-      salary: parseFloat(formData.get('salary')),
-      status: 'activo',
-      performance: 80
-    };
-    
-    if (currentEmployeeId) {
-      // Edit existing employee
-      const index = employeesData.findIndex(emp => emp.id === currentEmployeeId);
-      if (index !== -1) {
-        employeesData[index] = { ...employeesData[index], ...employeeData };
-      }
-    } else {
-      // Add new employee
-      const newId = Math.max(...employeesData.map(emp => emp.id), 0) + 1;
-      employeesData.push({ id: newId, ...employeeData });
+      firstName,
+      lastName,
+      email,
+      phone,
+      department,
+      position,
+      hireDate,
+      salary,
+      status,
     }
-    
-    closeEmployeeModal();
-    applyFilters(); // Re-apply filters and render table
-  });
-  
-  contractForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(contractForm);
-    const contractData = {
-      employeeId: currentEmployeeId,
-      type: formData.get('contractType'),
-      startDate: formData.get('contractStartDate'),
-      endDate: formData.get('contractEndDate') || null,
-      status: 'activo'
-    };
-    
-    // Add new contract
-    const newId = Math.max(...contractsData.map(contract => contract.id), 0) + 1;
-    contractsData.push({ id: newId, ...contractData });
-    
-    closeContractModal();
-    loadEmployeeContracts(currentEmployeeId);
-    
-    alert('Contrato generado correctamente');
-  });
 
-  // Close modal buttons
-  document.querySelectorAll('.close-modal-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-      const modal = this.closest('.modal');
-      if (modal) {
-        modal.classList.remove('active');
+    if (employeeId) {
+      employeeData.id = employeeId
+    }
+
+    try {
+      // Send data to API
+      // Comentado hasta que la API esté lista
+      /*
+      const url = employeeId 
+        ? `${API_URL.employees}/${employeeId}` 
+        : API_URL.employees;
+        
+      const method = employeeId ? 'PUT' : 'POST';
+      
+      const response = await fetch(url, {
+        method: method,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(employeeData)
+      });
+      
+      if (!response.ok) {
+        throw new Error('Error al guardar los datos del empleado');
       }
-    });
-  });
-  
-  // Initialize
-  renderEmployeesTable();
-});
+      */
+
+      // Por ahora, mostrar mensaje
+      alert(`Datos del empleado ${employeeId ? "actualizados" : "guardados"} correctamente`)
+      console.log("Datos enviados:", employeeData)
+
+      // Close modal
+      closeModal(employeeModal)
+
+      // Refresh employee list
+      fetchEmployees()
+    } catch (error) {
+      console.error("Error:", error)
+      alert(`Error al guardar los datos: ${error.message}`)
+    }
+  })
+
+  // Cargar datos iniciales para el dashboard
+  function loadDashboardData() {
+    // Aquí se cargarían los datos para el dashboard desde la API
+    console.log("Cargando datos del dashboard...")
+  }
+
+  // Inicializar la aplicación
+  loadDashboardData()
+})
+
+// Añadir código para la configuración de la base de datos
+document.addEventListener("DOMContentLoaded", () => {
+  // Formulario de configuración de base de datos
+  const dbConfigForm = document.getElementById("db-config-form")
+  const testConnectionBtn = document.getElementById("test-connection-btn")
+
+  if (dbConfigForm) {
+    dbConfigForm.addEventListener("submit", (e) => {
+      e.preventDefault()
+
+      // Recopilar datos del formulario
+      const dbConfig = {
+        host: document.getElementById("db-host").value,
+        port: document.getElementById("db-port").value,
+        database: document.getElementById("db-name").value,
+        type: document.getElementById("db-type").value,
+        user: document.getElementById("db-user").value,
+        password: document.getElementById("db-password").value,
+        apiUrl: document.getElementById("api-url").value,
+      }
+
+      // Guardar configuración (en localStorage por ahora)
+      localStorage.setItem("dbConfig", JSON.stringify(dbConfig))
+
+      // Mostrar mensaje de éxito
+      const successMessage = document.createElement("div")
+      successMessage.className = "connection-status connection-success"
+      successMessage.textContent =
+        "Configuración guardada correctamente. Reinicie la aplicación para aplicar los cambios."
+
+      // Eliminar mensajes anteriores
+      const previousMessages = document.querySelectorAll(".connection-status")
+      previousMessages.forEach((msg) => msg.remove())
+
+      // Añadir nuevo mensaje
+      dbConfigForm.appendChild(successMessage)
+
+      // Actualizar la URL de la API en la aplicación
+      if (dbConfig.apiUrl) {
+        window.API_URL = {
+          employees: `${dbConfig.apiUrl}/employees`,
+          departments: `${dbConfig.apiUrl}/departments`,
+          positions: `${dbConfig.apiUrl}/positions`,
+        }
+        console.log("API URL actualizada:", window.API_URL)
+      }
+    })
+  }
+
+  if (testConnectionBtn) {
+    testConnectionBtn.addEventListener("click", () => {
+      // Recopilar datos del formulario
+      const dbConfig = {
+        host: document.getElementById("db-host").value,
+        port: document.getElementById("db-port").value,
+        database: document.getElementById("db-name").value,
+        type: document.getElementById("db-type").value,
+        user: document.getElementById("db-user").value,
+        password: document.getElementById("db-password").value,
+        apiUrl: document.getElementById("api-url").value,
+      }
+
+      // Simular prueba de conexión
+      testConnection(dbConfig)
+    })
+  }
+
+  // Función para probar la conexión
+  function testConnection(config) {
+    // Eliminar mensajes anteriores
+    const previousMessages = document.querySelectorAll(".connection-status")
+    previousMessages.forEach((msg) => msg.remove())
+
+    // Crear mensaje de "probando conexión"
+    const testingMessage = document.createElement("div")
+    testingMessage.className = "connection-status"
+    testingMessage.textContent = "Probando conexión..."
+    dbConfigForm.appendChild(testingMessage)
+
+    // Simular una prueba de conexión (en un entorno real, esto sería una llamada a la API)
+    setTimeout(() => {
+      testingMessage.remove()
+
+      // Determinar si la conexión fue exitosa (simulado)
+      const isSuccess = config.host && config.database && config.user
+
+      const statusMessage = document.createElement("div")
+      if (isSuccess) {
+        statusMessage.className = "connection-status connection-success"
+        statusMessage.textContent = "Conexión exitosa a la base de datos."
+      } else {
+        statusMessage.className = "connection-status connection-error"
+        statusMessage.textContent = "Error de conexión. Verifique los datos ingresados."
+      }
+
+      dbConfigForm.appendChild(statusMessage)
+    }, 1500)
+  }
+
+  // Cargar configuración guardada (si existe)
+  function loadSavedConfig() {
+    const savedConfig = localStorage.getItem("dbConfig")
+    if (savedConfig && dbConfigForm) {
+      try {
+        const config = JSON.parse(savedConfig)
+
+        // Llenar el formulario con los datos guardados
+        document.getElementById("db-host").value = config.host || ""
+        document.getElementById("db-port").value = config.port || ""
+        document.getElementById("db-name").value = config.database || ""
+        document.getElementById("db-type").value = config.type || "mysql"
+        document.getElementById("db-user").value = config.user || ""
+        document.getElementById("db-password").value = config.password || ""
+        document.getElementById("api-url").value = config.apiUrl || ""
+
+        // Actualizar la URL de la API en la aplicación
+        if (config.apiUrl) {
+          window.API_URL = {
+            employees: `${config.apiUrl}/employees`,
+            departments: `${config.apiUrl}/departments`,
+            positions: `${config.apiUrl}/positions`,
+          }
+          console.log("API URL cargada desde configuración guardada:", window.API_URL)
+        }
+      } catch (error) {
+        console.error("Error al cargar la configuración guardada:", error)
+      }
+    }
+  }
+
+  // Inicializar carga de configuración
+  loadSavedConfig()
+})
+
+// Mantener el código para las animaciones y efectos visuales
+document.addEventListener("DOMContentLoaded", () => {
+  // Set current year in footer
+  if (document.getElementById("current-year")) {
+    document.getElementById("current-year").textContent = new Date().getFullYear()
+  }
+
+  // Header scroll effect
+  const header = document.querySelector(".header")
+  if (header) {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 50) {
+        header.classList.add("scrolled")
+      } else {
+        header.classList.remove("scrolled")
+      }
+    })
+  }
+
+  // Scroll animations
+  const animatedElements = document.querySelectorAll(".fade-in-up, .fade-in-scale")
+  function checkScroll() {
+    animatedElements.forEach((element) => {
+      const elementTop = element.getBoundingClientRect().top
+      const windowHeight = window.innerHeight
+
+      if (elementTop < windowHeight * 0.8) {
+        element.classList.add("active")
+      }
+    })
+  }
+
+  // Initial check
+  checkScroll()
+
+  // Check on scroll
+  window.addEventListener("scroll", checkScroll)
+})
+
