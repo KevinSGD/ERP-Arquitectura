@@ -1,578 +1,193 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HRManager - Sistema de Recursos Humanos</title>
-  <link rel="stylesheet" href="RH.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght300;400;500;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursos Humanos - ERP</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fc;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #1E3A8A;
+            color: white;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .sidebar ul li a.active, .sidebar ul li a:hover {
+            background-color: #2563EB;
+        }
+
+        /* Contenido principal */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #3B82F6;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        header button {
+            background-color: #2563EB;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Tabla de empleados */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #2563EB;
+            color: white;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            width: 300px;
+        }
+
+        .modal-content input, .modal-content button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-  <div class="app-container">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <div class="logo">
-          <i class="fas fa-building"></i>
-          <h2>HRManager</h2>
-        </div>
-        <button id="sidebar-toggle" class="sidebar-toggle">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
-      
-      <nav class="sidebar-nav">
-        <ul>
-          <li class="active" data-section="dashboard">
-            <a href="#"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
-          </li>
-          <li data-section="employees">
-            <a href="#"><i class="fas fa-users"></i> <span>Empleados</span></a>
-          </li>
-          <li data-section="departments">
-            <a href="#"><i class="fas fa-sitemap"></i> <span>Departamentos</span></a>
-          </li>
-          <li data-section="positions">
-            <a href="#"><i class="fas fa-id-badge"></i> <span>Puestos</span></a>
-          </li>
-          <li data-section="attendance">
-            <a href="#"><i class="fas fa-calendar-check"></i> <span>Asistencia</span></a>
-          </li>
-          <li data-section="payroll">
-            <a href="#"><i class="fas fa-money-bill-wave"></i> <span>Nómina</span></a>
-          </li>
-          <li data-section="reports">
-            <a href="#"><i class="fas fa-chart-bar"></i> <span>Reportes</span></a>
-          </li>
-          <li data-section="settings">
-            <a href="#"><i class="fas fa-cog"></i> <span>Configuración</span></a>
-          </li>
-        </ul>
-      </nav>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main-content">
-      <!-- Header -->
-      <header class="header">
-        <div class="header-search">
-          <i class="fas fa-search"></i>
-          <input type="text" placeholder="Buscar...">
-        </div>
-        <div class="header-right">
-          <div class="notifications">
-            <i class="fas fa-bell"></i>
-            <span class="badge">3</span>
-          </div>
-          <div class="user-profile">
-            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User Profile">
-            <div class="user-info">
-              <span class="user-name">Juan Pérez</span>
-              <span class="user-role">Administrador</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <!-- Content Area -->
-      <div class="content">
-        <!-- Dashboard Section -->
-        <section id="dashboard" class="section active">
-          <div class="section-header">
-            <h1>Dashboard</h1>
-            <p>Resumen general del departamento de Recursos Humanos</p>
-          </div>
-
-          <!-- Modificar la sección de Dashboard para mostrar que está esperando datos -->
-          <div class="dashboard-stats">
-            <div class="stat-card">
-              <div class="stat-icon">
-                <i class="fas fa-users"></i>
-              </div>
-              <div class="stat-info">
-                <h3>Total Empleados</h3>
-                <p class="stat-number">--</p>
-                <p class="stat-change">Conecte su base de datos</p>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon">
-                <i class="fas fa-user-plus"></i>
-              </div>
-              <div class="stat-info">
-                <h3>Nuevas Contrataciones</h3>
-                <p class="stat-number">--</p>
-                <p class="stat-change">Conecte su base de datos</p>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon">
-                <i class="fas fa-user-minus"></i>
-              </div>
-              <div class="stat-info">
-                <h3>Bajas</h3>
-                <p class="stat-number">--</p>
-                <p class="stat-change">Conecte su base de datos</p>
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon">
-                <i class="fas fa-percentage"></i>
-              </div>
-              <div class="stat-info">
-                <h3>Tasa de Retención</h3>
-                <p class="stat-number">--</p>
-                <p class="stat-change">Conecte su base de datos</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="dashboard-charts">
-            <div class="chart-container">
-              <div class="chart-header">
-                <h3>Distribución por Departamento</h3>
-              </div>
-              <div class="chart-placeholder">
-                <div class="chart-bars">
-                  <div class="chart-bar" style="height: 70%;" data-label="TI" data-value="35"></div>
-                  <div class="chart-bar" style="height: 50%;" data-label="Ventas" data-value="25"></div>
-                  <div class="chart-bar" style="height: 30%;" data-label="RRHH" data-value="15"></div>
-                  <div class="chart-bar" style="height: 60%;" data-label="Mkt" data-value="30"></div>
-                  <div class="chart-bar" style="height: 40%;" data-label="Fin" data-value="20"></div>
-                </div>
-              </div>
-            </div>
-            <div class="chart-container">
-              <div class="chart-header">
-                <h3>Contrataciones vs Bajas</h3>
-              </div>
-              <div class="chart-placeholder">
-                <div class="line-chart">
-                  <div class="line-chart-legend">
-                    <div class="legend-item">
-                      <span class="legend-color" style="background-color: #4CAF50;"></span>
-                      <span>Contrataciones</span>
-                    </div>
-                    <div class="legend-item">
-                      <span class="legend-color" style="background-color: #F44336;"></span>
-                      <span>Bajas</span>
-                    </div>
-                  </div>
-                  <div class="line-chart-content">
-                    <!-- Simplified chart representation -->
-                    <svg width="100%" height="200">
-                      <polyline points="0,150 50,120 100,100 150,80 200,60 250,50 300,30" 
-                        style="fill:none;stroke:#4CAF50;stroke-width:3" />
-                      <polyline points="0,160 50,165 100,155 150,160 200,150 250,155 300,145" 
-                        style="fill:none;stroke:#F44336;stroke-width:3" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="recent-activity">
-            <div class="section-header">
-              <h2>Actividad Reciente</h2>
-              <a href="#" class="view-all">Ver todo</a>
-            </div>
-            <!-- Modificar la sección de actividad reciente -->
-            <div class="activity-list">
-              <div class="activity-item">
-                <div class="activity-icon">
-                  <i class="fas fa-database"></i>
-                </div>
-                <div class="activity-details">
-                  <p>Conecte su base de datos para ver la actividad reciente</p>
-                  <span class="activity-time">Sistema listo para recibir datos</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Employees Section -->
-        <section id="employees" class="section">
-          <div class="section-header">
-            <h1>Gestión de Empleados</h1>
-            <button id="add-employee-btn" class="btn btn-primary">
-              <i class="fas fa-plus"></i> Nuevo Empleado
-            </button>
-          </div>
-
-          <div class="filter-bar">
-            <div class="search-container">
-              <i class="fas fa-search"></i>
-              <input type="text" id="employee-search" placeholder="Buscar empleado...">
-            </div>
-            <div class="filter-options">
-              <select id="department-filter">
-                <option value="">Todos los departamentos</option>
-                <option value="TI">TI</option>
-                <option value="Ventas">Ventas</option>
-                <option value="Marketing">Marketing</option>
-                <option value="RRHH">RRHH</option>
-                <option value="Finanzas">Finanzas</option>
-              </select>
-              <select id="status-filter">
-                <option value="">Todos los estados</option>
-                <option value="Activo">Activo</option>
-                <option value="Inactivo">Inactivo</option>
-                <option value="Vacaciones">Vacaciones</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="employees-table-container">
-            <table class="employees-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Nombre</th>
-                  <th>Departamento</th>
-                  <th>Puesto</th>
-                  <th>Fecha Contratación</th>
-                  <th>Estado</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody id="employees-table-body">
-                <!-- Employee rows will be populated by JavaScript -->
-              </tbody>
-            </table>
-          </div>
-
-          <div class="pagination">
-            <button class="pagination-btn" disabled><i class="fas fa-chevron-left"></i></button>
-            <div class="pagination-numbers">
-              <button class="pagination-number active">1</button>
-              <button class="pagination-number">2</button>
-              <button class="pagination-number">3</button>
-            </div>
-            <button class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
-          </div>
-        </section>
-
-        <!-- Other sections would go here -->
-        <section id="departments" class="section">
-          <div class="section-header">
-            <h1>Departamentos</h1>
-          </div>
-          <p>Contenido de departamentos (no implementado en esta versión)</p>
-        </section>
-
-        <section id="positions" class="section">
-          <div class="section-header">
-            <h1>Puestos</h1>
-          </div>
-          <p>Contenido de puestos (no implementado en esta versión)</p>
-        </section>
-
-        <section id="attendance" class="section">
-          <div class="section-header">
-            <h1>Asistencia</h1>
-          </div>
-          <p>Contenido de asistencia (no implementado en esta versión)</p>
-        </section>
-
-        <section id="payroll" class="section">
-          <div class="section-header">
-            <h1>Nómina</h1>
-          </div>
-          <p>Contenido de nómina (no implementado en esta versión)</p>
-        </section>
-
-        <section id="reports" class="section">
-          <div class="section-header">
-            <h1>Reportes</h1>
-          </div>
-          <p>Contenido de reportes (no implementado en esta versión)</p>
-        </section>
-
-        <!-- Añadir una sección de configuración de conexión a la base de datos -->
-        <section id="settings" class="section">
-          <div class="section-header">
-            <h1>Configuración</h1>
-          </div>
-          
-          <div class="settings-container">
-            <div class="settings-card">
-              <div class="settings-header">
-                <h2>Configuración de Base de Datos</h2>
-                <p>Configure la conexión a su base de datos para comenzar a utilizar el sistema</p>
-              </div>
-              
-              <form id="db-config-form" class="settings-form">
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="db-host">Host de la Base de Datos</label>
-                    <input type="text" id="db-host" placeholder="localhost o dirección IP">
-                  </div>
-                  <div class="form-group">
-                    <label for="db-port">Puerto</label>
-                    <input type="text" id="db-port" placeholder="3306">
-                  </div>
-                </div>
-                
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="db-name">Nombre de la Base de Datos</label>
-                    <input type="text" id="db-name" placeholder="rrhh_db">
-                  </div>
-                  <div class="form-group">
-                    <label for="db-type">Tipo de Base de Datos</label>
-                    <select id="db-type">
-                      <option value="mysql">MySQL</option>
-                      <option value="postgresql">PostgreSQL</option>
-                      <option value="sqlserver">SQL Server</option>
-                      <option value="oracle">Oracle</option>
-                    </select>
-                  </div>
-                </div>
-                
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="db-user">Usuario</label>
-                    <input type="text" id="db-user" placeholder="usuario">
-                  </div>
-                  <div class="form-group">
-                    <label for="db-password">Contraseña</label>
-                    <input type="password" id="db-password" placeholder="contraseña">
-                  </div>
-                </div>
-                
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="api-url">URL de la API (si es diferente)</label>
-                    <input type="text" id="api-url" placeholder="http://localhost:3000/api">
-                  </div>
-                </div>
-                
-                <div class="form-actions">
-                  <button type="button" class="btn btn-secondary" id="test-connection-btn">Probar Conexión</button>
-                  <button type="submit" class="btn btn-primary">Guardar Configuración</button>
-                </div>
-              </form>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>ERP - RRHH</h2>
+            <nav>
+                <ul>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#" class="active">Empleados</a></li>
+                    <li><a href="#">Reportes</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <h1>Gestión de Empleados</h1>
+                <button id="addEmployeeBtn">+ Agregar Empleado</button>
+            </header>
+            
+            <!-- Filtros -->
+            <div class="filters">
+                <input type="text" id="searchInput" placeholder="Buscar empleado...">
             </div>
             
-            <div class="settings-card">
-              <div class="settings-header">
-                <h2>Estructura de Tablas</h2>
-                <p>Información sobre la estructura de tablas requerida para el sistema</p>
-              </div>
-              
-              <div class="table-structure">
-                <h3>Tabla: employees</h3>
-                <pre>
-CREATE TABLE employees (
-  id VARCHAR(10) PRIMARY KEY,
-  firstName VARCHAR(50) NOT NULL,
-  lastName VARCHAR(50) NOT NULL,
-  email VARCHAR(100) UNIQUE NOT NULL,
-  phone VARCHAR(20),
-  department VARCHAR(50) NOT NULL,
-  position VARCHAR(50) NOT NULL,
-  hireDate DATE NOT NULL,
-  salary DECIMAL(10,2) NOT NULL,
-  status VARCHAR(20) NOT NULL
-);
-                </pre>
-                
-                <h3>Tabla: departments</h3>
-                <pre>
-CREATE TABLE departments (
-  id VARCHAR(10) PRIMARY KEY,
-  name VARCHAR(50) NOT NULL,
-  description TEXT
-);
-                </pre>
-                
-                <h3>Tabla: positions</h3>
-                <pre>
-CREATE TABLE positions (
-  id VARCHAR(10) PRIMARY KEY,
-  name VARCHAR(50) NOT NULL,
-  department VARCHAR(10) NOT NULL,
-  description TEXT,
-  FOREIGN KEY (department) REFERENCES departments(id)
-);
-                </pre>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </main>
-  </div>
-
-  <!-- Modal for adding/editing employee -->
-  <div id="employee-modal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 id="modal-title">Añadir Nuevo Empleado</h2>
-        <button class="close-modal">&times;></button>
-      </div>
-      <div class="modal-body">
-        <form id="employee-form">
-          <input type="hidden" id="employee-id">
-          
-          <div class="form-row">
-            <div class="form-group">
-              <label for="first-name">Nombre</label>
-              <input type="text" id="first-name" required>
-            </div>
-            <div class="form-group">
-              <label for="last-name">Apellidos</label>
-              <input type="text" id="last-name" required>
-            </div>
-          </div>
-          
-          <div class="form-row">
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" required>
-            </div>
-            <div class="form-group">
-              <label for="phone">Teléfono</label>
-              <input type="tel" id="phone">
-            </div>
-          </div>
-          
-          <div class="form-row">
-            <div class="form-group">
-              <label for="department">Departamento</label>
-              <select id="department" required>
-                <option value="">Seleccionar departamento</option>
-                <option value="TI">TI</option>
-                <option value="Ventas">Ventas</option>
-                <option value="Marketing">Marketing</option>
-                <option value="RRHH">RRHH</option>
-                <option value="Finanzas">Finanzas</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="position">Puesto</label>
-              <select id="position" required>
-                <option value="">Seleccionar puesto</option>
-                <option value="Gerente">Gerente</option>
-                <option value="Supervisor">Supervisor</option>
-                <option value="Analista">Analista</option>
-                <option value="Desarrollador">Desarrollador</option>
-                <option value="Diseñador">Diseñador</option>
-                <option value="Asistente">Asistente</option>
-              </select>
-            </div>
-          </div>
-          
-          <div class="form-row">
-            <div class="form-group">
-              <label for="hire-date">Fecha de Contratación</label>
-              <input type="date" id="hire-date" required>
-            </div>
-            <div class="form-group">
-              <label for="salary">Salario</label>
-              <input type="number" id="salary" min="0" step="100" required>
-            </div>
-          </div>
-          
-          <div class="form-row">
-            <div class="form-group">
-              <label for="status">Estado</label>
-              <select id="status" required>
-                <option value="Activo">Activo</option>
-                <option value="Inactivo">Inactivo</option>
-                <option value="Vacaciones">Vacaciones</option>
-              </select>
-            </div>
-          </div>
-          
-          <div class="form-actions">
-            <button type="button" class="btn btn-secondary close-modal">Cancelar</button>
-            <button type="submit" class="btn btn-primary">Guardar</button>
-          </div>
-        </form>
-      </div>
+            <!-- Tabla de empleados -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Departamento</th>
+                        <th>Cargo</th>
+                        <th>Fecha de Ingreso</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="employeesTableBody">
+                    <!-- Aquí se insertarán dinámicamente los empleados -->
+                </tbody>
+            </table>
+        </main>
     </div>
-  </div>
-
-  <!-- Employee Details Modal -->
-  <div id="employee-details-modal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Detalles del Empleado</h2>
-        <button class="close-modal">&times;></button>
-      </div>
-      <div class="modal-body">
-        <div class="employee-profile">
-          <div class="employee-avatar">
-            <img id="employee-avatar" src="https://randomuser.me/api/portraits/men/1.jpg" alt="Employee">
-          </div>
-          <div class="employee-info">
-            <h3 id="employee-name">Nombre del Empleado</h3>
-            <p id="employee-position">Puesto</p>
-            <span id="employee-status" class="status-badge">Activo</span>
-          </div>
+    
+    <!-- Modal para agregar/editar empleados -->
+    <div id="employeeModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Agregar Empleado</h2>
+            <form id="employeeForm">
+                <input type="text" id="firstName" placeholder="Nombre" required>
+                <input type="text" id="lastName" placeholder="Apellido" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="text" id="department" placeholder="Departamento" required>
+                <input type="text" id="role" placeholder="Cargo" required>
+                <input type="date" id="hireDate" required>
+                <button type="submit">Guardar</button>
+                <button type="button" id="cancelEmployeeBtn">Cancelar</button>
+            </form>
         </div>
-        
-        <div class="employee-details-grid">
-          <div class="detail-group">
-            <label>ID de Empleado</label>
-            <p id="detail-id">EMP001</p>
-          </div>
-          <div class="detail-group">
-            <label>Departamento</label>
-            <p id="detail-department">Departamento</p>
-          </div>
-          <div class="detail-group">
-            <label>Email</label>
-            <p id="detail-email">email@ejemplo.com</p>
-          </div>
-          <div class="detail-group">
-            <label>Teléfono</label>
-            <p id="detail-phone">+1234567890</p>
-          </div>
-          <div class="detail-group">
-            <label>Fecha de Contratación</label>
-            <p id="detail-hire-date">01/01/2022</p>
-          </div>
-          <div class="detail-group">
-            <label>Salario</label>
-            <p id="detail-salary">$50,000</p>
-          </div>
-        </div>
-        
-        <div class="employee-actions">
-          <button id="edit-employee-btn" class="btn btn-secondary">
-            <i class="fas fa-edit"></i> Editar
-          </button>
-          <button id="delete-employee-btn" class="btn btn-danger">
-            <i class="fas fa-trash"></i> Eliminar
-          </button>
-        </div>
-      </div>
     </div>
-  </div>
-
-  <!-- Confirmation Modal -->
-  <div id="confirmation-modal" class="modal">
-    <div class="modal-content modal-sm">
-      <div class="modal-header">
-        <h2>Confirmar Acción</h2>
-        <button class="close-modal">&times;></button>
-      </div>
-      <div class="modal-body">
-        <p id="confirmation-message">¿Está seguro de que desea eliminar este empleado?</p>
-        <div class="form-actions">
-          <button class="btn btn-secondary close-modal">Cancelar</button>
-          <button id="confirm-action-btn" class="btn btn-danger">Confirmar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="RH.js"></script>
+    
+    <script src="RH.js"></script>
 </body>
 </html>
-
