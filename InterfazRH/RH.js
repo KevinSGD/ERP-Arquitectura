@@ -1,37 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Sample employees data
-  const employeesData = [
-    { id: 1, firstName: 'Juan', lastName: 'Pérez', email: 'juan.perez@hotel.com', phone: '+52 123 456 7890', address: 'Av. Principal #123, Ciudad', department: 'recepcion', role: 'recepcionista', hireDate: '2022-05-15', status: 'activo', salary: 15000, performance: 85 },
-    { id: 2, firstName: 'María', lastName: 'González', email: 'maria.gonzalez@hotel.com', phone: '+52 234 567 8901', address: 'Calle 45 #678, Ciudad', department: 'limpieza', role: 'camarero', hireDate: '2021-08-10', status: 'activo', salary: 12000, performance: 90 },
-    { id: 3, firstName: 'Carlos', lastName: 'Rodríguez', email: 'carlos.rodriguez@hotel.com', phone: '+52 345 678 9012', address: 'Blvd. Central #456, Ciudad', department: 'cocina', role: 'cocinero', hireDate: '2023-01-20', status: 'activo', salary: 18000, performance: 75 },
-    { id: 4, firstName: 'Ana', lastName: 'Martínez', email: 'ana.martinez@hotel.com', phone: '+52 456 789 0123', address: 'Av. Norte #789, Ciudad', department: 'restaurante', role: 'mesero', hireDate: '2022-11-05', status: 'descansando', salary: 13000, performance: 80 },
-    { id: 5, firstName: 'Roberto', lastName: 'López', email: 'roberto.lopez@hotel.com', phone: '+52 567 890 1234', address: 'Calle Sur #234, Ciudad', department: 'mantenimiento', role: 'mantenimiento', hireDate: '2021-03-15', status: 'activo', salary: 14000, performance: 95 },
-    { id: 6, firstName: 'Laura', lastName: 'Sánchez', email: 'laura.sanchez@hotel.com', phone: '+52 678 901 2345', address: 'Av. Este #567, Ciudad', department: 'administracion', role: 'administrativo', hireDate: '2022-07-01', status: 'activo', salary: 16000, performance: 88 },
-    { id: 7, firstName: 'Miguel', lastName: 'Hernández', email: 'miguel.hernandez@hotel.com', phone: '+52 789 012 3456', address: 'Calle Oeste #890, Ciudad', department: 'recepcion', role: 'recepcionista', hireDate: '2023-02-10', status: 'activo', salary: 15000, performance: 82 },
-    { id: 8, firstName: 'Sofía', lastName: 'Díaz', email: 'sofia.diaz@hotel.com', phone: '+52 890 123 4567', address: 'Blvd. Principal #123, Ciudad', department: 'limpieza', role: 'camarero', hireDate: '2021-10-20', status: 'despedido', salary: 12000, performance: 60 }
-  ];
-
-  // Sample contracts data
-  const contractsData = [
-    { id: 1, employeeId: 1, type: 'indefinido', startDate: '2022-05-15', endDate: null, status: 'activo' },
-    { id: 2, employeeId: 2, type: 'temporal', startDate: '2021-08-10', endDate: '2022-08-10', status: 'finalizado' },
-    { id: 3, employeeId: 2, type: 'indefinido', startDate: '2022-08-11', endDate: null, status: 'activo' },
-    { id: 4, employeeId: 3, type: 'temporal', startDate: '2023-01-20', endDate: '2023-07-20', status: 'activo' },
-    { id: 5, employeeId: 4, type: 'indefinido', startDate: '2022-11-05', endDate: null, status: 'activo' },
-    { id: 6, employeeId: 5, type: 'indefinido', startDate: '2021-03-15', endDate: null, status: 'activo' },
-    { id: 7, employeeId: 6, type: 'temporal', startDate: '2022-07-01', endDate: '2023-01-01', status: 'finalizado' },
-    { id: 8, employeeId: 6, type: 'indefinido', startDate: '2023-01-02', endDate: null, status: 'activo' },
-    { id: 9, employeeId: 7, type: 'practicas', startDate: '2023-02-10', endDate: '2023-08-10', status: 'activo' },
-    { id: 10, employeeId: 8, type: 'indefinido', startDate: '2021-10-20', endDate: '2023-03-15', status: 'finalizado' }
-  ];
-
-  // Sample payments data
-  const paymentsData = [
-    { id: 1, employeeId: 1, period: 'Enero 2024', paymentDate: '2024-01-31', grossAmount: 18200, deductions: 4140, netAmount: 14060 },
-    { id: 2, employeeId: 1, period: 'Febrero 2024', paymentDate: '2024-02-29', grossAmount: 17500, deductions: 3950, netAmount: 13550 },
-    { id: 3, employeeId: 1, period: 'Marzo 2024', paymentDate: '2024-03-31', grossAmount: 18800, deductions: 4320, netAmount: 14480 }
-  ];
-
   // DOM Elements
   const toggleSidebarBtn = document.getElementById('toggleSidebar');
   const sidebar = document.getElementById('sidebar');
@@ -153,20 +120,6 @@ document.addEventListener('DOMContentLoaded', function() {
         openEmployeeDetailModal(employeeId, 'contract');
       });
     });
-  }
-
-  // Get status badge HTML
-  function getStatusBadge(status) {
-    switch (status) {
-      case 'activo':
-        return '<span class="badge badge-green">Activo</span>';
-      case 'descansando':
-        return '<span class="badge badge-yellow">Descansando</span>';
-      case 'despedido':
-        return '<span class="badge badge-red">Despedido</span>';
-      default:
-        return '';
-    }
   }
 
   // Get department name
