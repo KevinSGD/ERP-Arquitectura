@@ -85,7 +85,6 @@
           <td class="p-2">
             <button onclick="editClient(${client.id})" class="bg-yellow-500 text-white p-1 rounded">Editar</button>
             <button onclick="deleteClient(${client.id})" class="bg-red-500 text-white p-1 rounded">Eliminar</button>
-            <button onclick="manageReservation(${client.id})" class="bg-green-500 text-white p-1 rounded">Reservar</button>
           </td>
         </tr>`).join('');
     }
@@ -104,12 +103,7 @@
       document.getElementById('address').value = client.address;
       document.getElementById('status').value = client.status;
     }
-    
-    async function manageReservation(clientId) {
-      alert(`Gestionar reserva para el cliente ID: ${clientId}`);
-      window.location.href = `reservations.php?clientId=${clientId}`;
-    }
-    
+
     document.getElementById('userMenuButton').addEventListener('click', () => {
       document.getElementById('userMenu').classList.toggle('hidden');
     });

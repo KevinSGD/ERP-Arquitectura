@@ -3,73 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recursos Humanos - ERP</title>
+    <title>Hotel Horizon Prime - RRHH</title>
     <link rel="stylesheet" href="RH.css">
-    <style>
-       
-    </style>
 </head>
 <body>
     <div class="container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <h2>ERP - RRHH</h2>
-            <nav>
-                <ul>
-                    <li><a href="#">Dashboard</a></li>
-                    <li><a href="#" class="active">Empleados</a></li>
-                    <li><a href="#">Reportes</a></li>
-                </ul>
-            </nav>
-        </aside>
-        
-        <!-- Main Content -->
-        <main class="main-content">
-            <header>
-                <h1>Gestión de Empleados</h1>
-                <button id="addEmployeeBtn">+ Agregar Empleado</button>
-            </header>
-            
-            <!-- Filtros -->
-            <div class="filters">
-                <input type="text" id="searchInput" placeholder="Buscar empleado...">
-            </div>
-            
-            <!-- Tabla de empleados -->
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Departamento</th>
-                        <th>Cargo</th>
-                        <th>Fecha de Ingreso</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="employeesTableBody">
-                    <!-- Aquí se insertarán dinámicamente los empleados -->
-                </tbody>
-            </table>
+        <header>
+            <h1>Hotel Horizon Prime - RRHH</h1>
+            <span class="user-info">Administrador</span>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" data-tab="employees">Empleados</button>
+            <button class="tab-button" data-tab="departments">Departamentos</button>
+        </div>
+
+        <main>
+            <!-- Sección de Empleados -->
+            <section id="employees" class="tab-content active">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Gestión de Empleados</h2>
+                        <div class="actions">
+                            <div class="search-container">
+                                <input type="search" id="employee-search" placeholder="Buscar empleados...">
+                            </div>
+                            <button id="add-employee-btn" class="btn primary">+ Añadir Empleado</button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <table id="employees-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Cargo</th>
+                                    <th>Departamento</th>
+                                    <th>Estado</th>
+                                    <th>Fecha de Ingreso</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Los datos de empleados se cargarán con JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de Departamentos -->
+            <section id="departments" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Gestión de Departamentos</h2>
+                        <button id="add-department-btn" class="btn primary">+ Añadir Departamento</button>
+                    </div>
+                    <div class="card-content">
+                        <table id="departments-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Departamento</th>
+                                    <th>Responsable</th>
+                                    <th>Empleados</th>
+                                    <th>Descripción</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Los datos de departamentos se cargarán con JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
-    
-    <!-- Modal para agregar/editar empleados -->
-    <div id="employeeModal" class="modal">
+
+    <!-- Modal para Añadir/Editar Empleado -->
+    <div id="employee-modal" class="modal">
         <div class="modal-content">
-            <h2 id="modalTitle">Agregar Empleado</h2>
-            <form id="employeeForm">
-                <input type="text" id="firstName" placeholder="Nombre" required>
-                <input type="text" id="lastName" placeholder="Apellido" required>
-                <input type="email" id="email" placeholder="Email" required>
-                <input type="text" id="department" placeholder="Departamento" required>
-                <input type="text" id="role" placeholder="Cargo" required>
-                <input type="date" id="hireDate" required>
-                <button type="submit">Guardar</button>
-                <button type="button" id="cancelEmployeeBtn">Cancelar</button>
-            </form>
+            <div class="modal-header">
+                <h3 id="employee-modal-title">Añadir Nuevo Empleado</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="employee-form">
+                    <input type="hidden" id="employee-id">
+                    <div class="form-group">
+                        <label for="employee-name">Nombre Completo</label>
+                        <input type="text" id="employee-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="employee-position">Cargo</label>
+                        <select id="employee-position" required>
+                            <option value="">Seleccionar cargo</option>
+                            <option value="Recepcionista">Recepcionista</option>
+                            <option value="Chef">Chef</option>
+                            <option value="Camarera">Camarera</option>
+                            <option value="Gerente">Gerente</option>
+                            <option value="Botones">Botones</option>
+                            <option value="Técnico de Mantenimiento">Técnico de Mantenimiento</option>
+                            <option value="Asistente">Asistente</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="employee-department">Departamento</label>
+                        <select id="employee-department" required>
+                            <option value="">Seleccionar departamento</option>
+                            <option value="Recepción">Recepción</option>
+                            <option value="Cocina">Cocina</option>
+                            <option value="Limpieza">Limpieza</option>
+                            <option value="Administración">Administración</option>
+                            <option value="Servicio">Servicio</option>
+                            <option value="Mantenimiento">Mantenimiento</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="employee-status">Estado</label>
+                        <select id="employee-status" required>
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                            <option value="Vacaciones">Vacaciones</option>
+                            <option value="Permiso">Permiso</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="employee-join-date">Fecha de Ingreso</label>
+                        <input type="date" id="employee-join-date" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn secondary" id="cancel-employee-btn">Cancelar</button>
+                        <button type="submit" class="btn primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    
+
+    <!-- Modal para Añadir/Editar Departamento -->
+    <div id="department-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="department-modal-title">Añadir Nuevo Departamento</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="department-form">
+                    <input type="hidden" id="department-id">
+                    <div class="form-group">
+                        <label for="department-name">Nombre del Departamento</label>
+                        <input type="text" id="department-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="department-manager">Responsable</label>
+                        <input type="text" id="department-manager" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="department-employees">Número de Empleados</label>
+                        <input type="number" id="department-employees" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="department-description">Descripción</label>
+                        <textarea id="department-description" rows="3" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn secondary" id="cancel-department-btn">Cancelar</button>
+                        <button type="submit" class="btn primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación para Eliminar -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar Eliminación</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="confirm-message">¿Está seguro que desea eliminar este elemento?</p>
+                <div class="form-actions">
+                    <button type="button" class="btn secondary" id="cancel-confirm-btn">Cancelar</button>
+                    <button type="button" class="btn danger" id="confirm-delete-btn">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="RH.js"></script>
 </body>
 </html>

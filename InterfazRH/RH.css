@@ -1,97 +1,210 @@
- /* Estilos generales */
- body {
-  font-family: Arial, sans-serif;
+/* Estilos generales */
+* {
   margin: 0;
   padding: 0;
-  background-color: #f4f7fc;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f5f5f5;
   color: #333;
+  line-height: 1.6;
 }
 
 .container {
-  display: flex;
-  height: 100vh;
-}
-
-/* Sidebar */
-.sidebar {
-  width: 250px;
-  background-color: #1E3A8A;
-  color: white;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
 }
 
-.sidebar h2 {
-  text-align: center;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar ul li {
-  margin: 20px 0;
-}
-
-.sidebar ul li a {
-  color: white;
-  text-decoration: none;
-  display: block;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.sidebar ul li a.active, .sidebar ul li a:hover {
-  background-color: #2563EB;
-}
-
-/* Contenido principal */
-.main-content {
-  flex: 1;
-  padding: 20px;
-}
-
+/* Encabezado */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #3B82F6;
-  color: white;
-  padding: 15px;
-  border-radius: 5px;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-header button {
-  background-color: #2563EB;
-  color: white;
+header h1 {
+  color: #2c3e50;
+  font-size: 24px;
+}
+
+.user-info {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Pestañas */
+.tabs {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tab-button {
+  padding: 10px 20px;
+  background: none;
   border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
+  color: #666;
+  position: relative;
 }
 
-/* Tabla de empleados */
-table {
+.tab-button.active {
+  color: #3498db;
+  font-weight: 600;
+}
+
+.tab-button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background: white;
-  border-radius: 5px;
+  height: 3px;
+  background-color: #3498db;
+}
+
+.tab-button:hover {
+  background-color: #f9f9f9;
+}
+
+/* Contenido de pestañas */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Tarjetas */
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
   overflow: hidden;
 }
 
+.card-header {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.card-header h2 {
+  font-size: 18px;
+  color: #2c3e50;
+}
+
+.card-content {
+  padding: 20px;
+  overflow-x: auto;
+}
+
+/* Tablas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
 table th, table td {
-  padding: 10px;
+  padding: 12px 15px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 table th {
-  background-color: #2563EB;
+  background-color: #f9f9f9;
+  font-weight: 600;
+  color: #555;
+}
+
+table tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Botones */
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.primary {
+  background-color: #3498db;
   color: white;
 }
 
-/* Modal */
+.primary:hover {
+  background-color: #2980b9;
+}
+
+.secondary {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.secondary:hover {
+  background-color: #d0d0d0;
+}
+
+.danger {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.danger:hover {
+  background-color: #c0392b;
+}
+
+.action-btn {
+  padding: 6px;
+  margin: 0 3px;
+  background: none;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-btn {
+  color: #3498db;
+}
+
+.delete-btn {
+  color: #e74c3c;
+}
+
+/* Acciones y búsqueda */
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.search-container {
+  position: relative;
+}
+
+.search-container input {
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  width: 250px;
+}
+
+/* Modales */
 .modal {
   display: none;
   position: fixed;
@@ -99,21 +212,137 @@ table th {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 }
 
 .modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 5px;
-  width: 300px;
+  background-color: #fff;
+  margin: 10% auto;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  animation: modalFadeIn 0.3s;
 }
 
-.modal-content input, .modal-content button {
+@keyframes modalFadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.modal-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  font-size: 18px;
+  color: #2c3e50;
+}
+
+.close-modal {
+  font-size: 24px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.close-modal:hover {
+  color: #555;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+/* Formularios */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
   display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #555;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
   width: 100%;
-  margin: 10px 0;
   padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Estados */
+.status {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-active {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-inactive {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.status-vacation {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.status-leave {
+  background-color: #fff8e1;
+  color: #f57f17;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+  }
+  
+  .actions {
+      width: 100%;
+      flex-direction: column;
+  }
+  
+  .search-container input {
+      width: 100%;
+  }
+  
+  .btn {
+      width: 100%;
+  }
 }
