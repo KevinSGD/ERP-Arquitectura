@@ -1,198 +1,282 @@
-// Esperar a que el DOM esté completamente cargado
-document.addEventListener('DOMContentLoaded', function() {
-  // Elementos del DOM
-  const openNewSaleModalBtn = document.getElementById('openNewSaleModal');
-  const newSaleModal = document.getElementById('newSaleModal');
-  const closeModalBtn = document.getElementById('closeModal');
-  const cancelSaleButton = document.getElementById('cancelSaleButton');
-  const registerSaleButton = document.getElementById('registerSaleButton');
-  const cancelClientButton = document.getElementById('cancelClientButton');
-  const registerClientButton = document.getElementById('registerClientButton');
-  const newClientButton = document.getElementById('newClientButton');
-  const clienteSelect = document.getElementById('cliente');
+// Elementos DOM
+const detallesBtn = document.getElementById('detalles-btn');
+const informacionBtn = document.getElementById('informacion-btn');
+const inventarioBtn = document.getElementById('inventario-btn');
+const contentArea = document.getElementById('content-area');
+const headerTitle = document.getElementById('header-title');
+const menuButtons = document.querySelectorAll('.menu-button');
+const addSaleModal = document.getElementById('add-sale-modal');
+const closeModalBtn = document.getElementById('close-modal');
+const cancelFormBtn = document.getElementById('cancel-form');
+const addSaleForm = document.getElementById('add-sale-form');
 
-  // Elementos de las pestañas
-  const tabButtons = document.querySelectorAll('.tab-button');
-  const tabContents = document.querySelectorAll('.tab-content');
+// Estado de la aplicación
+let activeSection = 'detalles'; // Iniciar con detalles de venta activo
 
-  // Estado de la aplicación
-  let clienteData = {
-      nombre: '',
-      apellido: '',
-      documento: '',
-      email: '',
-      telefono: '',
-      direccion: '',
-      nacionalidad: ''
-  };
+// Contenido de las secciones
+const sectionContents = {
+  detalles: `
+    <div class="content-section" id="detalles-section">
+      <div class="sales-list-container">
+        <h2 class="section-title">Lista de ventas</h2>
+        <div class="section-content">
+          <div class="sales-list-header">
+            <button class="add-sale-button" id="add-sale-btn">
+              <span>+</span> Añadir venta
+            </button>
+          </div>
+          <div class="sales-list-content" id="sales-list">
+            <!-- Aquí irá la lista de ventas cuando se agreguen -->
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+  informacion: `
+    <div class="content-section" id="informacion-section">
+      <h2 class="section-title">Lista de ventas</h2>
+      <div class="section-content">
+        <div class="sales-info-list" id="sales-info-list">
+          <!-- Aquí se cargarán las ventas guardadas -->
+        </div>
+      </div>
+    </div>
+  `,
+  inventario: `
+    <div class="content-section" id="inventario-section">
+      <h2 class="section-title">Resumen de inventario</h2>
+      <div class="section-content">
+        <p>Aquí se mostrará el resumen del inventario actual.</p>
+      </div>
+    </div>
+  `,
+  placeholder: `
+    <div class="placeholder-content">
+      <div class="placeholder-image"></div>
+    </div>
+  `
+};
 
-  // Funciones para el modal
-  function openModal() {
-      console.log('Abriendo modal');
-      newSaleModal.classList.add('active');
-      document.body.style.overflow = 'hidden'; // Evitar scroll en el body
-  }
-
-  function closeModal() {
-      console.log('Cerrando modal');
-      newSaleModal.classList.remove('active');
-      document.body.style.overflow = ''; // Restaurar scroll
-  }
-
-  // Funciones para las pestañas
-  function switchTab(tabId) {
-      console.log('Cambiando a pestaña:', tabId);
-      // Desactivar todas las pestañas
-      tabButtons.forEach(button => {
-          button.classList.remove('active');
-      });
-      
-      tabContents.forEach(content => {
-          content.classList.remove('active');
-      });
-      
-      // Activar la pestaña seleccionada
-      const selectedButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
-      const selectedContent = document.getElementById(`${tabId}-tab`);
-      
-      if (selectedButton && selectedContent) {
-          selectedButton.classList.add('active');
-          selectedContent.classList.add('active');
-      }
-  }
-
-  // Función para registrar un cliente
-  function registerClient() {
-      // Obtener los valores de los campos
-      clienteData.nombre = document.getElementById('nombre').value;
-      clienteData.apellido = document.getElementById('apellido').value;
-      clienteData.documento = document.getElementById('documento').value;
-      clienteData.email = document.getElementById('email').value;
-      clienteData.telefono = document.getElementById('telefono').value;
-      clienteData.direccion = document.getElementById('direccion').value;
-      clienteData.nacionalidad = document.getElementById('nacionalidad').value;
-      
-      // Validar que al menos nombre y apellido estén completos
-      if (!clienteData.nombre || !clienteData.apellido) {
-          alert('Por favor complete al menos el nombre y apellido del cliente.');
-          return;
-      }
-      
-      // Crear una nueva opción en el select de clientes
-      const newOption = document.createElement('option');
-      newOption.value = 'nuevo-registrado';
-      newOption.text = `${clienteData.nombre} ${clienteData.apellido}`;
-      
-      // Verificar si ya existe la opción
-      let exists = false;
-      for (let i = 0; i < clienteSelect.options.length; i++) {
-          if (clienteSelect.options[i].value === 'nuevo-registrado') {
-              clienteSelect.options[i] = newOption;
-              exists = true;
-              break;
-          }
-      }
-      
-      // Si no existe, añadirla antes de la opción "Registrar nuevo cliente"
-      if (!exists) {
-          const newClientOption = clienteSelect.querySelector('option[value="nuevo"]');
-          if (newClientOption) {
-              clienteSelect.insertBefore(newOption, newClientOption);
-          } else {
-              clienteSelect.add(newOption);
-          }
-      }
-      
-      // Seleccionar el nuevo cliente
-      clienteSelect.value = 'nuevo-registrado';
-      
-      // Mostrar mensaje de éxito
-      alert(`Cliente ${clienteData.nombre} ${clienteData.apellido} registrado con éxito`);
-      
-      // Cambiar a la pestaña de venta
-      switchTab('venta');
-  }
-
-  // Función para registrar una venta
-  function registerSale() {
-      // Aquí normalmente guardarías los datos de la venta
-      alert('Venta registrada con éxito');
-      closeModal();
-  }
-
-  // Verificar que los elementos existen antes de agregar event listeners
-  if (openNewSaleModalBtn) {
-      console.log('Botón de nueva venta encontrado');
-      openNewSaleModalBtn.addEventListener('click', function(e) {
-          console.log('Botón de nueva venta clickeado');
-          e.preventDefault();
-          openModal();
-      });
+// Función para actualizar el título del encabezado
+function updateHeaderTitle(section) {
+  if (section === 'detalles') {
+    headerTitle.textContent = 'Detalle de Ventas';
+  } else if (section === 'informacion') {
+    headerTitle.textContent = 'Información de venta';
+  } else if (section === 'inventario') {
+    headerTitle.textContent = 'Resumen de inventario';
   } else {
-      console.error('Botón de nueva venta no encontrado');
+    headerTitle.textContent = 'Ventas';
   }
+}
 
-  if (closeModalBtn) {
-      closeModalBtn.addEventListener('click', closeModal);
-  }
-
-  if (cancelSaleButton) {
-      cancelSaleButton.addEventListener('click', closeModal);
-  }
-
-  if (cancelClientButton) {
-      cancelClientButton.addEventListener('click', function() {
-          switchTab('venta');
-      });
-  }
-
-  if (registerSaleButton) {
-      registerSaleButton.addEventListener('click', registerSale);
-  }
-
-  if (registerClientButton) {
-      registerClientButton.addEventListener('click', registerClient);
-  }
-
-  if (newClientButton) {
-      newClientButton.addEventListener('click', function() {
-          switchTab('nuevo-cliente');
-      });
-  }
-
-  // Event listener para cambiar de pestaña
-  tabButtons.forEach(button => {
-      button.addEventListener('click', function() {
-          const tabId = this.getAttribute('data-tab');
-          switchTab(tabId);
-      });
+// Función para cambiar de sección
+function changeSection(section) {
+  // Remover clase activa de todos los botones
+  menuButtons.forEach(button => {
+    button.classList.remove('active');
   });
-
-  // Event listener para el select de clientes
-  if (clienteSelect) {
-      clienteSelect.addEventListener('change', function(e) {
-          if (e.target.value === 'nuevo') {
-              switchTab('nuevo-cliente');
-          }
-      });
+  
+  // Si ya estamos en la sección activa, la cerramos
+  if (activeSection === section && section !== 'detalles') {
+    activeSection = null;
+    contentArea.innerHTML = sectionContents.placeholder;
+    updateHeaderTitle(null);
+    return;
   }
+  
+  // Actualizar sección activa
+  activeSection = section;
+  
+  // Marcar el botón como activo
+  if (section === 'detalles') {
+    detallesBtn.classList.add('active');
+  } else if (section === 'informacion') {
+    informacionBtn.classList.add('active');
+  } else if (section === 'inventario') {
+    inventarioBtn.classList.add('active');
+  }
+  
+  // Actualizar título del encabezado
+  updateHeaderTitle(section);
+  
+  // Actualizar contenido
+  contentArea.innerHTML = sectionContents[section];
+  
+  // Si estamos en la sección de detalles, añadir event listener al botón de añadir venta
+  if (section === 'detalles') {
+    const addSaleBtn = document.getElementById('add-sale-btn');
+    if (addSaleBtn) {
+      addSaleBtn.addEventListener('click', openAddSaleModal);
+    }
+    
+    // Cargar ventas guardadas
+    loadSavedSales();
+  }
+  
+  // Si estamos en la sección de información, cargar las ventas guardadas
+  if (section === 'informacion') {
+    loadSalesInfo();
+  }
+}
 
-  // Cerrar el modal si se hace clic fuera de él
-  window.addEventListener('click', function(e) {
-      if (e.target === newSaleModal) {
-          closeModal();
+// Función para cargar información de ventas
+function loadSalesInfo() {
+  const salesInfoList = document.getElementById('sales-info-list');
+  if (!salesInfoList) return;
+  
+  try {
+    const sales = JSON.parse(localStorage.getItem('hotel_sales') || '[]');
+    
+    // Si hay ventas guardadas, añadirlas después de los ejemplos estáticos
+    if (sales.length > 0) {
+      sales.forEach((sale, index) => {
+        const saleInfoItem = document.createElement('div');
+        saleInfoItem.className = 'sale-info-item';
+        saleInfoItem.innerHTML = `
+          <p class="sale-info-title">Venta #${index + 1}</p>
+          <p class="sale-info-description">
+            ${sale.product} - Cliente: ${sale.guestName} ${sale.guestLastName}, 
+            Valor: ${sale.value}, Fecha: ${sale.date}
+          </p>
+        `;
+        salesInfoList.appendChild(saleInfoItem);
+      });
+    }
+  } catch (error) {
+    console.error('Error al cargar información de ventas:', error);
+  }
+}
+
+// Función para abrir el modal de añadir venta
+function openAddSaleModal() {
+  addSaleModal.classList.add('active');
+  
+  // Establecer la fecha actual en el campo de fecha
+  const dateInput = document.getElementById('date');
+  const today = new Date().toISOString().split('T')[0];
+  dateInput.value = today;
+}
+
+// Función para cerrar el modal
+function closeAddSaleModal() {
+  addSaleModal.classList.remove('active');
+  addSaleForm.reset();
+}
+
+// Función para guardar venta en archivo plano (simulado con localStorage)
+function saveSale(saleData) {
+  try {
+    // En un entorno real, esto enviaría los datos a un servidor para guardar en un archivo
+    // Aquí simulamos con localStorage
+    const sales = JSON.parse(localStorage.getItem('hotel_sales') || '[]');
+    const newSale = {
+      ...saleData,
+      id: Date.now().toString(),
+      createdAt: new Date().toISOString()
+    };
+    
+    sales.push(newSale);
+    localStorage.setItem('hotel_sales', JSON.stringify(sales));
+    
+    return newSale;
+  } catch (error) {
+    console.error('Error al guardar la venta:', error);
+    throw new Error('No se pudo guardar la venta');
+  }
+}
+
+// Función para cargar ventas guardadas
+function loadSavedSales() {
+  const salesList = document.getElementById('sales-list');
+  if (!salesList) return;
+  
+  // Limpiar lista
+  salesList.innerHTML = '';
+  
+  try {
+    const sales = JSON.parse(localStorage.getItem('hotel_sales') || '[]');
+    
+    if (sales.length === 0) {
+      salesList.innerHTML = '<p class="p-4 text-gray-500">No hay ventas registradas</p>';
+      return;
+    }
+    
+    // Mostrar ventas en la lista
+    sales.forEach(sale => {
+      const saleItem = document.createElement('div');
+      saleItem.className = 'sale-item';
+      saleItem.innerHTML = `
+        <p class="sale-item-title">${sale.guestName} ${sale.guestLastName} - Habitación: ${sale.room}</p>
+        <p class="sale-item-detail">Producto: ${sale.product} - Valor: ${sale.value}</p>
+        <p class="sale-item-detail">Fecha: ${sale.date}</p>
+      `;
+      salesList.appendChild(saleItem);
+    });
+  } catch (error) {
+    console.error('Error al cargar las ventas:', error);
+    salesList.innerHTML = '<p class="p-4 text-red-500">Error al cargar las ventas</p>';
+  }
+}
+
+// Event listeners
+detallesBtn.addEventListener('click', () => changeSection('detalles'));
+informacionBtn.addEventListener('click', () => changeSection('informacion'));
+inventarioBtn.addEventListener('click', () => changeSection('inventario'));
+
+// Event listeners para el modal
+closeModalBtn.addEventListener('click', closeAddSaleModal);
+cancelFormBtn.addEventListener('click', closeAddSaleModal);
+
+// Event listener para el formulario
+addSaleForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  // Recopilar datos del formulario
+  const formData = {
+    guestName: document.getElementById('guest-name').value,
+    guestLastName: document.getElementById('guest-lastname').value,
+    room: document.getElementById('room').value,
+    employeeName: document.getElementById('employee-name').value,
+    employeeLastName: document.getElementById('employee-lastname').value,
+    employeeCode: document.getElementById('employee-code').value,
+    product: document.getElementById('product').value,
+    value: document.getElementById('value').value,
+    paymentMethod: document.getElementById('payment-method').value,
+    date: document.getElementById('date').value
+  };
+  
+  try {
+    // Guardar venta
+    const savedSale = saveSale(formData);
+    
+    // Añadir a la lista
+    const salesList = document.getElementById('sales-list');
+    if (salesList) {
+      // Eliminar mensaje de "No hay ventas" si existe
+      if (salesList.innerHTML.includes('No hay ventas registradas')) {
+        salesList.innerHTML = '';
       }
-  });
-
-  // Asegurarse de que la primera pestaña esté activa al cargar
-  switchTab('venta');
-
-  // Agregar un event listener global para todos los botones
-  document.addEventListener('click', function(e) {
-      // Verificar si el elemento clickeado es el botón de nueva venta
-      if (e.target.id === 'openNewSaleModal' || e.target.closest('#openNewSaleModal')) {
-          console.log('Botón de nueva venta clickeado (delegación)');
-          openModal();
-      }
-  });
+      
+      const saleItem = document.createElement('div');
+      saleItem.className = 'sale-item';
+      saleItem.innerHTML = `
+        <p class="sale-item-title">${formData.guestName} ${formData.guestLastName} - Habitación: ${formData.room}</p>
+        <p class="sale-item-detail">Producto: ${formData.product} - Valor: ${formData.value}</p>
+        <p class="sale-item-detail">Fecha: ${formData.date}</p>
+      `;
+      salesList.appendChild(saleItem);
+    }
+    
+    // Cerrar modal
+    closeAddSaleModal();
+    
+    // Mostrar mensaje de éxito
+    alert('Venta guardada correctamente');
+  } catch (error) {
+    alert('Error al guardar la venta');
+  }
 });
+
+// Inicializar con la sección de detalles activa
+changeSection('detalles');
