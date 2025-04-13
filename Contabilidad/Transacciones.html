@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transacciones - Contabilidad</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    <link rel="stylesheet" href="Transacciones.css">
+</head>
+<body>
+    <header>
+        <div class="header-text">Transacciones</div>
+    </header>
+    
+    <nav class="top-nav">
+        <div class="logo">
+            <div class="logo-icon">H</div>
+            <div class="logo-text">HORIZON PRIME</div>
+        </div>
+        <div class="user-profile">
+            <button class="profile-button">A</button>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="menu-items">
+                <button class="menu-button active">Transacciones</button>
+                <button class="menu-button">Cuenta contable</button>
+                <button class="menu-button">Facturación</button>
+                <button class="menu-button">Nomina</button>
+            </div>
+            <div class="back-button">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </div>
+        </aside>
+        
+        <main class="content">
+            <div class="content-header">
+                <h1 class="content-title">Módulo de Transacciones Contables</h1>
+                <button class="new-transaction-btn" id="newTransactionBtn">
+                    <span class="material-symbols-outlined">add</span>
+                    Nueva Transacción
+                </button>
+            </div>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="text" class="filter-input" id="searchInput" placeholder="Buscar transacciones">
+                </div>
+                <div class="filter-group">
+                    <span class="material-symbols-outlined">filter_list</span>
+                    <select class="filter-input" id="typeFilter">
+                        <option value="">Tipo de transacción</option>
+                        <option value="ingreso">Ingreso</option>
+                        <option value="gasto">Gasto</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <span class="material-symbols-outlined">calendar_today</span>
+                    <input type="date" class="filter-input" id="dateFilter">
+                </div>
+            </div>
+
+            <table class="transactions-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha</th>
+                        <th>Descripción</th>
+                        <th>Monto</th>
+                        <th>Tipo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="transactionsTableBody">
+                    <!-- Table content will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <footer>
+        <!-- Footer is a dark bar at the bottom -->
+    </footer>
+
+    <!-- Transaction Modal -->
+    <div class="modal" id="transactionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Nueva Transacción</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <form id="transactionForm">
+                <input type="hidden" id="transactionId">
+                <div class="form-group">
+                    <label for="transactionDate">Fecha</label>
+                    <input type="date" class="form-control" id="transactionDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="transactionDescription">Descripción</label>
+                    <input type="text" class="form-control" id="transactionDescription" required>
+                </div>
+                <div class="form-group">
+                    <label for="transactionAmount">Monto</label>
+                    <input type="number" class="form-control" id="transactionAmount" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="transactionType">Tipo</label>
+                    <select class="form-control" id="transactionType" required>
+                        <option value="ingreso">Ingreso</option>
+                        <option value="gasto">Gasto</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-cancel" id="cancelTransaction">Cancelar</button>
+                    <button type="submit" class="btn btn-save">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Confirmar Eliminación</h2>
+                <button class="close-modal" id="closeDeleteModal">&times;</button>
+            </div>
+            <p>¿Está seguro que desea eliminar esta transacción?</p>
+            <div class="form-actions">
+                <button type="button" class="btn btn-cancel" id="cancelDelete">Cancelar</button>
+                <button type="button" class="btn btn-save" id="confirmDelete">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="Transacciones.js"></script>
+</body>
+</html>
