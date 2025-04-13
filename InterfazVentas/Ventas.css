@@ -193,7 +193,7 @@ body {
 }
 
 .sale-info-item {
-  padding: 12px 0;
+  padding: 16px;
   border-bottom: 1px solid #e0e0e0;
 }
 
@@ -202,13 +202,27 @@ body {
 }
 
 .sale-info-title {
-  font-weight: 500;
-  margin-bottom: 4px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 16px;
 }
 
 .sale-info-description {
   font-size: 14px;
   color: #666;
+  margin-bottom: 8px;
+}
+
+/* Estilos para la información adicional de ventas */
+.sale-info-additional {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.sale-info-additional p {
+  margin-bottom: 4px;
 }
 
 /* Estilos para el modal */
@@ -325,4 +339,13 @@ body {
 .sale-item-detail {
   font-size: 14px;
   color: #666;
+}
+
+/* Estilos para mensajes */
+.text-gray-500 {
+  color: #6b7280;
+}
+
+.text-red-500 {
+  color: #ef4444;
 }

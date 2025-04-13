@@ -18,7 +18,6 @@ const sectionContents = {
   detalles: `
     <div class="content-section" id="detalles-section">
       <div class="sales-list-container">
-        <h2 class="section-title">Lista de ventas</h2>
         <div class="section-content">
           <div class="sales-list-header">
             <button class="add-sale-button" id="add-sale-btn">
@@ -120,10 +119,18 @@ function changeSection(section) {
   }
 }
 
-// Función para cargar información de ventas
+// Función para cargar información de ventas en el formato exacto solicitado
 function loadSalesInfo() {
   const salesInfoList = document.getElementById('sales-info-list');
   if (!salesInfoList) return;
+  
+  // Limpiar contenido existente excepto los ejemplos estáticos
+  const staticExamples = salesInfoList.querySelectorAll('.sale-info-item');
+  const exampleCount = Math.min(staticExamples.length, 2); // Mantener solo los 2 primeros ejemplos
+  
+  while (salesInfoList.children.length > exampleCount) {
+    salesInfoList.removeChild(salesInfoList.lastChild);
+  }
   
   try {
     const sales = JSON.parse(localStorage.getItem('hotel_sales') || '[]');
@@ -133,18 +140,35 @@ function loadSalesInfo() {
       sales.forEach((sale, index) => {
         const saleInfoItem = document.createElement('div');
         saleInfoItem.className = 'sale-info-item';
+        
+        // Crear el contenido en el formato exacto solicitado
         saleInfoItem.innerHTML = `
           <p class="sale-info-title">Venta #${index + 1}</p>
-          <p class="sale-info-description">
-            ${sale.product} - Cliente: ${sale.guestName} ${sale.guestLastName}, 
-            Valor: ${sale.value}, Fecha: ${sale.date}
-          </p>
+          <p class="sale-info-description">${sale.product} - Cliente: ${sale.guestName} ${sale.guestLastName}, Valor: ${sale.value}, Fecha: ${sale.date}</p>
+          <div class="sale-info-additional">
+            <p>Empleado: ${sale.employeeName} ${sale.employeeLastName} (Código: ${sale.employeeCode})</p>
+            <p>Método de pago: ${sale.paymentMethod}</p>
+            <p>Habitación: ${sale.room}</p>
+          </div>
         `;
+        
         salesInfoList.appendChild(saleInfoItem);
       });
+    } else {
+      // Si no hay ventas, mostrar mensaje después de los ejemplos estáticos
+      const noSalesMessage = document.createElement('div');
+      noSalesMessage.className = 'sale-info-item';
+      noSalesMessage.innerHTML = '<p class="text-gray-500">No hay ventas registradas</p>';
+      salesInfoList.appendChild(noSalesMessage);
     }
   } catch (error) {
     console.error('Error al cargar información de ventas:', error);
+    
+    // Mostrar mensaje de error
+    const errorMessage = document.createElement('div');
+    errorMessage.className = 'sale-info-item';
+    errorMessage.innerHTML = '<p class="text-red-500">Error al cargar las ventas</p>';
+    salesInfoList.appendChild(errorMessage);
   }
 }
 
@@ -203,13 +227,14 @@ function loadSavedSales() {
     }
     
     // Mostrar ventas en la lista
-    sales.forEach(sale => {
+    sales.forEach((sale, index) => {
       const saleItem = document.createElement('div');
       saleItem.className = 'sale-item';
       saleItem.innerHTML = `
-        <p class="sale-item-title">${sale.guestName} ${sale.guestLastName} - Habitación: ${sale.room}</p>
-        <p class="sale-item-detail">Producto: ${sale.product} - Valor: ${sale.value}</p>
-        <p class="sale-item-detail">Fecha: ${sale.date}</p>
+        <p class="sale-item-title">Venta #${index + 1}</p>
+        <p class="sale-item-detail">${sale.product} - Cliente: ${sale.guestName} ${sale.guestLastName}, Valor: ${sale.value}, Fecha: ${sale.date}</p>
+        <p class="sale-item-detail">Empleado: ${sale.employeeName} ${sale.employeeLastName} (Código: ${sale.employeeCode})</p>
+        <p class="sale-item-detail">Método de pago: ${sale.paymentMethod} - Habitación: ${sale.room}</p>
       `;
       salesList.appendChild(saleItem);
     });
@@ -261,9 +286,10 @@ addSaleForm.addEventListener('submit', function(e) {
       const saleItem = document.createElement('div');
       saleItem.className = 'sale-item';
       saleItem.innerHTML = `
-        <p class="sale-item-title">${formData.guestName} ${formData.guestLastName} - Habitación: ${formData.room}</p>
-        <p class="sale-item-detail">Producto: ${formData.product} - Valor: ${formData.value}</p>
-        <p class="sale-item-detail">Fecha: ${formData.date}</p>
+        <p class="sale-item-title">Venta #${salesList.children.length + 1}</p>
+        <p class="sale-item-detail">${formData.product} - Cliente: ${formData.guestName} ${formData.guestLastName}, Valor: ${formData.value}, Fecha: ${formData.date}</p>
+        <p class="sale-item-detail">Empleado: ${formData.employeeName} ${formData.employeeLastName} (Código: ${formData.employeeCode})</p>
+        <p class="sale-item-detail">Método de pago: ${formData.paymentMethod} - Habitación: ${formData.room}</p>
       `;
       salesList.appendChild(saleItem);
     }
