@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta contable - Contabilidad</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    <link rel="stylesheet" href="CuentaC.css">
+</head>
+<body>
+    <header>
+        <div class="header-text">Cuenta contable</div>
+    </header>
+    
+    <nav class="top-nav">
+        <div class="logo">
+            <div class="logo-icon">H</div>
+            <div class="logo-text">HORIZON PRIME</div>
+        </div>
+        <div class="user-profile">
+            <button class="profile-button">A</button>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="menu-items">
+                <button class="menu-button">Transacciones</button>
+                <button class="menu-button active">Cuenta contable</button>
+                <button class="menu-button">Facturación</button>
+                <button class="menu-button">Nomina</button>
+            </div>
+            <div class="back-button">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </div>
+        </aside>
+        
+        <main class="content">
+            <div class="content-header">
+                <h1 class="content-title">Cuentas Contables</h1>
+                <button class="new-account-btn" id="newAccountBtn">
+                    <span class="material-symbols-outlined">add</span>
+                    Nueva Cuenta
+                </button>
+            </div>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="text" class="filter-input" id="searchInput" placeholder="Buscar cuentas...">
+                </div>
+            </div>
+
+            <table class="accounts-table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Saldo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="accountsTableBody">
+              
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <footer>
+   
+    </footer>
+
+    <!-- Account Modal -->
+    <div class="modal" id="accountModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Nueva Cuenta</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <form id="accountForm">
+                <input type="hidden" id="accountId">
+                <div class="form-group">
+                    <label for="accountCode">Código</label>
+                    <input type="text" class="form-control" id="accountCode" required>
+                </div>
+                <div class="form-group">
+                    <label for="accountName">Nombre</label>
+                    <input type="text" class="form-control" id="accountName" required>
+                </div>
+                <div class="form-group">
+                    <label for="accountType">Tipo</label>
+                    <select class="form-control" id="accountType" required>
+                        <option value="Activo">Activo</option>
+                        <option value="Pasivo">Pasivo</option>
+                        <option value="Patrimonio">Patrimonio</option>
+                        <option value="Ingreso">Ingreso</option>
+                        <option value="Gasto">Gasto</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="accountBalance">Saldo Inicial</label>
+                    <input type="number" class="form-control" id="accountBalance" step="0.01" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-cancel" id="cancelAccount">Cancelar</button>
+                    <button type="submit" class="btn btn-save">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+   
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Confirmar Eliminación</h2>
+                <button class="close-modal" id="closeDeleteModal">&times;</button>
+            </div>
+            <p>¿Está seguro que desea eliminar esta cuenta?</p>
+            <div class="form-actions">
+                <button type="button" class="btn btn-cancel" id="cancelDelete">Cancelar</button>
+                <button type="button" class="btn btn-save" id="confirmDelete">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="CuentaC.js"></script>
+</body>
+</html>
