@@ -410,12 +410,29 @@ document.addEventListener('DOMContentLoaded', function() {
     cancelDelete.addEventListener('click', closeDeleteModalFunc);
     confirmDelete.addEventListener('click', deleteTransaction);
     
-    // Menu buttons
+    // Menu buttons with navigation
     const menuButtons = document.querySelectorAll('.menu-button');
     menuButtons.forEach(button => {
         button.addEventListener('click', function() {
             menuButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
+            console.log(`Selected menu: ${this.textContent}`);
+
+            // Abrir interfaz según el texto del botón
+            switch (this.textContent.trim()) {
+                case 'Transacciones':
+                    window.location.href = 'Transacciones.html';
+                    break;
+                case 'Cuenta contable':
+                    window.location.href = 'cuenta.html';
+                    break;
+                case 'Facturación':
+                    window.location.href = 'facturacion.html';
+                    break;
+                case 'Nomina':
+                    window.location.href = 'nomina.html';
+                    break;
+            }
         });
     });
     
@@ -423,6 +440,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const backButton = document.querySelector('.back-button');
     backButton.addEventListener('click', function() {
         console.log('Back button clicked');
+        // Redirigir a la página principal o anterior
+        window.location.href = 'index.html';
     });
     
     // Keyboard shortcuts
