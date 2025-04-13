@@ -353,6 +353,15 @@ function handleConfirmDelete() {
     deleteItemType = null;
 }
 
+// Función para cerrar sesión
+function logout() {
+    if (confirm('¿Está seguro que desea cerrar sesión?')) {
+        // En una aplicación real, aquí se redireccionaría a la página de login
+        alert('Sesión cerrada correctamente');
+        // window.location.href = 'login.html';
+    }
+}
+
 // Cerrar modales al hacer clic fuera del contenido
 window.addEventListener('click', function(event) {
     if (event.target === employeeModal) {
