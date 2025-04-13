@@ -409,13 +409,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Abrir interfaz según el texto del botón
             switch (this.textContent.trim()) {
                 case 'Transacciones':
-                    window.location.href = 'Transacciones.html';
+                    window.location.href = 'Principal.html';
                     break;
                 case 'Cuenta contable':
-                    window.location.href = 'cuenta.html';
+                    window.location.href = 'CuentaC.html';
                     break;
                 case 'Facturación':
-                    window.location.href = 'facturacion.html';
+                    window.location.href = 'Factura.html';
                     break;
                 case 'Nomina':
                     window.location.href = 'nomina.html';

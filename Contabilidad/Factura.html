@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facturación - Contabilidad</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    <link rel="stylesheet" href="Factura.css">
+</head>
+<body>
+    <header>
+        <div class="header-text">Facturacion</div>
+    </header>
+    
+    <nav class="top-nav">
+        <div class="logo">
+            <div class="logo-icon">H</div>
+            <div class="logo-text">HORIZON PRIME</div>
+        </div>
+        <div class="user-profile">
+            <button class="profile-button">A</button>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="menu-items">
+                <button class="menu-button">Transacciones</button>
+                <button class="menu-button">Cuenta contable</button>
+                <button class="menu-button active">Facturación</button>
+                <button class="menu-button">Nomina</button>
+            </div>
+            <div class="back-button">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </div>
+        </aside>
+        
+        <main class="content">
+            <div class="content-header">
+                <h1 class="content-title">Facturación</h1>
+                <button class="new-invoice-btn" id="newInvoiceBtn">
+                    <span class="material-symbols-outlined">add</span>
+                    Nueva Factura
+                </button>
+            </div>
+
+            <table class="invoices-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Número / Estado</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="invoicesTableBody">
+                    <!-- Table content will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <footer>
+        <!-- Footer is a dark bar at the bottom -->
+    </footer>
+
+    <!-- Invoice Modal -->
+    <div class="modal" id="invoiceModal">
+        <div class="modal-content invoice-modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Nueva Factura</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <form id="invoiceForm">
+                <input type="hidden" id="invoiceId">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="invoiceNumber">Número de Factura</label>
+                        <input type="text" class="form-control" id="invoiceNumber" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="invoiceDate">Fecha</label>
+                        <input type="date" class="form-control" id="invoiceDate" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="invoiceClient">Cliente</label>
+                    <select class="form-control" id="invoiceClient" required>
+                        <option value="">Seleccionar cliente</option>
+                        <option value="Juan Pérez">Juan Pérez</option>
+                        <option value="María García">María García</option>
+                        <option value="Carlos López">Carlos López</option>
+                        <option value="Ana Martínez">Ana Martínez</option>
+                        <option value="Pedro Sánchez">Pedro Sánchez</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Productos / Servicios</label>
+                    <div class="invoice-items" id="invoiceItems">
+                        <!-- Items will be added here -->
+                    </div>
+                    <button type="button" class="btn btn-add-item" id="addItemBtn">
+                        <span class="material-symbols-outlined">add</span> Agregar Producto/Servicio
+                    </button>
+                </div>
+                
+                <div class="invoice-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotalAmount">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>IVA (16%):</span>
+                        <span id="taxAmount">$0.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="totalAmount">$0.00</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="invoiceStatus">Estado</label>
+                    <select class="form-control" id="invoiceStatus" required>
+                        <option value="Pagada">Pagada</option>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Vencida">Vencida</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-cancel" id="cancelInvoice">Cancelar</button>
+                    <button type="submit" class="btn btn-save">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Confirmar Eliminación</h2>
+                <button class="close-modal" id="closeDeleteModal">&times;</button>
+            </div>
+            <p>¿Está seguro que desea eliminar esta factura?</p>
+            <div class="form-actions">
+                <button type="button" class="btn btn-cancel" id="cancelDelete">Cancelar</button>
+                <button type="button" class="btn btn-save" id="confirmDelete">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item Template (hidden) -->
+    <template id="invoiceItemTemplate">
+        <div class="invoice-item">
+            <div class="item-row">
+                <div class="form-group item-description">
+                    <input type="text" class="form-control item-name" placeholder="Descripción" required>
+                </div>
+                <div class="form-group item-quantity">
+                    <input type="number" class="form-control item-qty" placeholder="Cant." min="1" value="1" required>
+                </div>
+                <div class="form-group item-price">
+                    <input type="number" class="form-control item-unit-price" placeholder="Precio" step="0.01" min="0" required>
+                </div>
+                <div class="item-total">$0.00</div>
+                <button type="button" class="btn-remove-item">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+            </div>
+        </div>
+    </template>
+
+    <script src="Factura.js"></script>
+</body>
+</html>

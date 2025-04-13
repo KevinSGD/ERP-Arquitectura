@@ -14,10 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     window.location.href = 'Transacciones.html';
                     break;
                 case 'Cuenta contable':
-                    window.location.href = 'cuenta.html';
+                    window.location.href = 'CuentaC.html';
                     break;
                 case 'Facturación':
-                    window.location.href = 'facturacion.html';
+                    window.location.href = 'Factura.html';
                     break;
                 case 'Nomina':
                     window.location.href = 'nomina.html';
