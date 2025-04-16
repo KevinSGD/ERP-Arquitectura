@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     window.location.href = 'Factura.html';
                     break;
                 case 'Nomina':
-                    window.location.href = 'nomina.html';
+                    window.location.href = 'Nomina.html';
                     break;
             }
         });
