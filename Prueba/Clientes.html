@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión Hotelera</title>
+    <link rel="stylesheet" href="Clientes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h1>Hotel</h1>
+            </div>
+            <div class="menu-header">CLIENTES</div>
+            
+            <div class="admin-profile">
+                <div class="admin-avatar">A</div>
+                <div class="admin-info">
+                    <div class="admin-name">Admin</div>
+                    <div class="admin-role">Administrador</div>
+                </div>
+            </div>
+            
+            <ul class="menu">
+                <li class="active">
+                    <a href="#"><i class="fas fa-th-large"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="#" id="check-in-cliente"><i class="fas fa-sign-in-alt"></i> Check-in Cliente</a>
+                </li>
+                <li>
+                    <a href="#" id="buscar-cliente"><i class="fas fa-search"></i> Buscar Cliente</a>
+                </li>
+                <li>
+                    <a href="#" id="historial"><i class="fas fa-history"></i> Historial</a>
+                </li>
+                <li>
+                    <a href="#" id="reportes"><i class="fas fa-chart-bar"></i> Reportes</a>
+                </li>
+            </ul>
+            
+            <div class="bottom-menu">
+                <a href="#" class="btn-cerrar"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                <div class="copyright">© 2025 Hotel Manager</div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Cards -->
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Total Clientes</h3>
+                        <div class="card-value">0</div>
+                        <div class="card-subtitle">Registrados</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-bed"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Huéspedes Actuales</h3>
+                        <div class="card-value">0</div>
+                        <div class="card-subtitle">Hospedados</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Check-ins</h3>
+                        <div class="card-value">0</div>
+                        <div class="card-subtitle">Este mes</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-times"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Check-outs</h3>
+                        <div class="card-value">0</div>
+                        <div class="card-subtitle">Este mes</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Clients Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <h2>Clientes Recientes</h2>
+                    <a href="#" class="view-all">Ver todos</a>
+                </div>
+                <table id="clients-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Documento</th>
+                            <th>Habitación</th>
+                            <th>Check-in</th>
+                            <th>Check-out</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los datos se cargarán dinámicamente con JavaScript -->
+                    </tbody>
+                </table>
+                <div id="no-clients" class="hidden">No hay clientes registrados</div>
+            </div>
+            
+            <!-- Two Column Layout -->
+            <div class="two-column-layout">
+                <!-- Consumos Table -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <h2>Consumos Recientes</h2>
+                        <a href="#" class="view-all">Ver todos</a>
+                    </div>
+                    <table id="consumos-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Cliente</th>
+                                <th>Habitación</th>
+                                <th>Servicio</th>
+                                <th>Monto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Los datos se cargarán dinámicamente con JavaScript -->
+                        </tbody>
+                    </table>
+                    <div id="no-consumos" class="hidden">No hay consumos registrados</div>
+                </div>
+                
+                <!-- Ocupación Chart -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h2>Ocupación por Tipo</h2>
+                    </div>
+                    <div id="ocupacion-chart" class="chart">
+                        <!-- El gráfico se cargará dinámicamente con JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal para Check-in -->
+        <div id="checkin-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Registrar Check-in</h2>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="checkin-form">
+                        <div class="form-group">
+                            <label for="cliente-checkin">Cliente</label>
+                            <select id="cliente-checkin" name="cliente" required>
+                                <option value="">Seleccionar cliente...</option>
+                                <!-- Opciones cargadas dinámicamente -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="habitacion">Habitación</label>
+                            <select id="habitacion" name="habitacion" required>
+                                <option value="">Seleccionar habitación...</option>
+                                <option value="101">101 - Individual</option>
+                                <option value="102">102 - Doble</option>
+                                <option value="201">201 - Suite</option>
+                                <option value="202">202 - Familiar</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha-entrada">Fecha de Entrada</label>
+                            <input type="date" id="fecha-entrada" name="fecha-entrada" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha-salida">Fecha de Salida</label>
+                            <input type="date" id="fecha-salida" name="fecha-salida" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="num-personas">Número de Personas</label>
+                            <input type="number" id="num-personas" name="num-personas" min="1" value="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="observaciones">Observaciones</label>
+                            <textarea id="observaciones" name="observaciones" rows="3"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" id="cancel-checkin">Cancelar</button>
+                            <button type="submit" class="btn-primary">Completar Check-in</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal para Buscar Cliente -->
+        <div id="search-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Buscar Cliente</h2>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="search-container">
+                        <div class="search-box">
+                            <input type="text" id="search-input" placeholder="Buscar por nombre o documento...">
+                            <button id="search-btn"><i class="fas fa-search"></i></button>
+                        </div>
+                        <div class="filter-options">
+                            <select id="filter-type">
+                                <option value="todos">Todos</option>
+                                <option value="nombre">Nombre</option>
+                                <option value="documento">Documento</option>
+                                <option value="habitacion">Habitación</option>
+                            </select>
+                            <button id="add-client-btn" class="btn-primary">+ Nuevo Cliente</button>
+                        </div>
+                    </div>
+                    <div class="search-results">
+                        <table id="search-results-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Documento</th>
+                                    <th>Habitación</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Resultados de búsqueda -->
+                            </tbody>
+                        </table>
+                        <div id="no-search-results" class="hidden">No hay resultados que coincidan con la búsqueda</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="Clientes.js"></script>
+</body>
+</html>
